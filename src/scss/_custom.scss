@@ -1,0 +1,131 @@
+// Here you can add other styles
+.bold {
+  font-weight: bold;
+}
+//estilos HeadCard
+.h-card {
+  background: #00beb1 !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.h-card-matrix {
+  background: #E0E0E0 !important;
+  color: #1A1A1A !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.btn-login {
+  background: #0169b7;
+  height: 45px;
+  color: #ffffff;
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+.btn-add {
+  background: #0169b7;
+  border: 1px solid #0169b7 !important;
+  color: #ffffff;
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid #0169b7 !important;
+  color: #0169b7;
+}
+
+.f-none {
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.c-shadow {
+  &:focus {
+    box-shadow: 0 0 0 0.1rem #017fdd;
+  }
+}
+.bg-login {
+  background: #013259;
+}
+.btn-logout {
+  color: #4f5d73;
+  &:hover {
+    text-decoration: none;
+    color: #4f5d73;
+  }
+}
+.color-layout{
+  background: #013259;
+  color:#ffffff;
+}
+.input-group-search {
+  .form-control {
+    &:focus {
+      outline: none !important;
+      outline-width: 0 !important;
+      box-shadow: none;
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+  }
+}
+
+.bg-search {
+  background-color: #00beb1;
+
+  &.input-group-text {
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+  }
+}
+.jumbotron-view{
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+  background-color: #EEEEEE;
+  padding: 1rem 1rem;
+}
+
+.page-item {
+  &.active {
+    .page-link {
+      background-color: #00beb1;
+      border-color: #00beb1;
+    }
+  }
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.colmena {
+  // justify-content: end;
+  // text-align: end;
+  margin-top: -175px;
+
+  @media (max-width: 575.98px) {
+    margin-left: 40px;
+  }
+  @media (min-width: 575.98px) {
+    margin-left: 189px;
+  }
+
+  @media (min-width: 767.98px) {
+    margin-left: 280px;
+  }
+
+  @media (min-width: 991.98px) {
+    // margin-right: 42px;
+    margin-left: 410px;
+  }
+
+  @media (min-width: 1199.98px) {
+    margin-left: 508px;
+  }
+}
