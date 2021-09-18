@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 function New(props) {
 
     // PARA EL EDITAR
-    const [id, setId] = useState(1);
+    const [id] = useState(1);
 
     // OBJETO PARA INICIALIZAR, PUEDE SERVIR PARA CREAR O EDITAR
     const client = {

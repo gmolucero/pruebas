@@ -17,7 +17,10 @@ import {
   cilCalculator,
   cilFile,
   cilChevronBottom,
-  cilChevronTop
+  cilChevronTop,
+  cilClock,
+  cilChatBubble,
+  cilFindInPage,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -42,6 +45,9 @@ export const icons = Object.assign(
     cilCalculator,
     cilFile,
     cilChevronBottom,
-    cilChevronTop
+    cilChevronTop,
+    cilClock,
+    cilChatBubble,
+    cilFindInPage,
   }
 );
