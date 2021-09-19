@@ -23,7 +23,10 @@ import {
   cilFindInPage,
   cilAccountLogout,
   cilWarning,
-  cilCheckCircle
+  cilCheckCircle,
+  cilUser,
+  cilPhone,
+  cilEnvelopeClosed,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -54,6 +57,9 @@ export const icons = Object.assign(
     cilFindInPage,
     cilAccountLogout,
     cilWarning,
-    cilCheckCircle
+    cilCheckCircle,
+    cilUser,
+    cilPhone,
+    cilEnvelopeClosed,
   }
 );
