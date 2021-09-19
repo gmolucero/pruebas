@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const Home = React.lazy(() => import("./views/home/Home"));
 const PreOrders = React.lazy(() => import("./views/preOrders/PreOrders"));
 const OrderDetails = React.lazy(() => import("./views/orderDetails/OrderDetails"));
+const Summary = React.lazy(() => import("./views/summary/Summary"));
 
 
 const CardComponent = React.lazy(() => import("./components/cardComponent/CardComponent"));
@@ -16,6 +17,7 @@ const routes = [
   { path: "/", exact: true, name: "Home", component: Home },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/card", name: "Dashboard", component: CardComponent },
+  { path: "/resumen", name: "Summary", component: Summary },
   { path: "/orders/:hash", name: "Orders", component: OrderDetails },
   { path: "/orders", name: "Orders", component: PreOrders },
   // INICIO SECCION DE EJEMPLOS
