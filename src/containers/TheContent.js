@@ -35,7 +35,7 @@ const TheContent = () => {
                   )} />
               )
             })}
-            <Redirect from="/" to="/clientes/nuevo" />
+            <Redirect from="/" to="/" />
           </Switch>
         </Suspense>
       </CContainer>
