@@ -3,11 +3,11 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:10.15.3
+image: node:15.14.0
 
 pipelines:
   branches:
-    master:
+    develop:
       - step:
           name: Install
           caches:
@@ -19,14 +19,14 @@ pipelines:
       - step:
           name: Create artifact
           script:
-            - git archive --format=tar.gz master -o app.tar.gz
+            - git archive --format=tar.gz develop -o app.tar.gz
           artifacts:
             - app.tar.gz
       - step:
           name: Heroku deploy
-          deployment: Test
+          deployment: Dev
           script:
-            - pipe: atlassian/heroku-deploy:1.1.4
+            - pipe: atlassian/heroku-deploy:1.2.1
               variables:
                 HEROKU_API_KEY: $HEROKU_API_KEY
                 HEROKU_APP_NAME: $HEROKU_APP_NAME
