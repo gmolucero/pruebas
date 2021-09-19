@@ -6,7 +6,6 @@ import {
     CCol,
     CRow,
     CCard,
-    CBadge,
     CButton,
     CDataTable
 } from "@coreui/react";
