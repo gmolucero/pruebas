@@ -12,7 +12,6 @@ import {
   CSidebarNavItem,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import logo from "../assets/img/logo_portal.png";
 // sidebar nav config
 import navigation from "./_nav";
 
