@@ -54,7 +54,7 @@ const ChangePasswordFormComponent = ({ formik, onChange }) => {
             <a href="#/recuperar" className="mb-4 text-white d-block">¿Olvidaste tu contraseña?</a>
 
             <CButton type="submit" className="btn-login d-inline px-4" >
-                Iniciar sesión
+                Continuar
             </CButton>
 
         </CForm>
