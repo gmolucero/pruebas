@@ -15,6 +15,9 @@ const loading = (
 const TheLayout = React.lazy(() => import("./containers/TheLayout"));
 // Pages
 const Login = React.lazy(() => import("./views/login/Login"));
+const Singup = React.lazy(() => import("./views/singup/Singup"));
+const RecoverPassword = React.lazy(() => import("./views/recoverPassword/RecoverPassword"));
+const ChangePassword = React.lazy(() => import("./views/changePassword/ChangePassword"));
 
 export default function App() {
   const [value, setValue] = useState(null);
@@ -25,27 +28,25 @@ export default function App() {
 
   useEffect(() => {
     async function cargarUsuario() {
-      const token= window.localStorage.getItem("token")
+      const token = window.localStorage.getItem("token")
       if (token) {
-        
-        setValue(window.localStorage.getItem("user"));     
+
+        setValue(window.localStorage.getItem("user"));
         return;
       }
     }
     cargarUsuario();
-  },[]);
+  }, []);
 
   return (
     <context.Provider value={providerValue}>
       <HashRouter>
         <React.Suspense fallback={loading}>
           <Switch>
-            <Route
-              exact
-              path="/login"
-              name="Login Page"
-              render={(props) => <Login {...props} />}
-            />
+            <Route exact path="/login" name="Login Page" component={Login} />
+            <Route exact path="/registro" name="Signup Page" component={Singup} />
+            <Route exact path="/recuperar" name="Recover password Page" component={RecoverPassword} />
+            <Route exact path="/actualizar/:tokenId" name="Recover password Page" component={ChangePassword} />
             <ProtectedRoute
               path="/"
               name="Home"

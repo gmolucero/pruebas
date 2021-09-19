@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import {
   CCol,
@@ -9,65 +9,43 @@ import {
 import CIcon from "@coreui/icons-react";
 
 import { validate, handlerInputChangeCreator } from 'utils';
-import { loginSchema as schema } from 'components/loginFormComponent/loginSchema';
+import { signupSchema as schema } from 'components/signupFormComponent/signupSchema';
 
 import PublicLayout from 'containers/ThePublicLayout.js';
-import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent';
+import SignupFormComponent from 'components/signupFormComponent/SignupFormComponent';
 
-import { context } from "../../context/context";
 import ImgFondo from "../../assets/img/bg-1.png";
-import login from "../../services/login";
-
 
 var styles = {
   backgroundImage: `url(${ImgFondo})`,
   backgroundSize: "cover",
 };
 
-const Login = (props) => {
-  const { setValue } = useContext(context);
+const Singup = (props) => {
   const [visible, setVisible] = useState(true);
+
   const menu = [
     {
-      name: 'Registros',
-      target: 'registro'
+      name: 'login',
+      target: 'login'
     }
   ]
 
-  const setUserLogged = (username, token) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", username);
-    setValue(username);
-    props.history.push("/dashboard");
-  }
-
   const onSubmit = (user) => {
     setVisible(false);
-    if (process.env.REACT_APP_FAKE_LOGIN) {
-      setUserLogged("fake_user", "fake_token");
-    } else {
-      login.login(user).then(
-        (response) => {
-          if (response.status === 200) {
-            setUserLogged(user.username, response.data.data);
-          } else {
-            if (response.status === 404) {
-              setVisible(true);
-            }
-          }
-        },
-        (error) => {
-          setVisible(true);
-          console.error('Login onSubmit: ', error);
-        }
-      );
-    }
+    console.log('enciando form', user);
   };
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      name: '',
+      lastname: '',
+      rut: '',
+      email: '',
+      cellphone: '',
       password: '',
+      password_confirmation: '',
+      term: false
     },
     validate: validate(schema),
     onSubmit: onSubmit,
@@ -76,6 +54,7 @@ const Login = (props) => {
   const handleTextChange = handlerInputChangeCreator(formik)
 
   return (
+
     <PublicLayout menu={menu} >
       <div
         className="c-app c-default-layout flex-row bg-public"
@@ -84,8 +63,8 @@ const Login = (props) => {
           <CRow className="justify-content-center h-100">
             <CCol md="6" style={styles} className="align-items-center bg-gradient-blue">
               <div className="d-flex h-100 justify-content-center align-items-center text-center flex-column text-white p-relative">
-                <h1 className="bold f-48 mt-5 mt-md-0">Inicia sesión</h1>
-                <p className="mb-5 h3 px-5">Rellena el formulario y comienza la experiencia con Portal Bancario.</p>
+                <h1 className="bold f-48 mt-5 mt-md-0">Registrarse</h1>
+                <p className="mb-5 h3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas fugit cupiditate ut mollitia itaque, accusamus beatae qui eaque corporis excepturi. </p>
 
                 <ul className="login-list p-0">
                   <li><CIcon name="cil-clock" /> Ahorra tiempo y solicita tu crédito.</li>
@@ -98,7 +77,7 @@ const Login = (props) => {
             <CCol md="6">
               <CRow className="justify-content-center align-items-center h-100">
                 <CCol md={8}>
-                  {visible ? <LoginFormComponent formik={formik} onChange={handleTextChange} /> : <div className="text-center"><CSpinner color="light" /></div>}
+                  {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} /> : <div className="text-center"><CSpinner color="light" /></div>}
                 </CCol>
               </CRow>
             </CCol>
@@ -106,7 +85,9 @@ const Login = (props) => {
         </CContainer>
       </div>
     </PublicLayout>
+
+
   );
 };
 
-export default Login;
+export default Singup;

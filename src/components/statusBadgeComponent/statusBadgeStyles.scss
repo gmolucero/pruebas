@@ -1,0 +1,30 @@
+
+
+.badge{
+    font-weight: normal;
+    padding: .45rem .75rem;
+    color: #505050;
+    
+    &-success{
+        background-color:#ACFFA0;
+        .circle{ background-color:#6CD95D;  }
+    }
+    
+    &-info{
+        background-color:#BCF3FF;
+        .circle{ background-color:#00D1FF;  }
+    }
+    
+    &-warning{
+        background-color:#FFEFB7;
+        .circle{ background-color:#FFD542;  }
+    }
+
+    .circle{
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        padding: 0px;
+        margin-right: 10px;
+    }
+}
