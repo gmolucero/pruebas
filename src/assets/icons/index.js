@@ -21,7 +21,9 @@ import {
   cilClock,
   cilChatBubble,
   cilFindInPage,
-  cilAccountLogout
+  cilAccountLogout,
+  cilWarning,
+  cilCheckCircle
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -50,6 +52,8 @@ export const icons = Object.assign(
     cilClock,
     cilChatBubble,
     cilFindInPage,
-    cilAccountLogout
+    cilAccountLogout,
+    cilWarning,
+    cilCheckCircle
   }
 );

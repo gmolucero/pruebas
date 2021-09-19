@@ -20,7 +20,7 @@ const TheHeader = (props) => {
   };
 
   return (
-    <CHeader withSubheader className="px-sm-5 px-3 py-2">
+    <CHeader withSubheader className="px-sm-5 px-3 py-2 bg-primary">
       <CHeaderBrand className="" to="/">
         <img src={logo} alt="Logo" style={{ height: "48px" }} />
       </CHeaderBrand>
@@ -33,7 +33,7 @@ const TheHeader = (props) => {
 
       <CHeaderNav className="px-sm-3">
         <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
-        <Link onClick={logout}>
+        <Link to="/" onClick={logout}>
           <CIcon name="cil-account-logout" className="text-white" />
         </Link>
       </CHeaderNav>

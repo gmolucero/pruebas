@@ -3,7 +3,6 @@ import {
     CCol,
     CContainer,
     CRow,
-    CSpinner
 } from "@coreui/react";
 import ImgFondo from "../../assets/img/bg-1.png";
 
