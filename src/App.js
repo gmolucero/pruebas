@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useReducer } from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./app/ProtectedRoute";
-import { context } from "./context/context";
+import { context, initialState } from "./context/context";
+import { reducer } from "context/reducers";
 import "./scss/style.scss";
 
 
@@ -20,23 +21,22 @@ const RecoverPassword = React.lazy(() => import("./views/recoverPassword/Recover
 const ChangePassword = React.lazy(() => import("./views/changePassword/ChangePassword"));
 
 export default function App() {
-  const [value, setValue] = useState(null);
-  const providerValue = useMemo(() => ({ value, setValue }), [value, setValue]);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const providerValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   // const [usuario, setUsuario] = useState(null);
   // const [token, setToken] = useState(true);
   // const [cargandoUsuario, setCargandoUsuario] = useState(true);
 
-  useEffect(() => {
-    async function cargarUsuario() {
-      const token = window.localStorage.getItem("token")
-      if (token) {
-
-        setValue(window.localStorage.getItem("user"));
-        return;
-      }
-    }
-    cargarUsuario();
-  }, []);
+  // useEffect(() => {
+  //   async function cargarUsuario() {
+  //     const token = window.localStorage.getItem("token")
+  //     if (token) {
+  //       setValue(window.localStorage.getItem("user"));
+  //       return;
+  //     }
+  //   }
+  //   cargarUsuario();
+  // }, []);
 
   return (
     <context.Provider value={providerValue}>

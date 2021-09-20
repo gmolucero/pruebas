@@ -13,8 +13,10 @@ import {
   CFormGroup
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { useNotification } from "context/hooks";
 
 import { validate, handlerInputChangeCreator, getValidationResult } from 'utils';
+import { resetPassword } from "../../services/login";
 
 import PublicLayout from 'containers/ThePublicLayout.js';
 
@@ -25,8 +27,9 @@ var styles = {
   backgroundSize: "cover",
 };
 
-const RecoverPassword = (props) => {
+const RecoverPassword = ({ history }) => {
   const [visible, setVisible] = useState(true);
+  const [, setNotification] = useNotification();
 
   const menu = [
     {
@@ -35,9 +38,18 @@ const RecoverPassword = (props) => {
     }
   ]
 
-  const onSubmit = (user) => {
-    setVisible(false);
-    console.log('enciando form', user);
+  const onSubmit = async (user) => {
+    try {
+      setVisible(false);
+      const res = await resetPassword(user)
+      if (res.status !== 200) throw new Error("error ")
+      setNotification({ open: true, type: 'info', message: 'Revise su correo electronico' });
+      history.push('/');
+    } catch (error) {
+      setNotification({ open: true, type: 'warning', message: 'Datos de usuario inválidos' });
+      setVisible(true);
+      console.log('[onSubmit error]', error);
+    }
   };
 
   const formik = useFormik({
@@ -54,8 +66,6 @@ const RecoverPassword = (props) => {
   });
 
   const handleTextChange = handlerInputChangeCreator(formik)
-
-  console.log(formik.errors);
 
   return (
 

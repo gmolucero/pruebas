@@ -10,12 +10,13 @@ import {
 } from "@coreui/react";
 import Logo from "../assets/img/logo_portal.png";
 
-const PublicLayout = ({ children, menu }) => {
+import NotificationComponent from 'components/notificationComponent/NotificationComponent';
 
-    // const [visible, setVisible] = React.useState(true);
+const PublicLayout = ({ children, menu }) => {
 
     return (
         <>
+            <NotificationComponent />
             <CContainer fluid className="bg-primary-dark" >
                 <CNavbar expand="md" colorscheme="light" >
 
