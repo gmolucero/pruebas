@@ -8,6 +8,8 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
+import { useNotification } from 'context/hooks';
+
 import { validate, handlerInputChangeCreator } from 'utils';
 import { changePasswordSchema as schema } from 'components/changePasswordFormComponent/changePasswordSchema';
 
@@ -16,6 +18,7 @@ import ChangePasswordFormComponent from 'components/changePasswordFormComponent/
 
 import ImgFondo from "../../assets/img/bg-1.png";
 
+import { changePassword } from 'services/login';
 
 var styles = {
   backgroundImage: `url(${ImgFondo})`,
@@ -24,6 +27,7 @@ var styles = {
 
 const ChangePassword = (props) => {
   const [visible, setVisible] = useState(true);
+  const [, setNotification] = useNotification();
   const menu = [
     {
       name: 'Registros',
@@ -31,9 +35,15 @@ const ChangePassword = (props) => {
     }
   ]
 
-  const onSubmit = (user) => {
-    setVisible(false);
-    console.log('los datos a enviar son', user);
+  const onSubmit = async (user) => {
+    try {
+      setVisible(false);
+      const res = await changePassword(user);
+      setNotification({ type: 'info', message: 'Contraseña acutalizada' })
+      props.history.push("/")
+    } catch (error) {
+      console.error('[onSubmit Error:]', error);
+    }
   };
 
   const formik = useFormik({
