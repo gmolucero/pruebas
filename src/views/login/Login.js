@@ -40,11 +40,13 @@ const Login = (props) => {
   }
 
   const onSubmit = (user) => {
+    console.log('onSubmit');
     setVisible(false);
     if (process.env.REACT_APP_FAKE_LOGIN === "true") {
       setUserLogged("fake_user", "fake_token");
+      props.history.push("/");
     } else {
-      login.login(user).then(
+      login(user).then(
         (response) => {
           if (response.status === 200) {
             setUserLogged(user.username, response.data.data);
