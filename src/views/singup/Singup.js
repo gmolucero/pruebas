@@ -8,6 +8,8 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
+import { register } from 'services/login';
+
 import { validate, handlerInputChangeCreator } from 'utils';
 import { signupSchema as schema } from 'components/signupFormComponent/signupSchema';
 
@@ -21,7 +23,7 @@ var styles = {
   backgroundSize: "cover",
 };
 
-const Singup = (props) => {
+const Singup = ({ history }) => {
   const [visible, setVisible] = useState(true);
 
   const menu = [
@@ -31,9 +33,14 @@ const Singup = (props) => {
     }
   ]
 
-  const onSubmit = (user) => {
-    setVisible(false);
-    console.log('enciando form', user);
+  const onSubmit = async (user) => {
+    try {
+      setVisible(false);
+      const res = await register(user);
+      history.push("/")
+    } catch (error) {
+      console.error('[onSubmit Error] form', error);
+    }
   };
 
   const formik = useFormik({

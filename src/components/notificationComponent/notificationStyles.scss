@@ -1,0 +1,14 @@
+
+
+.notification-element{
+    position: absolute;
+    z-index: 10;
+    top: -100%;
+    left: 0px;
+    width: 100%;
+    transition: all .4s;
+
+    &.open{
+        top: 0%;
+    }
+}

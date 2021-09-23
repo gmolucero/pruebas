@@ -16,7 +16,7 @@ import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent
 
 import { context } from "../../context/context";
 import ImgFondo from "../../assets/img/bg-1.png";
-import login from "../../services/login";
+import { login } from "../../services/login";
 
 
 var styles = {
@@ -25,7 +25,6 @@ var styles = {
 };
 
 const Login = (props) => {
-  const { setValue } = useContext(context);
   const [visible, setVisible] = useState(true);
   const menu = [
     {
@@ -37,16 +36,17 @@ const Login = (props) => {
   const setUserLogged = (username, token) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", username);
-    setValue(username);
-    props.history.push("/dashboard");
+    props.history.push("/");
   }
 
   const onSubmit = (user) => {
+    console.log('onSubmit');
     setVisible(false);
-    if (process.env.REACT_APP_FAKE_LOGIN) {
+    if (process.env.REACT_APP_FAKE_LOGIN === "true") {
       setUserLogged("fake_user", "fake_token");
+      props.history.push("/");
     } else {
-      login.login(user).then(
+      login(user).then(
         (response) => {
           if (response.status === 200) {
             setUserLogged(user.username, response.data.data);
