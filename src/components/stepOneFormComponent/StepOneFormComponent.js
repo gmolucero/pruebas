@@ -59,7 +59,7 @@ const StepOneFormComponent = ({ formik, onChange }) => {
     console.log('formik.errors', formik.errors);
 
     return (
-        <CForm className="my-5" onSubmit={formik.handleSubmit}>
+        <CForm onSubmit={formik.handleSubmit}>
 
             <CFormGroup className="mb-3 text-left">
                 <label>¿cuándo naciste?</label>

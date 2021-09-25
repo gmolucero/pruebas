@@ -7,5 +7,6 @@ export const initialState = {
         type: 'success',
         message: 'hola mundo',
         delay: 3000
-    }
+    },
+    loading: false
 };

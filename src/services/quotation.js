@@ -22,3 +22,17 @@ export const getRent = async function () {
         url: `/rent`,
     });
 };
+
+export const deleteIncome = async function (income_id) {
+    return request({
+        method: "DELETE",
+        url: `/income/${income_id}`,
+    });
+};
+
+export const deleteIncomeAttachedFile = async function (income_id, file_id) {
+    return request({
+        method: "DELETE",
+        url: `/income/${income_id}/file/${file_id}`,
+    });
+};

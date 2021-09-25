@@ -7,6 +7,9 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
+import { useLoading } from 'context/hooks';
+
+import { deleteIncome, deleteIncomeAttachedFile } from 'services/quotation';
 import Modal from 'components/modalComponent/ModalComponent';
 
 import moment from 'moment';
@@ -22,6 +25,7 @@ moment.locale('es', {
 const AttachFileComponent = ({ income, amountField }) => {
 
     const formated = moment(income.period).locale('es').format('MMMM YYYY');
+    const [, setLoading] = useLoading();
 
     const inputRef = React.useRef(null);
     const [deleteRowModal, setDeleteRowModal] = React.useState(false);
@@ -31,19 +35,32 @@ const AttachFileComponent = ({ income, amountField }) => {
         name: ''
     });
 
-    const handleDeleteAttach = (data) => {
-        console.log('a eliminar', data);
+    const handleDeleteAttach = async (fileId) => {
+        try {
+            setLoading(true)
+            const response = await deleteIncomeAttachedFile(income.id, fileId)
+            setLoading(false)
+        } catch (error) {
+            console.log('Error: ', error);
+        }
     }
 
-    const handleDeleteRegister = () => {
-        console.log("eliminando registro");
+    const handleDeleteRegister = async () => {
+        try {
+            setLoading(true)
+            const response = await deleteIncome(income.id)
+            setLoading(false)
+            console.log("eliminando registro", response.data);
+        } catch (error) {
+            console.log('Error: ', error);
+        }
     }
 
     return (
         <>
             <hr />
             <CRow>
-                <CCol xs={10} md={6} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income[amountField]}</CCol>
+                <CCol xs={10} md={6} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income.income}</CCol>
                 <CCol xs={2} className="text-right d-md-none">
                     <CIcon name="cil-x" className="pointer" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
