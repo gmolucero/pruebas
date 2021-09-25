@@ -14,9 +14,7 @@ import CIcon from "@coreui/icons-react";
 
 import { validateSchema } from './quotarionSchema';
 
-const QuotationForm = ({ label, incominName }) => {
-
-    const [disable, setDisable] = React.useState(true);
+const QuotationForm = ({ label }) => {
 
     const onSubmit = (data) => {
         console.log('a enviar : ', data);
@@ -50,7 +48,10 @@ const QuotationForm = ({ label, incominName }) => {
                 <label className="bold">{label}</label>
                 <CRow>
                     <CCol>
-                        <CSelect size="lg"
+                        <CSelect
+                            size="lg"
+                            md={4}
+                            sx={6}
                             onChange={handleChange}
                             value={formik.values.periodo}
                             name="periodo"
@@ -61,16 +62,22 @@ const QuotationForm = ({ label, incominName }) => {
                             }
                         </CSelect>
                     </CCol>
-                    <CCol className="px-0">
+                    <CCol className="px-0 pr-3 pr-md-0">
                         <CInput
                             size="lg"
+                            md={4}
+                            sx={6}
                             value={formik.values.amount}
                             name="amount"
                             placeholder="2.000.000"
                             onChange={handleChange}
                         />
                     </CCol>
-                    <CCol>
+                    <CCol
+                        xs={12}
+                        md={4}
+                        className="pt-3 pt-md-0"
+                    >
                         <CButton disabled={formik.values.periodo.trim() === '' || formik.values.amount.trim() === ''} onClick={() => console.log('cliked')} color="light" size="lg" className="d-inline-flex align-items-center w-100 justify-content-center">
                             <CIcon name="cil-plus" />
                             Agregar

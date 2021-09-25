@@ -1,10 +1,6 @@
 import React from 'react'
 import {
     CButton,
-    CForm,
-    CInput,
-    CSelect,
-    CFormGroup,
     CLink,
     CRow,
     CCol,
@@ -26,6 +22,8 @@ moment.locale('es', {
 const AttachFileComponent = ({ income, amountField }) => {
 
     const formated = moment(income.period).locale('es').format('MMMM YYYY');
+
+    const inputRef = React.useRef(null);
     const [deleteRowModal, setDeleteRowModal] = React.useState(false);
     const [attachFileModal, setAttachFileModal] = React.useState({
         id: 1,
@@ -45,20 +43,33 @@ const AttachFileComponent = ({ income, amountField }) => {
         <>
             <hr />
             <CRow>
-                <CCol lg={5} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income[amountField]}</CCol>
-                <CCol md={4}><CButton color="light" variant="outline" className="d-inline-flex align-items-center w-100 justify-content-center">
-                    <CIcon name="cil-paperclip" />
-                    Adjuntar archivos
-                </CButton>
+                <CCol xs={10} md={6} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income[amountField]}</CCol>
+                <CCol xs={2} className="text-right d-md-none">
+                    <CIcon name="cil-x" className="pointer" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
-                <CCol className="text-right">
-                    <CIcon name="cil-x" onClick={() => setDeleteRowModal(true)} />
+                <CCol xs={12} md={5} className="py-3 py-md-0">
+                    <input type="file" className="d-none" ref={inputRef} onChange={() => console.log('archivo cambiando')} />
+
+                    <CButton
+                        onClick={() => inputRef.current.click()}
+                        color="light"
+                        variant="outline"
+                        className="d-inline-flex align-items-center w-100 justify-content-center">
+                        <CIcon name="cil-paperclip" className="mr-1" />
+                        Adjuntar <span className="d-md-none d-xl-inline pl-1"> archivos</span>
+                    </CButton>
+
+                </CCol>
+                <CCol className="text-right d-none d-md-inline" md={1}>
+                    <CIcon name="cil-x" className="pointer" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
             </CRow>
             <CRow>
-                <CCol xs={12} className="text-left mt-2">
-                    <label className="bold mb-0">Archivos adjuntos</label>
-                </CCol>
+                {
+                    income.files && income.files.lenght > 0 && <CCol xs={12} className="text-left mt-2">
+                        <label className="bold mb-0">Archivos adjuntos</label>
+                    </CCol>
+                }
                 {
                     income.files && income.files.map((_file) => (
                         <CCol key={_file.id} xs={12} className="text-left d-inline-flex align-items-center">
@@ -73,7 +84,7 @@ const AttachFileComponent = ({ income, amountField }) => {
                                     name: _file.original_name,
                                     open: true
                                 })}
-                                className="m-2 text-black" />
+                                className="m-2 text-black pointer" />
                         </CCol>
                     ))
                 }
