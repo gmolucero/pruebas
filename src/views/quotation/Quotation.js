@@ -7,14 +7,21 @@ import {
 
 
 import StepOne from 'views/stepOne/StepOne';
+import StepTwo from 'views/stepTwo/StepTwo';
 import StepThree from 'views/stepThree/StepThree';
 
 const Quotation = (props) => {
+
+    const [step, setStep] = React.useState(2);
+
     return (
-        <CContainer className="pt-5 text-center">
-            <StepOne />
-            <StepThree />
-        </CContainer>
+        <>
+
+            {step === 1 && <StepOne next={() => setStep(2)} />}
+            {step === 2 && <StepTwo next={() => setStep(3)} />}
+            {step === 3 && <StepThree />}
+
+        </>
     )
 }
 

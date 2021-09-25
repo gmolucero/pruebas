@@ -21,12 +21,12 @@ const LoginFormComponent = ({ formik, onChange }) => {
                     type="email"
                     placeholder="Correo electronico"
                     autoComplete="email"
-                    value={formik.values.username}
-                    invalid={formik.touched.username && !!formik.errors.username}
+                    value={formik.values.email}
+                    invalid={formik.touched.email && !!formik.errors.email}
                     onChange={onChange}
-                    name="username"
+                    name="email"
                 />
-                <CInvalidFeedback invalid={getValidationResult(formik.touched.username && !!formik.errors.username)}>{formik.errors.username}</CInvalidFeedback>
+                <CInvalidFeedback invalid={getValidationResult(formik.touched.email && !!formik.errors.email)}>{formik.errors.email}</CInvalidFeedback>
             </CFormGroup>
             <CFormGroup className="mb-3">
                 <CInput

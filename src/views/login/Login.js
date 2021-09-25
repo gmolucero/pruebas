@@ -14,7 +14,6 @@ import { loginSchema as schema } from 'components/loginFormComponent/loginSchema
 import PublicLayout from 'containers/ThePublicLayout.js';
 import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent';
 
-import { context } from "../../context/context";
 import ImgFondo from "../../assets/img/bg-1.png";
 import { login } from "../../services/login";
 
@@ -33,9 +32,9 @@ const Login = (props) => {
     }
   ]
 
-  const setUserLogged = (username, token) => {
+  const setUserLogged = (email, token) => {
     localStorage.setItem("token", token);
-    localStorage.setItem("user", username);
+    localStorage.setItem("user", email);
     props.history.push("/");
   }
 
@@ -49,7 +48,7 @@ const Login = (props) => {
       login(user).then(
         (response) => {
           if (response.status === 200) {
-            setUserLogged(user.username, response.data.data);
+            setUserLogged(user.email, response.data.data);
           } else {
             if (response.status === 404) {
               setVisible(true);
@@ -66,7 +65,7 @@ const Login = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: '',
     },
     validate: validate(schema),

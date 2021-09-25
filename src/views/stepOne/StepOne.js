@@ -12,27 +12,51 @@ import TheQuotationLayout from 'containers/TheQuotationLayout';
 import { stepOnechema as schema } from 'components/stepOneFormComponent/stepOnechema'
 import StepOneFormComponent from 'components/stepOneFormComponent/StepOneFormComponent'
 
-import { validate, handlerInputChangeCreator } from 'utils';
+import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
 
-const StepOne = props => {
+import { updateQuotation } from 'services/quotation';
+
+const StepOne = ({ next }) => {
+    let [timer, setTimer] = React.useState(null);
 
     const onSubmit = (data) => {
-        console.log('data', data);
+        next();
     }
 
     const formik = useFormik({
         initialValues: {
-            birthdate: '',
+            day: '',
+            month: '',
+            year: '',
             region: '',
             commune: '',
-            knowledge: '',
-            ocupation: ''
+            education_level: '',
+            occupation: ''
         },
         validate: validate(schema),
         onSubmit: onSubmit,
     });
 
+    const handleUpdate = async (data) => {
+        try {
+            console.log('a enviar', data);
+            const res = await updateQuotation(data);
+            console.log('actualizado', res.data.data);
+        } catch (error) {
+            console.error('[handleUpdate]', error);
+        }
+    }
+
     const handleTextChange = handlerInputChangeCreator(formik)
+
+    React.useEffect(() => {
+        clearTimeout(timer)
+        if (!isEmpty(formik.values)) {
+            setTimer(setTimeout(() => {
+                handleUpdate(formik.values)
+            }, 500))
+        }
+    }, [formik.values])
 
     return (
         <TheQuotationLayout
