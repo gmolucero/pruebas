@@ -7,17 +7,18 @@ import {
     CRow
 } from "@coreui/react";
 
-import TheQuotationLayout from 'containers/TheQuotationLayout';
-
 import { stepOnechema as schema } from 'components/stepOneFormComponent/stepOnechema'
 import StepOneFormComponent from 'components/stepOneFormComponent/StepOneFormComponent'
 
 import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
 
-import { updateQuotation } from 'services/quotation';
+import { updateCustomer, getCustomer } from 'services/quotation';
+
+import Spinner from 'app/common/Spinner';
 
 const StepOne = ({ next }) => {
     let [timer, setTimer] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
 
     const onSubmit = (data) => {
         next();
@@ -37,11 +38,20 @@ const StepOne = ({ next }) => {
         onSubmit: onSubmit,
     });
 
+
+    const handleInit = async () => {
+        try {
+            const { data } = await getCustomer();
+            formik.setValues(data.result)
+            setLoading(false)
+        } catch (error) {
+            console.log('ERROR: ', error);
+        }
+    }
+
     const handleUpdate = async (data) => {
         try {
-            console.log('a enviar', data);
-            const res = await updateQuotation(data);
-            console.log('actualizado', res.data.data);
+            await updateCustomer(data);
         } catch (error) {
             console.error('[handleUpdate]', error);
         }
@@ -58,17 +68,17 @@ const StepOne = ({ next }) => {
         }
     }, [formik.values])
 
+
+    React.useEffect(() => {
+        handleInit();
+    }, [])
+
     return (
-        <TheQuotationLayout
-            title="¡Necesitamos más datos para que las instituciones financieras puedan hacer sus pre-ofertas!"
-            text="Las insituciones financieras requieren de datos para generar pre-ofertas personalizadas para ti."
-            step={1}>
-            <CRow className="justify-content-center">
-                <CCol md={8} lg={6}>
-                    <StepOneFormComponent formik={formik} onChange={handleTextChange} />
-                </CCol>
-            </CRow>
-        </TheQuotationLayout>
+        <CRow className="justify-content-center">
+            <CCol md={8} lg={6}>
+                {loading ? <Spinner /> : <StepOneFormComponent formik={formik} onChange={handleTextChange} />}
+            </CCol>
+        </CRow>
     )
 }
 

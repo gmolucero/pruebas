@@ -6,17 +6,25 @@ import {
     CCol,
     CRow,
 } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 
 import { useLoading } from 'context/hooks';
 import Spinner from 'app/common/Spinner';
 import StepperComponent from 'components/stepperComponent/StepperComponent';
 
-const TheQuotationLayout = ({ children, step, title, text }) => {
-
+const TheQuotationLayout = ({ children, step, title, text, backFun }) => {
     const [loading] = useLoading();
     return (
         <CContainer className="pt-5 text-center">
-            <CRow className="justify-content-center pt-5">
+            {
+                backFun && <CRow className="text-left">
+                    <CCol md={10}>
+                        <CIcon onClick={backFun} className="pointer text-light" size="xl" name="cil-arrow-circle-left" />
+                    </CCol>
+                </CRow>
+            }
+
+            <CRow className="justify-content-center">
                 <CCol md={10}>
                     <h1 className="text-primary mb-3">{title}</h1>
                     <p className="f-24"> {text}</p>

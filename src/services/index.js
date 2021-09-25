@@ -5,6 +5,13 @@ const instance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+instance.interceptors.response.use(response => response, function (error) {
+  if (error.response.status === 401) {
+    window.location.href = '/'
+  }
+  return Promise.reject(error);
+});
+
 const onSuccess = async function (response) {
   return response;
 };

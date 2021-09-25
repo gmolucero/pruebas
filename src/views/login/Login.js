@@ -39,7 +39,6 @@ const Login = (props) => {
   }
 
   const onSubmit = (user) => {
-    console.log('onSubmit');
     setVisible(false);
     if (process.env.REACT_APP_FAKE_LOGIN === "true") {
       setUserLogged("fake_user", "fake_token");
@@ -48,7 +47,7 @@ const Login = (props) => {
       login(user).then(
         (response) => {
           if (response.status === 200) {
-            setUserLogged(user.email, response.data.data);
+            setUserLogged(user.email, response.data.result.access_token);
           } else {
             if (response.status === 404) {
               setVisible(true);
@@ -65,8 +64,8 @@ const Login = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'jchbarreto@gmail.com',
+      password: 'asdfasdf',
     },
     validate: validate(schema),
     onSubmit: onSubmit,

@@ -3,7 +3,7 @@ import request from "./index";
 export const getRegion = function (user) {
     return request({
         method: "GET",
-        url: `/region/list`,
+        url: `/region`,
     });
 };
 

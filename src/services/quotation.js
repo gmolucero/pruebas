@@ -1,13 +1,5 @@
 import request from "./index";
 
-export const createQuotation = async function (user) {
-    return request({
-        method: "POST",
-        data: user,
-        url: `/quotation/create`,
-    });
-};
-
 export const updateQuotation = async function (user) {
     return request({
         method: "PUT",
@@ -34,5 +26,22 @@ export const deleteIncomeAttachedFile = async function (income_id, file_id) {
     return request({
         method: "DELETE",
         url: `/income/${income_id}/file/${file_id}`,
+    });
+};
+
+
+// CUSTOMER !!!
+export const getCustomer = async function () {
+    return request({
+        method: "GET",
+        url: `/customer`,
+    });
+};
+
+export const updateCustomer = async function (user) {
+    return request({
+        method: "PATCH",
+        data: user,
+        url: `/customer`,
     });
 };

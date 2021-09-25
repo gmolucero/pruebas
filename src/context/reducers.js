@@ -6,6 +6,8 @@ export function reducer(state, action) {
             return { ...state, notification: { ...state.notification, open: true, ...action.value } };
         case 'SET_LOADING':
             return { ...state, loading: action.value };
+        case 'SET_STEPPER':
+            return { ...state, step: action.value };
         default:
             throw new Error();
     }

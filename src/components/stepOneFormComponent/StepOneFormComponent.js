@@ -23,11 +23,11 @@ const StepOneFormComponent = ({ formik, onChange }) => {
     const [isMounted, setIsMounted] = React.useState(false);
 
     const handleGetRegion = async () => {
-        const resp = await getRegion();
         try {
+            const resp = await getRegion();
             setRegion(resp.data.result)
         } catch (error) {
-            console.log('ERROR: ', error);
+            console.log('StepOneFormComponent ERROR: ', error);
         }
     }
 
@@ -53,10 +53,6 @@ const StepOneFormComponent = ({ formik, onChange }) => {
         handleGetRegion();
         setIsMounted(true)
     }, [])
-
-
-
-    console.log('formik.errors', formik.errors);
 
     return (
         <CForm onSubmit={formik.handleSubmit}>
