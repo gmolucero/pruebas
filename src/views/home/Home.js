@@ -6,6 +6,8 @@ import {
 } from "@coreui/react";
 import ImgFondo from "../../assets/img/bg-1.png";
 
+import { useStepper } from 'context/hooks';
+
 var styles = {
     backgroundImage: `url(${ImgFondo})`,
     backgroundSize: "cover",
@@ -13,6 +15,11 @@ var styles = {
 
 
 const Home = ({ history }) => {
+    const [step, setStepper] = useStepper();
+
+    React.useEffect(() => {
+        if (step !== 1) setStepper(1)
+    }, [])
 
     return (
         <div

@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { context } from './context';
-import { getCustomer } from 'services/quotation';
-
 export const useNotification = () => {
     const { state: { notification }, dispatch } = React.useContext(context)
     return [notification, (_notification) => dispatch({ type: 'NOTIFICACION', value: _notification })]
