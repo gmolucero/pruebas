@@ -11,21 +11,48 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import moment from 'moment';
+import Modal from 'components/modalComponent/ModalComponent';
 
-function AttachFileComponent({ income, amountField }) {
+import moment from 'moment';
+moment.locale('es', {
+    months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+    monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+    weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+    weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+    weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+}
+);
+
+const AttachFileComponent = ({ income, amountField }) => {
+
+    const formated = moment(income.period).locale('es').format('MMMM YYYY');
+    const [deleteRowModal, setDeleteRowModal] = React.useState(false);
+    const [attachFileModal, setAttachFileModal] = React.useState({
+        id: 1,
+        open: false,
+        name: ''
+    });
+
+    const handleDeleteAttach = (data) => {
+        console.log('a eliminar', data);
+    }
+
+    const handleDeleteRegister = () => {
+        console.log("eliminando registro");
+    }
+
     return (
         <>
             <hr />
             <CRow>
-                <CCol lg={5} className="align-items-center d-inline-flex bold">{moment(income.period).format('MMMM YYYY')}  ·  $ {income[amountField]}</CCol>
+                <CCol lg={5} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income[amountField]}</CCol>
                 <CCol md={4}><CButton color="light" variant="outline" className="d-inline-flex align-items-center w-100 justify-content-center">
                     <CIcon name="cil-paperclip" />
                     Adjuntar archivos
                 </CButton>
                 </CCol>
                 <CCol className="text-right">
-                    <CIcon name="cil-x" />
+                    <CIcon name="cil-x" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
             </CRow>
             <CRow>
@@ -34,16 +61,45 @@ function AttachFileComponent({ income, amountField }) {
                 </CCol>
                 {
                     income.files && income.files.map((_file) => (
-                        <CCol key={_file.id} xs={12} className="text-left">
+                        <CCol key={_file.id} xs={12} className="text-left d-inline-flex align-items-center">
                             <CLink to="#" className="bold text-light d-inline-flex align-items-center">
                                 <CIcon name="cil-file" className="mr-2" />
                                 {_file.original_name}
-                                <CIcon name="cil-x-circle" className="m-2 text-black" />
                             </CLink>
+                            <CIcon
+                                name="cil-x-circle"
+                                onClick={() => setAttachFileModal({
+                                    id: _file.id,
+                                    name: _file.original_name,
+                                    open: true
+                                })}
+                                className="m-2 text-black" />
                         </CCol>
                     ))
                 }
             </CRow>
+
+            <Modal
+                show={attachFileModal.open}
+                rigthButtonText="Eliminar"
+                rightButtonFunc={() => handleDeleteAttach(attachFileModal.id)}
+                toggle={() => setAttachFileModal({
+                    id: 0,
+                    name: '',
+                    open: false
+                })}>
+                <h3>Eliminar Archivo</h3>
+                <p>¿Desea elimiar el archivos {attachFileModal.name}?</p>
+            </Modal>
+
+            <Modal
+                show={deleteRowModal}
+                rightButtonFunc={handleDeleteRegister}
+                rigthButtonText="Eliminar"
+                toggle={setDeleteRowModal}>
+                <h3>Eliminar Periodo</h3>
+                <p>¿Desea elimiar el registro {formated}?</p>
+            </Modal>
         </>
     )
 }
