@@ -16,9 +16,7 @@ import { getValidationResult } from 'utils';
 const StepThreeFormComponent = ({ formik, onChange }) => {
 
     return (
-        <CForm className="my-5" onSubmit={formik.handleSubmit}>
-
-
+        <CForm onSubmit={formik.handleSubmit}>
             <CFormGroup className="mb-3 text-left">
                 <CSelect size="lg" onChange={onChange} name="subject" value={formik.values.subject}>
                     <option disabled value="">Motivo del crédito</option>

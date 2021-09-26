@@ -7,44 +7,78 @@ import {
     CRow
 } from "@coreui/react";
 
-import TheQuotationLayout from 'containers/TheQuotationLayout';
-
 import { stepOnechema as schema } from 'components/stepOneFormComponent/stepOnechema'
 import StepOneFormComponent from 'components/stepOneFormComponent/StepOneFormComponent'
 
-import { validate, handlerInputChangeCreator } from 'utils';
+import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
 
-const StepOne = props => {
+import { updateCustomer, getCustomer } from 'services/quotation';
+
+import Spinner from 'app/common/Spinner';
+
+const StepOne = ({ next }) => {
+    let [timer, setTimer] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
 
     const onSubmit = (data) => {
-        console.log('data', data);
+        next();
     }
 
     const formik = useFormik({
         initialValues: {
-            birthdate: '',
+            day: '',
+            month: '',
+            year: '',
             region: '',
             commune: '',
-            knowledge: '',
-            ocupation: ''
+            education_level: '',
+            occupation: ''
         },
         validate: validate(schema),
         onSubmit: onSubmit,
     });
 
+
+    const handleInit = async () => {
+        try {
+            const { data } = await getCustomer();
+            formik.setValues(data.result)
+            setLoading(false)
+        } catch (error) {
+            console.log('ERROR: ', error);
+        }
+    }
+
+    const handleUpdate = async (data) => {
+        try {
+            await updateCustomer(data);
+        } catch (error) {
+            console.error('[handleUpdate]', error);
+        }
+    }
+
     const handleTextChange = handlerInputChangeCreator(formik)
 
+    React.useEffect(() => {
+        clearTimeout(timer)
+        if (!isEmpty(formik.values)) {
+            setTimer(setTimeout(() => {
+                handleUpdate(formik.values)
+            }, 500))
+        }
+    }, [formik.values])
+
+
+    React.useEffect(() => {
+        handleInit();
+    }, [])
+
     return (
-        <TheQuotationLayout
-            title="¡Necesitamos más datos para que las instituciones financieras puedan hacer sus pre-ofertas!"
-            text="Las insituciones financieras requieren de datos para generar pre-ofertas personalizadas para ti."
-            step={1}>
-            <CRow className="justify-content-center">
-                <CCol md={8} lg={6}>
-                    <StepOneFormComponent formik={formik} onChange={handleTextChange} />
-                </CCol>
-            </CRow>
-        </TheQuotationLayout>
+        <CRow className="justify-content-center">
+            <CCol md={8} lg={6}>
+                {loading ? <Spinner /> : <StepOneFormComponent formik={formik} onChange={handleTextChange} />}
+            </CCol>
+        </CRow>
     )
 }
 

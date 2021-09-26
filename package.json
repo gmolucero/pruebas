@@ -15,7 +15,7 @@
     }
   ],
   "homepage": ".",
-  "copyright": "Copyright 2017-2020 creativeLabs £ukasz Holeczek",
+  "copyright": "Copyright 2017-2020 creativeLabs ï¿½ukasz Holeczek",
   "license": "https://coreui.io/pro/license/",
   "private": true,
   "repository": {
@@ -36,7 +36,7 @@
     "formik": "^2.1.5",
     "js-file-download": "^0.4.12",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",

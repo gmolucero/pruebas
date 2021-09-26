@@ -5,13 +5,11 @@ import './stepperComponentStyles.scss';
 
 const StepperComponent = ({ active }) => {
     return (
-        <>
-            <div className="drop-container">
-                {
-                    [1, 2, 3].map((el) => (<div key={el} className={`drop ${active >= el ? 'active' : ''}`}>{el}</div>))
-                }
-            </div>
-        </>
+        <div className="drop-container">
+            {
+                [1, 2, 3].map((el) => (<div key={el} className={`drop ${active >= el ? 'active' : ''}`}>{el}</div>))
+            }
+        </div>
     )
 }
 

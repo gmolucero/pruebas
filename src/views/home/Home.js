@@ -6,18 +6,26 @@ import {
 } from "@coreui/react";
 import ImgFondo from "../../assets/img/bg-1.png";
 
+import { useStepper } from 'context/hooks';
+
 var styles = {
     backgroundImage: `url(${ImgFondo})`,
     backgroundSize: "cover",
 };
 
 
-const Home = () => {
+const Home = ({ history }) => {
+    const [step, setStepper] = useStepper();
+
+    React.useEffect(() => {
+        if (step !== 1) setStepper(1)
+    }, [])
 
     return (
         <div
             className="c-app c-default-layout flex-row c-home"
         >
+
             <CContainer fluid={true}>
                 <CRow className="justify-content-center h-100">
                     <CCol md="6" style={styles} className="align-items-center d-none d-md-inline" />
@@ -27,7 +35,7 @@ const Home = () => {
                                 <h1 className="text-primary bold f-48">¡Cotiza tu producto!</h1>
                                 <p className="f-24 mb-5">Revisa los créditos solicitadosen Portal Bancario</p>
 
-                                <button className="card bg-secondary text-center p-4 d-inline-flex">
+                                <button onClick={() => history.push(`/cotizacion`)} className="card bg-secondary text-center p-4 d-inline-flex">
                                     <svg className="m-auto mb-4" width="105" height="102" viewBox="0 0 105 102" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path opacity="0.098" d="M56.9088 101.25C83.1697 101.25 104.458 79.9835 104.458 53.75C104.458 27.5165 83.1697 6.25 56.9088 6.25C30.6479 6.25 9.35925 27.5165 9.35925 53.75C9.35925 79.9835 30.6479 101.25 56.9088 101.25Z" fill="white" />
                                         <path d="M34.7729 34.673C38.2052 34.673 41.5603 33.6563 44.4142 31.7514C47.268 29.8465 49.4923 27.1391 50.8058 23.9714C52.1194 20.8037 52.4631 17.3181 51.7936 13.9553C51.124 10.5924 49.4713 7.50345 47.0444 5.07893C44.6175 2.65441 41.5254 1.00324 38.1591 0.334213C34.7928 -0.334814 31.3035 0.00835442 28.1325 1.32032C24.9614 2.63229 22.251 4.85413 20.344 7.70489C18.437 10.5556 17.419 13.9073 17.4188 17.336C17.4187 19.6127 17.8675 21.8671 18.7395 23.9705C19.6116 26.0739 20.8899 27.9851 22.5014 29.595C24.1128 31.2049 26.026 32.482 28.1315 33.3533C30.2371 34.2245 32.4938 34.673 34.7729 34.673ZM34.7729 3.15198C37.5811 3.15198 40.3263 3.98386 42.6613 5.54242C44.9963 7.10098 46.8162 9.31621 47.8908 11.908C48.9655 14.4998 49.2467 17.3517 48.6988 20.1031C48.151 22.8546 46.7987 25.3819 44.8129 27.3656C42.8272 29.3492 40.2972 30.7001 37.5429 31.2474C34.7886 31.7947 31.9337 31.5138 29.3392 30.4403C26.7448 29.3667 24.5272 27.5487 22.967 25.2162C21.4069 22.8836 20.5741 20.1413 20.5741 17.336C20.5741 13.5741 22.07 9.96639 24.7328 7.30638C27.3956 4.64636 31.0071 3.15198 34.7729 3.15198Z" fill="white" />

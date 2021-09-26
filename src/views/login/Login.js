@@ -14,7 +14,6 @@ import { loginSchema as schema } from 'components/loginFormComponent/loginSchema
 import PublicLayout from 'containers/ThePublicLayout.js';
 import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent';
 
-import { context } from "../../context/context";
 import ImgFondo from "../../assets/img/bg-1.png";
 import { login } from "../../services/login";
 
@@ -33,14 +32,13 @@ const Login = (props) => {
     }
   ]
 
-  const setUserLogged = (username, token) => {
+  const setUserLogged = (email, token) => {
     localStorage.setItem("token", token);
-    localStorage.setItem("user", username);
+    localStorage.setItem("user", email);
     props.history.push("/");
   }
 
   const onSubmit = (user) => {
-    console.log('onSubmit');
     setVisible(false);
     if (process.env.REACT_APP_FAKE_LOGIN === "true") {
       setUserLogged("fake_user", "fake_token");
@@ -49,7 +47,7 @@ const Login = (props) => {
       login(user).then(
         (response) => {
           if (response.status === 200) {
-            setUserLogged(user.username, response.data.data);
+            setUserLogged(user.email, response.data.result.access_token);
           } else {
             if (response.status === 404) {
               setVisible(true);
@@ -66,8 +64,8 @@ const Login = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      email: 'jchbarreto@gmail.com',
+      password: 'asdfasdf',
     },
     validate: validate(schema),
     onSubmit: onSubmit,

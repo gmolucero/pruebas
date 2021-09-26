@@ -26,6 +26,13 @@ export const getInputValue = (target) => {
     return { [target.name]: target.value }
 }
 
+export const isEmpty = (obj) => {
+    return Object.keys(obj).reduce((acc, val) => {
+        const target = obj[val];
+        if (target !== '') acc = false
+        return acc;
+    }, true)
+}
 
 // CREATORS
 export const handlerInputChangeCreator = (formik) => ({ target }) => formik.setValues({ ...formik.values, ...getInputValue(target) });

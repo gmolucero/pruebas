@@ -28,6 +28,10 @@ import {
   cilPhone,
   cilEnvelopeClosed,
   cilDollar,
+  cilX,
+  cilXCircle,
+  cilPaperclip,
+  cilArrowCircleLeft,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -63,5 +67,9 @@ export const icons = Object.assign(
     cilPhone,
     cilEnvelopeClosed,
     cilDollar,
+    cilX,
+    cilXCircle,
+    cilPaperclip,
+    cilArrowCircleLeft,
   }
 );
