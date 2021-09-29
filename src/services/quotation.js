@@ -8,6 +8,7 @@ export const updateQuotation = async function (user) {
     });
 };
 
+// Rent !!!
 export const getRent = async function () {
     return request({
         method: "GET",
@@ -23,19 +24,35 @@ export const createRent = async function (rent) {
     });
 };
 
-export const deleteIncome = async function (income_id) {
+export const deleteRent = async function (income_id) {
     return request({
         method: "DELETE",
         url: `/rent/${income_id}`,
     });
 };
 
-export const deleteIncomeAttachedFile = async function (income_id, file_id) {
+export const createRentFile = async function (rent) {
     return request({
-        method: "DELETE",
-        url: `/income/${income_id}/file/${file_id}`,
+        method: "POST",
+        data: rent,
+        url: `/rent/file`,
     });
 };
+
+export const deleteRentAttachedFile = async function (file_id) {
+    return request({
+        method: "DELETE",
+        url: `/rent/file/${file_id}`,
+    });
+};
+
+export const downloadFile = async function (file_id) {
+    return request({
+        method: "GET",
+        url: `/rent/file/${file_id}`,
+    });
+};
+
 
 
 // CUSTOMER !!!

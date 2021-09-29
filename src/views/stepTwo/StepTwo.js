@@ -79,7 +79,7 @@ const StepTwo = ({ next }) => {
                         <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income.length >= 3} />
 
                         {
-                            states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="independent_income" />)
+                            states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
                         }
 
                         <hr />
@@ -91,7 +91,7 @@ const StepTwo = ({ next }) => {
                         <QuotationForm label="Dependiente" type="dependent" onDone={handleInit} disabled={states.dependent_income.length >= 3} />
 
                         {
-                            states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="dependent_income" />)
+                            states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
                         }
 
                     </>
