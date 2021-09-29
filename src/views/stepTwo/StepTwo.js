@@ -14,11 +14,11 @@ import QuotationForm from 'components/quotationForm/QuotationForm';
 import AttachFileComponent from 'components/attachFileComponent/AttachFileComponent';
 import Spinner from 'app/common/Spinner';
 
-import { getRent } from 'services/quotation';
+import { getRent, updateCustomerType } from 'services/quotation';
 
 const StepTwo = ({ next }) => {
 
-    const [type, setType] = React.useState('2');
+    const [type, setType] = React.useState('ambos');
     const [loading, setLoading] = React.useState(true);
 
     const [states, setState] = React.useState({
@@ -26,15 +26,30 @@ const StepTwo = ({ next }) => {
         dependent_income: [],
     })
 
+    const handleUpdateType = async (_value) => {
+        try {
+            const _temp = type;
+            setType(_value);
+            const res = await updateCustomerType({
+                activity_type: _value
+            })
+            if (res.status !== 200) setType(_temp);
+        } catch (error) {
+            console.error('handleUpdateType ERROR: ', error);
+        }
+
+    }
+
     const handleInit = async () => {
         try {
             const { data } = await getRent();
 
-            if (data.result.independent_income && data.result.dependent_income) setType('2')
-            else if (!data.result.independent_income && data.result.dependent_income) setType('1')
-            else if (data.result.independent_income && !data.result.dependent_income) setType('0')
+            if (data.result.independent_income && data.result.dependent_income) setType('ambos')
+            else if (!data.result.independent_income && data.result.dependent_income) setType('dependiente')
+            else if (data.result.independent_income && !data.result.dependent_income) setType('independiente')
 
             setState(data.result)
+            setType(data.result.activity_type);
             setLoading(false)
         } catch (error) {
             console.error('Error: ', error);
@@ -51,17 +66,17 @@ const StepTwo = ({ next }) => {
 
                 <CFormGroup className="mb-3 text-left">
                     <label>¿Eres dependiente o independiente?</label>
-                    <CSelect size="lg" value={type} onChange={({ target: { value } }) => setType(value)}>
-                        <option value="0">Independiente</option>
-                        <option value="1">Dependiente</option>
-                        <option value="2">Ambos</option>
+                    <CSelect size="lg" value={type} onChange={({ target: { value } }) => handleUpdateType(value)}>
+                        <option value="independiente">Independiente</option>
+                        <option value="dependiente">Dependiente</option>
+                        <option value="ambos">Ambos</option>
                     </CSelect>
                 </CFormGroup>
 
                 <p className="text-left"> Cuéntanos de tus ingresos líquidos en los últimos 3 meses </p>
                 {
-                    type !== '1' && <>
-                        <QuotationForm label="Independiente" />
+                    type !== 'dependiente' && <>
+                        <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income.length >= 3} />
 
                         {
                             states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="independent_income" />)
@@ -72,8 +87,8 @@ const StepTwo = ({ next }) => {
                 }
 
                 {
-                    type !== '0' && <>
-                        <QuotationForm label="Dependiente" />
+                    type !== 'independiente' && <>
+                        <QuotationForm label="Dependiente" type="dependent" onDone={handleInit} disabled={states.dependent_income.length >= 3} />
 
                         {
                             states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="dependent_income" />)

@@ -15,10 +15,18 @@ export const getRent = async function () {
     });
 };
 
+export const createRent = async function (rent) {
+    return request({
+        method: "POST",
+        data: rent,
+        url: `/rent`,
+    });
+};
+
 export const deleteIncome = async function (income_id) {
     return request({
         method: "DELETE",
-        url: `/income/${income_id}`,
+        url: `/rent/${income_id}`,
     });
 };
 
@@ -45,3 +53,12 @@ export const updateCustomer = async function (user) {
         url: `/customer`,
     });
 };
+
+export const updateCustomerType = async function (user) {
+    return request({
+        method: "PATCH",
+        data: user,
+        url: `/customer/updateactivitytype`,
+    });
+};
+
