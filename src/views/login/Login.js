@@ -16,6 +16,7 @@ import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent
 
 import ImgFondo from "../../assets/img/bg-1.png";
 import { login } from "../../services/login";
+import { useNotification } from "context/hooks";
 
 
 var styles = {
@@ -25,6 +26,7 @@ var styles = {
 
 const Login = (props) => {
   const [visible, setVisible] = useState(true);
+  const [, setNotification] = useNotification()
   const menu = [
     {
       name: 'Registros',
@@ -49,9 +51,8 @@ const Login = (props) => {
           if (response.status === 200) {
             setUserLogged(user.email, response.data.result.access_token);
           } else {
-            if (response.status === 404) {
-              setVisible(true);
-            }
+            setNotification({ type: 'warning', message: response.data.message })
+            setVisible(true);
           }
         },
         (error) => {
@@ -64,8 +65,8 @@ const Login = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'jchbarreto@gmail.com',
-      password: 'asdfasdf',
+      email: '',
+      password: '',
     },
     validate: validate(schema),
     onSubmit: onSubmit,

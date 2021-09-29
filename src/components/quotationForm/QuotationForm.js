@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { useFormik } from "formik";
 import moment from 'moment'
 import {
@@ -13,17 +14,31 @@ import {
 import CIcon from "@coreui/icons-react";
 
 import { validateSchema } from './quotarionSchema';
+import { createRent } from 'services/quotation';
+import Spinner from 'app/common/Spinner';
 
-const QuotationForm = ({ label }) => {
+const QuotationForm = ({ label, type, onDone, disabled }) => {
+    const [loading, setLoading] = React.useState(false);
 
-    const onSubmit = (data) => {
-        console.log('a enviar : ', data);
+    const onSubmit = async (data) => {
+        try {
+            setLoading(true)
+            const response = await createRent(data);
+            setLoading(false)
+            if (response.status === 200 && onDone) {
+                formik.resetForm();
+                onDone()
+            };
+        } catch (error) {
+            console.error('QuotationForm Error: ', error);
+        }
     }
 
     const formik = useFormik({
         initialValues: {
-            periodo: '',
-            amount: '',
+            activity_type: type,
+            date: '',
+            total: '',
         },
         validate: validateSchema,
         onSubmit: onSubmit,
@@ -33,6 +48,7 @@ const QuotationForm = ({ label }) => {
 
     const handleCreateMonth = () => {
         const _currentDate = moment();
+        _currentDate.set('date', 1)
         const options = [];
         for (let index = 6; index > 0; index--) {
             const monthName = _currentDate.format('MMMM YYYY');
@@ -52,9 +68,10 @@ const QuotationForm = ({ label }) => {
                             size="lg"
                             md={4}
                             sx={6}
+                            disabled={disabled}
                             onChange={handleChange}
-                            value={formik.values.periodo}
-                            name="periodo"
+                            value={formik.values.date}
+                            name="date"
                             className="px-1">
                             <option disabled value="">Periodo</option>
                             {
@@ -67,8 +84,9 @@ const QuotationForm = ({ label }) => {
                             size="lg"
                             md={4}
                             sx={6}
-                            value={formik.values.amount}
-                            name="amount"
+                            disabled={disabled}
+                            value={formik.values.total}
+                            name="total"
                             placeholder="2.000.000"
                             onChange={handleChange}
                         />
@@ -78,16 +96,30 @@ const QuotationForm = ({ label }) => {
                         md={4}
                         className="pt-3 pt-md-0"
                     >
-                        <CButton disabled={formik.values.periodo.trim() === '' || formik.values.amount.trim() === ''} onClick={() => console.log('cliked')} color="light" size="lg" className="d-inline-flex align-items-center w-100 justify-content-center">
-                            <CIcon name="cil-plus" />
-                            Agregar
-                        </CButton>
+                        {
+                            loading ? <Spinner /> : <CButton type="submit" disabled={formik.values.date.trim() === '' || formik.values.total.trim() === '' || disabled} color="light" size="lg" className="d-inline-flex align-items-center w-100 justify-content-center">
+                                <CIcon name="cil-plus" />
+                                Agregar
+                            </CButton>
+                        }
+
                     </CCol>
                 </CRow>
 
             </CFormGroup>
         </CForm>
     )
+}
+
+QuotationForm.defaultProps = {
+    disabled: false,
+    onDone: () => null
+}
+QuotationForm.propTypes = {
+    label: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
+    onDone: PropTypes.func
 }
 
 export default QuotationForm

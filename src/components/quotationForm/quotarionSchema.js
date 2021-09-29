@@ -3,8 +3,8 @@ import { validate } from 'utils';
 
 export const stepOnechema = () => {
     return Yup.object().shape({
-        periodo: Yup.string().required("El mes es requerido"),
-        amount: Yup.string().required("El monto es requerido")
+        date: Yup.string().required("El mes es requerido"),
+        total: Yup.string().required("El monto es requerido")
     })
 }
 
