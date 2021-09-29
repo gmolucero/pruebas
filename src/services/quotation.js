@@ -45,37 +45,3 @@ export const deleteRentAttachedFile = async function (file_id) {
         url: `/rent/file/${file_id}`,
     });
 };
-
-export const downloadFile = async function (file_id) {
-    return request({
-        method: "GET",
-        url: `/rent/file/${file_id}`,
-    });
-};
-
-
-
-// CUSTOMER !!!
-export const getCustomer = async function () {
-    return request({
-        method: "GET",
-        url: `/customer`,
-    });
-};
-
-export const updateCustomer = async function (user) {
-    return request({
-        method: "PATCH",
-        data: user,
-        url: `/customer`,
-    });
-};
-
-export const updateCustomerType = async function (user) {
-    return request({
-        method: "PATCH",
-        data: user,
-        url: `/customer/updateactivitytype`,
-    });
-};
-

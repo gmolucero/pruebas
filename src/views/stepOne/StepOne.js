@@ -12,7 +12,7 @@ import StepOneFormComponent from 'components/stepOneFormComponent/StepOneFormCom
 
 import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
 
-import { updateCustomer, getCustomer } from 'services/quotation';
+import { updateCustomer, getCustomer } from 'services/customer';
 
 import Spinner from 'app/common/Spinner';
 

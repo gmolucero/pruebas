@@ -52,7 +52,6 @@ const AttachFileComponent = ({ income, onDone }) => {
             setLoading(true)
             const response = await deleteRent(income.id)
             setLoading(false)
-            console.log("eliminando registro", response.data);
         } catch (error) {
             console.error('Error: ', error);
         }

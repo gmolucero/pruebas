@@ -14,7 +14,8 @@ import QuotationForm from 'components/quotationForm/QuotationForm';
 import AttachFileComponent from 'components/attachFileComponent/AttachFileComponent';
 import Spinner from 'app/common/Spinner';
 
-import { getRent, updateCustomerType } from 'services/quotation';
+import { getRent } from 'services/quotation';
+import { updateCustomerType } from 'services/customer';
 
 const StepTwo = ({ next }) => {
 
