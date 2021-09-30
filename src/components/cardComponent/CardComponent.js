@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     CCard,
-    CContainer,
     CCol,
     CRow,
     CButton,
@@ -12,21 +11,19 @@ import CIcon from "@coreui/icons-react";
 
 const CardComponent = ({ title, btnText, text, iconName, iconClassName, btnOnClick, children }) => {
     return (
-        <CContainer className="pt-5">
-            <CRow className="justify-content-center">
-                <CCol md={8}>
-                    <CCard className="text-center py-3">
-                        <CCardBody className="px-3 px-md-5">
-                            <CIcon className={`${iconClassName} mb-4`} name={iconName} style={{ width: "155px", height: "155px" }} />
-                            <h1 className="text-primary">{title}</h1>
-                            <p className="px-4 f-24 mb-4">{text}</p>
-                            {children}
-                            <CButton size="lg" onClick={btnOnClick} className="btn-secondary px-4">{btnText}</CButton>
-                        </CCardBody>
-                    </CCard>
-                </CCol>
-            </CRow>
-        </CContainer>
+        <CRow className="justify-content-center">
+            <CCol md={12}>
+                <CCard className="text-center py-3 mb-0">
+                    <CCardBody className="px-3 px-md-5">
+                        <CIcon className={`${iconClassName} mb-4`} name={iconName} style={{ width: "155px", height: "155px" }} />
+                        <h1 className="text-primary">{title}</h1>
+                        <p className="px-4 f-24 mb-4">{text}</p>
+                        {children}
+                        <CButton size="lg" onClick={btnOnClick} className="btn-secondary px-4">{btnText}</CButton>
+                    </CCardBody>
+                </CCard>
+            </CCol>
+        </CRow>
     )
 }
 

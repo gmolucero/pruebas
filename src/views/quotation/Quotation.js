@@ -39,8 +39,8 @@ const Quotation = (props) => {
     return (
         <TheQuotationLayout {...stepsContent[step - 1]} >
             {step === 1 && <StepOne next={() => setStep(2)} />}
-            {step === 2 && <StepTwo next={() => setStep(3)} />}
-            {step === 3 && <StepThree />}
+            {step === 2 && <StepTwo next={() => setStep(3)} prev={stepsContent[step - 1].backFun} />}
+            {step === 3 && <StepThree history={props.history} prev={stepsContent[step - 1].backFun} />}
         </TheQuotationLayout>
     )
 }

@@ -39,6 +39,14 @@ export const createRentFile = async function (rent) {
     });
 };
 
+export const createSolicitude = async function (data) {
+    return request({
+        method: "POST",
+        data: data,
+        url: `/debt`,
+    });
+};
+
 export const deleteRentAttachedFile = async function (file_id) {
     return request({
         method: "DELETE",
