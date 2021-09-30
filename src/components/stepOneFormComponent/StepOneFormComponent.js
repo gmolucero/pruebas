@@ -9,6 +9,8 @@ import {
     CSelect,
     CInvalidFeedback,
     CFormGroup,
+    CRow,
+    CCol
 } from "@coreui/react";
 
 import DateComponent from 'components/dateComponent/DateComponent';
@@ -133,10 +135,13 @@ const StepOneFormComponent = ({ formik, onChange }) => {
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.occupation && !!formik.errors.occupation)}>{formik.errors.occupation}</CInvalidFeedback>
             </CFormGroup>
 
-            <CButton type="submit" color="secondary" size="lg" className="btn-login d-inline px-4" >
-                continuar
-            </CButton>
-
+            <CRow>
+                <CCol xs="12" sm="5" className="text-left pt-2">
+                    <CButton type="submit" color="secondary" size="lg" className="btn-login d-inline px-4 w-100" >
+                        Continuar
+                    </CButton>
+                </CCol>
+            </CRow>
         </CForm>
     )
 }
