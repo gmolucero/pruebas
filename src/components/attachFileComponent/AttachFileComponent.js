@@ -102,13 +102,13 @@ const AttachFileComponent = ({ income, onDone }) => {
             </CRow>
             <CRow>
                 {
-                    income.files && income.files.lenght > 0 && <CCol xs={12} className="text-left mt-2">
+                    income.files && income.files.length > 0 && <CCol xs={12} className="text-md-left mt-2">
                         <label className="bold mb-0">Archivos adjuntos</label>
                     </CCol>
                 }
                 {
                     income.files && income.files.map((_file) => (
-                        <CCol key={_file.id} xs={12} className="text-left d-inline-flex align-items-center">
+                        <CCol key={_file.id} xs={12} className="justify-content-center justify-content-md-start d-inline-flex align-items-center">
                             <CLink to="#" className="bold text-light d-inline-flex align-items-center">
                                 <CIcon name="cil-file" className="mr-2" />
                                 {_file.original_name}
