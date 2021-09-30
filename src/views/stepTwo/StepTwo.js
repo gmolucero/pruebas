@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useFormik } from "formik";
 
 import {
     CCol,
@@ -14,9 +13,10 @@ import QuotationForm from 'components/quotationForm/QuotationForm';
 import AttachFileComponent from 'components/attachFileComponent/AttachFileComponent';
 import Spinner from 'app/common/Spinner';
 
-import { getRent, updateCustomerType } from 'services/quotation';
+import { getRent } from 'services/quotation';
+import { updateCustomerType } from 'services/customer';
 
-const StepTwo = ({ next }) => {
+const StepTwo = ({ next, prev }) => {
 
     const [type, setType] = React.useState('ambos');
     const [loading, setLoading] = React.useState(true);
@@ -79,7 +79,7 @@ const StepTwo = ({ next }) => {
                         <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income.length >= 3} />
 
                         {
-                            states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="independent_income" />)
+                            states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
                         }
 
                         <hr />
@@ -91,23 +91,39 @@ const StepTwo = ({ next }) => {
                         <QuotationForm label="Dependiente" type="dependent" onDone={handleInit} disabled={states.dependent_income.length >= 3} />
 
                         {
-                            states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} amountField="dependent_income" />)
+                            states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
                         }
 
                     </>
                 }
 
-                <CButton onClick={next} color="secondary" size="lg" className="btn-login d-inline px-4 mt-5" >
-                    continuar
-                </CButton>
+                <CRow className="justify-content-center">
+                    <CCol xs="12" sm="6" xl="5" className="pt-3">
+                        <CButton onClick={prev} color="secondary" size="lg" variant="outline" className="px-4 w-100" >
+                            Volver
+                        </CButton>
+                    </CCol>
+                    <CCol xs="12" sm="6" xl="5" className="pt-3">
+                        <CButton onClick={next} color="secondary" size="lg" className="btn-login px-4 w-100" >
+                            continuar
+                        </CButton>
+                    </CCol>
+                </CRow>
 
             </CCol>}
         </CRow>
     )
 }
 
-StepTwo.propTypes = {
-
+StepTwo.defaultProps = {
+    next: () => null,
+    prev: () => null
 }
+
+StepTwo.propTypes = {
+    next: PropTypes.func,
+    prev: PropTypes.func
+}
+
 
 export default StepTwo

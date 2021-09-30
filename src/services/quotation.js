@@ -8,6 +8,7 @@ export const updateQuotation = async function (user) {
     });
 };
 
+// Rent !!!
 export const getRent = async function () {
     return request({
         method: "GET",
@@ -23,42 +24,32 @@ export const createRent = async function (rent) {
     });
 };
 
-export const deleteIncome = async function (income_id) {
+export const deleteRent = async function (income_id) {
     return request({
         method: "DELETE",
         url: `/rent/${income_id}`,
     });
 };
 
-export const deleteIncomeAttachedFile = async function (income_id, file_id) {
+export const createRentFile = async function (rent) {
+    return request({
+        method: "POST",
+        data: rent,
+        url: `/rent/file`,
+    });
+};
+
+export const createSolicitude = async function (data) {
+    return request({
+        method: "POST",
+        data: data,
+        url: `/debt`,
+    });
+};
+
+export const deleteRentAttachedFile = async function (file_id) {
     return request({
         method: "DELETE",
-        url: `/income/${income_id}/file/${file_id}`,
+        url: `/rent/file/${file_id}`,
     });
 };
-
-
-// CUSTOMER !!!
-export const getCustomer = async function () {
-    return request({
-        method: "GET",
-        url: `/customer`,
-    });
-};
-
-export const updateCustomer = async function (user) {
-    return request({
-        method: "PATCH",
-        data: user,
-        url: `/customer`,
-    });
-};
-
-export const updateCustomerType = async function (user) {
-    return request({
-        method: "PATCH",
-        data: user,
-        url: `/customer/updateactivitytype`,
-    });
-};
-

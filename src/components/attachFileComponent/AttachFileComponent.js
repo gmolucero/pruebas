@@ -9,8 +9,9 @@ import CIcon from "@coreui/icons-react";
 
 import { useLoading } from 'context/hooks';
 
-import { deleteIncome, deleteIncomeAttachedFile } from 'services/quotation';
+import { deleteRent, deleteRentAttachedFile, createRentFile } from 'services/quotation';
 import Modal from 'components/modalComponent/ModalComponent';
+import Spinner from 'app/common/Spinner';
 
 import moment from 'moment';
 moment.locale('es', {
@@ -22,10 +23,10 @@ moment.locale('es', {
 }
 );
 
-const AttachFileComponent = ({ income, amountField }) => {
-
+const AttachFileComponent = ({ income, onDone }) => {
     const formated = moment(income.period).locale('es').format('MMMM YYYY');
     const [, setLoading] = useLoading();
+    const [loadingBtn, setLoadingBtn] = React.useState(false);
 
     const inputRef = React.useRef(null);
     const [deleteRowModal, setDeleteRowModal] = React.useState(false);
@@ -38,7 +39,8 @@ const AttachFileComponent = ({ income, amountField }) => {
     const handleDeleteAttach = async (fileId) => {
         try {
             setLoading(true)
-            const response = await deleteIncomeAttachedFile(income.id, fileId)
+            const response = await deleteRentAttachedFile(fileId)
+            if (response.status === 200) onDone();
             setLoading(false)
         } catch (error) {
             console.log('Error: ', error);
@@ -48,12 +50,27 @@ const AttachFileComponent = ({ income, amountField }) => {
     const handleDeleteRegister = async () => {
         try {
             setLoading(true)
-            const response = await deleteIncome(income.id)
+            const response = await deleteRent(income.id)
             setLoading(false)
-            console.log("eliminando registro", response.data);
         } catch (error) {
-            console.log('Error: ', error);
+            console.error('Error: ', error);
         }
+    }
+
+    const handleUploadFile = async ({ target }) => {
+        try {
+            setLoadingBtn(true)
+            const _form = new FormData();
+            _form.append('rent_id', income.id);
+            _form.append('file', target.files[0]);
+            const response = await createRentFile(_form)
+            if (response.status === 200) onDone();
+            setLoadingBtn(false)
+        } catch (error) {
+            console.error('Error: ', error);
+            setLoadingBtn(false)
+        }
+
     }
 
     return (
@@ -65,16 +82,18 @@ const AttachFileComponent = ({ income, amountField }) => {
                     <CIcon name="cil-x" className="pointer" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
                 <CCol xs={12} md={5} className="py-3 py-md-0">
-                    <input type="file" className="d-none" ref={inputRef} onChange={() => console.log('archivo cambiando')} />
+                    <input type="file" className="d-none" ref={inputRef} onChange={handleUploadFile} />
 
-                    <CButton
-                        onClick={() => inputRef.current.click()}
-                        color="light"
-                        variant="outline"
-                        className="d-inline-flex align-items-center w-100 justify-content-center">
-                        <CIcon name="cil-paperclip" className="mr-1" />
-                        Adjuntar <span className="d-md-none d-xl-inline pl-1"> archivos</span>
-                    </CButton>
+                    {
+                        loadingBtn ? <Spinner /> : <CButton
+                            onClick={() => inputRef.current.click()}
+                            color="light"
+                            variant="outline"
+                            className="d-inline-flex align-items-center w-100 justify-content-center">
+                            <CIcon name="cil-paperclip" className="mr-1" />
+                            Adjuntar <span className="d-md-none d-xl-inline pl-1"> archivos</span>
+                        </CButton>
+                    }
 
                 </CCol>
                 <CCol className="text-right d-none d-md-inline" md={1}>
@@ -83,13 +102,13 @@ const AttachFileComponent = ({ income, amountField }) => {
             </CRow>
             <CRow>
                 {
-                    income.files && income.files.lenght > 0 && <CCol xs={12} className="text-left mt-2">
+                    income.files && income.files.length > 0 && <CCol xs={12} className="text-md-left mt-2">
                         <label className="bold mb-0">Archivos adjuntos</label>
                     </CCol>
                 }
                 {
                     income.files && income.files.map((_file) => (
-                        <CCol key={_file.id} xs={12} className="text-left d-inline-flex align-items-center">
+                        <CCol key={_file.id} xs={12} className="justify-content-center justify-content-md-start d-inline-flex align-items-center">
                             <CLink to="#" className="bold text-light d-inline-flex align-items-center">
                                 <CIcon name="cil-file" className="mr-2" />
                                 {_file.original_name}
