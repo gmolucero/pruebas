@@ -9,5 +9,10 @@ export const stepOnechema = () => {
         commune: Yup.string().required("La comuna es requerida"),
         education_level: Yup.string().required("El nivel de estudio es requerido"),
         occupation: Yup.string().required("La ocupación es requerida"),
+        other_occupation: Yup.string().when("occupation", {
+            is: 'Otro',
+            then: Yup.string().required("Su ocupación es requerida")
+        })
     })
 }
+

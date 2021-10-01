@@ -78,7 +78,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev }) => {
                 <CSelect size="lg" onChange={onChange} name="credit_start" value={formik.values.credit_start}>
                     <option disabled value="">Fecha pago primero cuota</option>
                     {
-                        [].map((_credit_start) => (<option key={_credit_start.id} value={_credit_start.id}>{_credit_start.credit_start}</option>))
+                        [30, 60, 90, 120].map((_credit_start) => (<option key={_credit_start} value={_credit_start}>{_credit_start}</option>))
                     }
                 </CSelect>
                 <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.credit_start)}>{formik.errors.credit_start}</CInvalidFeedback>
