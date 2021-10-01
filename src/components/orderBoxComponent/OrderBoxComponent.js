@@ -9,27 +9,39 @@ import {
 import CIcon from "@coreui/icons-react";
 
 
-const OrderBoxComponent = ({ fee, img, amount, rate, feeNumber, executive }) => {
+const OrderBoxComponent = ({
+    id,
+    enhanced_quota_value,
+    bank,
+    requested_amount,
+    interest,
+    quotas_offered,
+    executive,
+}) => {
     return (
         <CCard>
             <CCardBody className="text-center p-3 p-md-4">
                 <div className="d-block px-4 mb-5">
-                    <img src={img} alt="" className="d-block mb-4 w-100" />
+                    <img src={bank.img} alt="" className="d-block mb-4 w-100" />
                 </div>
-                <h2 className="bold text-primary">{fee}</h2>
+                <h2 className="bold text-primary">$ {enhanced_quota_value}</h2>
                 <p>valor cuota</p>
 
-                <p className="bold mb-1"><CIcon className="mr-1" name="cil-user" /> {executive.name}</p>
-                <p className="bold mb-1"><CIcon className="mr-1" name="cil-envelope-closed" /> {executive.email}</p>
-                <p className="bold mb-3"><CIcon className="mr-1" name="cil-phone" /> {executive.phone}</p>
+                {
+                    executive && executive.name !== '' && <>
+                        <p className="bold mb-1"><CIcon className="mr-1" name="cil-user" /> {executive.name}</p>
+                        <p className="bold mb-1"><CIcon className="mr-1" name="cil-envelope-closed" /> {executive.email}</p>
+                        <p className="bold mb-3"><CIcon className="mr-1" name="cil-phone" /> {executive.phone}</p>
+                    </>
+                }
 
-                <p className="mb-2">Monto solicitado: {amount}</p>
-                <p className="mb-2">Tasa de interés: {rate}</p>
-                <p className="mb-4">N° de cuotas: {feeNumber}</p>
+                <p className="mb-2">Monto solicitado: {requested_amount}</p>
+                <p className="mb-2">Tasa de interés: {interest} %</p>
+                <p className="mb-4">N° de cuotas: {quotas_offered}</p>
 
                 <div className="d-flex flex-column">
                     <CButton color="secondary" className="mb-3 bold" size="lg">Aceptar</CButton>
-                    <CButton color="secondary" variant="outline" className="bold" size="lg">Ver detalles</CButton>
+                    <CButton to={`/detalle/${id}`} color="secondary" variant="outline" className="bold" size="lg">Ver detalles</CButton>
                 </div>
 
 
@@ -39,20 +51,29 @@ const OrderBoxComponent = ({ fee, img, amount, rate, feeNumber, executive }) => 
 }
 
 OrderBoxComponent.defaultProps = {
-    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Banco_Santander_Logotipo.svg/2560px-Banco_Santander_Logotipo.svg.png',
-    fee: '$ 130.000',
+    img: '',
+    enhanced_quota_value: 0,
     executive: {
-        name: 'juan flores',
-        email: 'juan@santander.cl',
-        phone: '+56933541456'
+        name: '',
+        email: '',
+        phone: ''
     },
-    amount: '$10.000.000',
-    rate: '1,75%',
-    feeNumber: '24'
+    requested_amount: '',
+    interest: '',
+    quotas_offered: 0
 }
 
 OrderBoxComponent.propTypes = {
-
+    img: PropTypes.string,
+    enhanced_quota_value: PropTypes.number,
+    executive: PropTypes.shape({
+        name: PropTypes.string,
+        email: PropTypes.string,
+        phone: PropTypes.string
+    }),
+    requested_amount: PropTypes.string,
+    interest: PropTypes.string,
+    quotas_offered: PropTypes.number
 }
 
 export default OrderBoxComponent

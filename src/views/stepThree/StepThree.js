@@ -44,7 +44,7 @@ const StepThree = ({ prev, history }) => {
     const onSubmit = async (data) => {
         try {
             const response = await createSolicitude(data);
-            if (response.status >= 400) {
+            if (response.status >= 4000) {
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,
@@ -54,7 +54,7 @@ const StepThree = ({ prev, history }) => {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
                     text: response.data.message,
-                    btnOnClick: () => history.push('/orders')
+                    btnOnClick: () => history.push('/resumen')
                 })
             }
         } catch (error) {
@@ -64,10 +64,10 @@ const StepThree = ({ prev, history }) => {
 
     const formik = useFormik({
         initialValues: {
-            reason: "test",
-            requested_amount: "1000000",
-            number_quotas: "36",
-            credit_start: "2021-10-04"
+            reason: "",
+            requested_amount: "",
+            number_quotas: "",
+            credit_start: "32423423"
         },
         validate: validate(schema),
         onSubmit: onSubmit,

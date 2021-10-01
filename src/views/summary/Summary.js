@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { getSolicitudes } from 'services/quotation';
+
 import {
     CContainer,
     CCol,
@@ -13,12 +15,13 @@ import CIcon from "@coreui/icons-react";
 
 import StatusBadgeComponent from 'components/statusBadgeComponent/StatusBadgeComponent'
 import Pagination from 'components/paginationComponent/PaginationComponent'
+import Spinner from 'app/common/Spinner';
 
 const fields = [
-    { key: 'date', label: "Fecha" },
+    { key: 'inicio_credito', label: "Fecha" },
     { key: 'type', label: "TIPO DE CRÉDITO" },
-    { key: 'amount', label: "Monto" },
-    { key: 'status', label: "Estado" },
+    { key: 'principal', label: "Monto" },
+    { key: 'estatus', label: "Estado" },
     { key: 'actions', label: "Acciones" },
     { key: 'offers', label: "" },
 ]
@@ -26,16 +29,25 @@ const fields = [
 
 const Summary = props => {
 
-    const [paginationConfig] = React.useState(null)
+    const [loading, setLoading] = React.useState(true)
+    const [list, setList] = React.useState([]);
 
-    const list = [
-        { id: 1, date: "14/09/2021", type: "Crédito de consumo", amount: "$10.000.000", status: 'warning' },
-        { id: 2, date: "14/09/2021", type: "Crédito de consumo", amount: "$10.000.000", status: 'info' },
-        { id: 3, date: "14/09/2021", type: "Crédito de consumo", amount: "$10.000.000", status: 'warning' },
-        { id: 4, date: "14/09/2021", type: "Crédito de consumo", amount: "$10.000.000", status: 'success' },
-    ]
+    const handleInit = async () => {
+        try {
+            const response = await getSolicitudes();
+            setList(response.data.result)
+            setLoading(false)
+            console.log('response ', response.data);
+        } catch (error) {
+            console.error("Summary error: ", error);
+        }
+    }
 
-    const handlePagination = (page) => { console.log('pagina', page); }
+    React.useEffect(() => {
+        handleInit();
+    }, [])
+
+    // const handlePagination = (page) => { console.log('pagina', page); }
 
     return (
         <CContainer className="pt-5">
@@ -47,45 +59,49 @@ const Summary = props => {
             <CRow>
                 <CCol md={12}>
                     <CCard className="p-3 p-md-4">
-                        <CDataTable
-                            items={list}
-                            fields={fields}
-                            sorter
-                            scopedSlots={{
-                                'amount':
-                                    (item) => (<td className="bold"> {item.amount} </td>),
-                                'status':
-                                    (item) => (<td> <StatusBadgeComponent status={item.status} /> </td>),
-                                'offers':
-                                    (item) => (<td>  <a href="#/" className="link"> <CIcon name="cil-dollar" /> Ver ofertas</a> </td>),
-                                'actions':
-                                    (item, index) => {
-                                        return (
-                                            <td className="py-2">
-                                                <CButton
-                                                    variant="outline"
-                                                    shape="square"
-                                                    size="sm"
-                                                >
-                                                    <CIcon name="cil-pencil" className="text-primary" />
-                                                </CButton>
-                                                <CButton
-                                                    variant="outline"
-                                                    shape="square"
-                                                    size="sm"
-                                                    className="ml-1"
-                                                >
-                                                    <CIcon name="cil-trash" className="text-primary" />
-                                                </CButton>
-                                            </td>
-                                        )
-                                    },
-                            }}
-                        />
+                        {
+
+                            loading ? <Spinner /> : <CDataTable
+                                items={list}
+                                fields={fields}
+                                sorter
+                                scopedSlots={{
+                                    'principal':
+                                        (item) => (<td className="bold"> ${item.principal} </td>),
+                                    'status':
+                                        (item) => (<td> <StatusBadgeComponent status={item.status} /> </td>),
+                                    'offers':
+                                        (item) => (<td> {
+                                            item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver ofertas</a>
+                                        }   </td>),
+                                    'actions':
+                                        (item, index) => {
+                                            return (
+                                                <td className="py-2">
+                                                    <CButton
+                                                        variant="outline"
+                                                        shape="square"
+                                                        size="sm"
+                                                    >
+                                                        <CIcon name="cil-pencil" className="text-primary" />
+                                                    </CButton>
+                                                    <CButton
+                                                        variant="outline"
+                                                        shape="square"
+                                                        size="sm"
+                                                        className="ml-1"
+                                                    >
+                                                        <CIcon name="cil-trash" className="text-primary" />
+                                                    </CButton>
+                                                </td>
+                                            )
+                                        },
+                                }}
+                            />}
                     </CCard>
 
                     {
-                        paginationConfig && paginationConfig.pages > 1 && <Pagination {...paginationConfig} onActivePageChange={handlePagination} />
+                        // paginationConfig && paginationConfig.pages > 1 && <Pagination {...paginationConfig} onActivePageChange={handlePagination} />
                     }
                 </CCol>
             </CRow>
