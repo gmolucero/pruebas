@@ -68,12 +68,12 @@ const SignupFormComponent = ({ formik, onChange }) => {
             <CFormGroup className="mb-3">
                 <CInput
                     placeholder="teléfono"
-                    value={formik.values.cellphone}
-                    invalid={formik.touched.cellphone && !!formik.errors.cellphone}
+                    value={formik.values.phone}
+                    invalid={formik.touched.phone && !!formik.errors.phone}
                     onChange={onChange}
-                    name="cellphone"
+                    name="phone"
                 />
-                <CInvalidFeedback invalid={getValidationResult(formik.touched.cellphone && !!formik.errors.cellphone)}>{formik.errors.cellphone}</CInvalidFeedback>
+                <CInvalidFeedback invalid={getValidationResult(formik.touched.phone && !!formik.errors.phone)}>{formik.errors.phone}</CInvalidFeedback>
             </CFormGroup>
 
             <CFormGroup className="mb-3">

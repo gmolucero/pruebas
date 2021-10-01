@@ -41,9 +41,9 @@ const OrderDetails = props => {
                 const listRight = [
                     { name: "Valor cuota", value: `$${result.enhanced_quota_value}` },
                     { name: "Tasa de interés", value: `${result.interest}%` },
-                    { name: "Costo total", value: "" },
-                    { name: "Periodo de gracia", value: "" },
-                    { name: "Plazo total", value: "" }
+                    { name: "Costo total", value: result.requested_amount },
+                    { name: "Periodo de gracia", value: `${result.grace_period || 0} meses` },
+                    { name: "Plazo total", value: `${result.total_term || 0} meses` }
                 ]
 
                 setData({
@@ -128,11 +128,14 @@ const OrderDetails = props => {
                                                 </CCol>
                                             </CRow>
 
-                                            <div className="d-block text-center mt-4">
-                                                <a href="tel:5651234567" className="text-secondary justify-content-center d-flex align-items-center" style={{ fontSize: '18px' }}>
-                                                    <CIcon name="cil-phone" className="mr-1" /> Contactar ejecutivo(a)
-                                                </a>
-                                            </div>
+                                            {
+                                                data.client_accepts === 1 &&
+                                                <div className="d-block text-center mt-4">
+                                                    <a href={`tel:${data.executive.phone}`} className="text-secondary justify-content-center d-flex align-items-center" style={{ fontSize: '18px' }}>
+                                                        <CIcon name="cil-phone" className="mr-1" /> Contactar ejecutivo(a)
+                                                    </a>
+                                                </div>
+                                            }
                                         </CCardBody>
                                     </CCard>
                                 </CCol>

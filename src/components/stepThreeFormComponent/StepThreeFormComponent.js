@@ -42,7 +42,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev }) => {
                     reason.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="reason" value={formik.values.reason}>
                         <option disabled value="">Motivo del crédito</option>
                         {
-                            reason.map((_reason) => (<option key={_reason.id} value={_reason.nombre}>{_reason.nombre}</option>))
+                            reason.map((_reason) => (<option key={_reason.id} value={_reason.id}>{_reason.nombre}</option>))
                         }
                     </CSelect>
                 }

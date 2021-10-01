@@ -16,6 +16,8 @@ import { signupSchema as schema } from 'components/signupFormComponent/signupSch
 import PublicLayout from 'containers/ThePublicLayout.js';
 import SignupFormComponent from 'components/signupFormComponent/SignupFormComponent';
 
+import { useNotification } from 'context/hooks';
+
 import ImgFondo from "../../assets/img/bg-1.png";
 
 var styles = {
@@ -25,6 +27,7 @@ var styles = {
 
 const Singup = ({ history }) => {
   const [visible, setVisible] = useState(true);
+  const [, setNotification] = useNotification();
 
   const menu = [
     {
@@ -36,8 +39,15 @@ const Singup = ({ history }) => {
   const onSubmit = async (user) => {
     try {
       setVisible(false);
-      const res = await register(user);
-      history.push("/")
+      const { status, data } = await register(user);
+      if (status > 400) {
+        setNotification({ type: 'warning', message: data.message })
+        setVisible(true)
+      }
+      else {
+        setNotification({ type: 'success', message: 'Usuario creado correctamente' })
+        history.push("/")
+      }
     } catch (error) {
       console.error('[onSubmit Error] form', error);
     }
@@ -49,7 +59,7 @@ const Singup = ({ history }) => {
       lastname: '',
       rut: '',
       email: '',
-      cellphone: '',
+      phone: '',
       password: '',
       password_confirmation: '',
       term: false
