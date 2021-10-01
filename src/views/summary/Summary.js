@@ -22,7 +22,6 @@ const fields = [
     { key: 'type', label: "TIPO DE CRÉDITO" },
     { key: 'principal', label: "Monto" },
     { key: 'estatus', label: "Estado" },
-    { key: 'actions', label: "Acciones" },
     { key: 'offers', label: "" },
 ]
 
