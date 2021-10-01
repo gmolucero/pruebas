@@ -19,7 +19,7 @@ import Spinner from 'app/common/Spinner';
 
 const fields = [
     { key: 'inicio_credito', label: "Fecha" },
-    { key: 'type', label: "TIPO DE CRÉDITO" },
+    { key: 'type', label: "Tipo de crédito" },
     { key: 'principal', label: "Monto" },
     { key: 'estatus', label: "Estado" },
     { key: 'offers', label: "" },
@@ -36,7 +36,6 @@ const Summary = props => {
             const response = await getSolicitudes();
             setList(response.data.result)
             setLoading(false)
-            console.log('response ', response.data);
         } catch (error) {
             console.error("Summary error: ", error);
         }
@@ -67,8 +66,8 @@ const Summary = props => {
                                 scopedSlots={{
                                     'principal':
                                         (item) => (<td className="bold"> ${item.principal} </td>),
-                                    'status':
-                                        (item) => (<td> <StatusBadgeComponent status={item.status} /> </td>),
+                                    'estatus':
+                                        (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':
                                         (item) => (<td> {
                                             item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver ofertas</a>

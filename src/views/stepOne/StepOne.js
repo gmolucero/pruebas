@@ -40,7 +40,13 @@ const StepOne = ({ next }) => {
         try {
             const { data } = await getCustomer();
             formik.setValues({
-                ...data.result,
+                day: data.result.day || '',
+                month: data.result.month || '',
+                year: data.result.year || '',
+                region: data.result.region || '',
+                commune: data.result.commune || '',
+                education_level: data.result.education_level || '',
+                occupation: data.result.occupation || '',
                 other_occupation: data.result.other_occupation || ''
             })
             setLoading(false)

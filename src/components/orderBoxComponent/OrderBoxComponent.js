@@ -17,6 +17,7 @@ const OrderBoxComponent = ({
     interest,
     quotas_offered,
     executive,
+    client_accepts
 }) => {
     return (
         <CCard>
@@ -28,7 +29,7 @@ const OrderBoxComponent = ({
                 <p>valor cuota</p>
 
                 {
-                    executive && executive.name !== '' && <>
+                    client_accepts === 1 && <>
                         <p className="bold mb-1"><CIcon className="mr-1" name="cil-user" /> {executive.name}</p>
                         <p className="bold mb-1"><CIcon className="mr-1" name="cil-envelope-closed" /> {executive.email}</p>
                         <p className="bold mb-3"><CIcon className="mr-1" name="cil-phone" /> {executive.phone}</p>
@@ -40,7 +41,9 @@ const OrderBoxComponent = ({
                 <p className="mb-4">N° de cuotas: {quotas_offered}</p>
 
                 <div className="d-flex flex-column">
-                    <CButton color="secondary" className="mb-3 bold" size="lg">Aceptar</CButton>
+                    {
+                        client_accepts === 0 && <CButton color="secondary" className="mb-3 bold" size="lg">Aceptar</CButton>
+                    }
                     <CButton to={`/detalle/${id}`} color="secondary" variant="outline" className="bold" size="lg">Ver detalles</CButton>
                 </div>
 
@@ -60,7 +63,8 @@ OrderBoxComponent.defaultProps = {
     },
     requested_amount: '',
     interest: '',
-    quotas_offered: 0
+    quotas_offered: 0,
+    client_accepts: 0
 }
 
 OrderBoxComponent.propTypes = {
@@ -72,8 +76,9 @@ OrderBoxComponent.propTypes = {
         phone: PropTypes.string
     }),
     requested_amount: PropTypes.string,
-    interest: PropTypes.string,
-    quotas_offered: PropTypes.number
+    interest: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    quotas_offered: PropTypes.number,
+    client_accepts: PropTypes.number
 }
 
 export default OrderBoxComponent

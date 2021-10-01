@@ -67,7 +67,7 @@ const StepThree = ({ prev, history }) => {
             reason: "",
             requested_amount: "",
             number_quotas: "",
-            credit_start: "32423423"
+            credit_start: "30"
         },
         validate: validate(schema),
         onSubmit: onSubmit,
