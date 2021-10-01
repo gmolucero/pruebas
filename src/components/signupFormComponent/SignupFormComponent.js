@@ -1,6 +1,7 @@
 
 
 import React from "react";
+import { formatRut } from '@fdograph/rut-utilities';
 import PropTypes from 'prop-types';
 import {
     CButton,
@@ -44,7 +45,7 @@ const SignupFormComponent = ({ formik, onChange }) => {
                 <CInput
                     type="text"
                     placeholder="Rut"
-                    value={formik.values.rut}
+                    value={formatRut(formik.values.rut.replace('-', ''))}
                     invalid={formik.touched.rut && !!formik.errors.rut}
                     onChange={onChange}
                     name="rut"
