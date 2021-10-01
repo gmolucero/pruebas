@@ -44,7 +44,7 @@ const StepThree = ({ prev, history }) => {
     const onSubmit = async (data) => {
         try {
             const response = await createSolicitude(data);
-            if (response.status >= 4000) {
+            if (response.status >= 400) {
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,

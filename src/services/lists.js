@@ -7,6 +7,13 @@ export const getCreditReason = function (user) {
     });
 };
 
+export const getEducationOptions = async function () {
+    return request({
+        method: "GET",
+        url: `/list/education-level`,
+    });
+};
+
 export const getProfession = function (id) {
     return request({
         method: "GET",

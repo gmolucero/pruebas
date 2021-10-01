@@ -17,7 +17,7 @@ import DateComponent from 'components/dateComponent/DateComponent';
 import { getValidationResult } from 'utils';
 import { getRegion, getComuneById } from 'services/location';
 
-import { getEducationOptions } from 'services/customer';
+import { getEducationOptions, getProfession } from 'services/lists';
 import Spinner from 'app/common/Spinner'
 
 const StepOneFormComponent = ({ formik, onChange }) => {
@@ -25,6 +25,7 @@ const StepOneFormComponent = ({ formik, onChange }) => {
     const [region, setRegion] = React.useState([]);
     const [communes, setCommunes] = React.useState([]);
     const [education, setEducation] = React.useState([]);
+    const [profession, setProfession] = React.useState([]);
     const [isMounted, setIsMounted] = React.useState(false);
 
     const handleGetRegion = async () => {
@@ -40,6 +41,14 @@ const StepOneFormComponent = ({ formik, onChange }) => {
         const resp = await getEducationOptions();
         try {
             setEducation(resp.data.result)
+        } catch (error) {
+            console.log('ERROR: ', error);
+        }
+    }
+    const handleGetProfession = async () => {
+        const resp = await getProfession();
+        try {
+            setProfession(resp.data.result)
         } catch (error) {
             console.log('ERROR: ', error);
         }
@@ -65,6 +74,7 @@ const StepOneFormComponent = ({ formik, onChange }) => {
 
     React.useEffect(() => {
         handleGetEducation();
+        handleGetProfession();
         handleGetRegion();
         setIsMounted(true)
     }, [])
@@ -124,16 +134,29 @@ const StepOneFormComponent = ({ formik, onChange }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
-                <CInput
-                    size="lg"
-                    placeholder="A que te dedicas"
-                    value={formik.values.occupation}
-                    invalid={formik.touched.occupation && !!formik.errors.occupation}
-                    onChange={onChange}
-                    name="occupation"
-                />
-                <CInvalidFeedback invalid={getValidationResult(formik.touched.occupation && !!formik.errors.occupation)}>{formik.errors.occupation}</CInvalidFeedback>
+                {profession.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="occupation" value={formik.values.occupation}>
+                    <option disabled value="">¿A qué te dedicas?</option>
+                    {
+                        profession.map((_occupation) => (<option key={_occupation.id} value={_occupation.name}>{_occupation.name}</option>))
+                    }
+                </CSelect>
+                }
+                <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.occupation)}>{formik.errors.occupation}</CInvalidFeedback>
             </CFormGroup>
+
+            {
+                formik.values.occupation === 'Otro' && <CFormGroup className="mb-3 text-left">
+                    <CInput
+                        size="lg"
+                        placeholder="A que te dedicas"
+                        value={formik.values.other_occupation}
+                        invalid={formik.touched.other_occupation && !!formik.errors.other_occupation}
+                        onChange={onChange}
+                        name="other_occupation"
+                    />
+                    <CInvalidFeedback invalid={getValidationResult(formik.touched.other_occupation && !!formik.errors.other_occupation)}>{formik.errors.other_occupation}</CInvalidFeedback>
+                </CFormGroup>
+            }
 
             <CRow>
                 <CCol xs="12" sm="5" className="text-left pt-2">

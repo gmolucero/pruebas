@@ -20,10 +20,6 @@ const StepOne = ({ next }) => {
     let [timer, setTimer] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
 
-    const onSubmit = (data) => {
-        next();
-    }
-
     const formik = useFormik({
         initialValues: {
             day: '',
@@ -32,17 +28,21 @@ const StepOne = ({ next }) => {
             region: '',
             commune: '',
             education_level: '',
-            occupation: ''
+            occupation: '',
+            other_occupation: ''
         },
         validate: validate(schema),
-        onSubmit: onSubmit,
+        onSubmit: next,
     });
 
 
     const handleInit = async () => {
         try {
             const { data } = await getCustomer();
-            formik.setValues(data.result)
+            formik.setValues({
+                ...data.result,
+                other_occupation: data.result.other_occupation || ''
+            })
             setLoading(false)
         } catch (error) {
             console.log('ERROR: ', error);
