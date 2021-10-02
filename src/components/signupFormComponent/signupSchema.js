@@ -4,7 +4,6 @@ import { validateRut } from '@fdograph/rut-utilities';
 export const signupSchema = () => {
     return Yup.object().shape({
         name: Yup.string().required("El nombre es requerido"),
-        lastname: Yup.string().required("El apellido es requerido"),
         rut: Yup.string()
             .test('rut', 'El rut es invalido', (val) => validateRut(val.replace('-', '')))
             .required("El rut es requerido"),
