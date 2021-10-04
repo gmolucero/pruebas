@@ -20,25 +20,13 @@ const SignupFormComponent = ({ formik, onChange }) => {
             <CFormGroup className="mb-3">
                 <CInput
                     type="text"
-                    placeholder="Nombre"
+                    placeholder="Nombre completo"
                     value={formik.values.name}
                     invalid={formik.touched.name && !!formik.errors.name}
                     onChange={onChange}
                     name="name"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.name && !!formik.errors.name)}>{formik.errors.name}</CInvalidFeedback>
-            </CFormGroup>
-
-            <CFormGroup className="mb-3">
-                <CInput
-                    type="text"
-                    placeholder="Apellido"
-                    value={formik.values.lastname}
-                    invalid={formik.touched.lastname && !!formik.errors.lastname}
-                    onChange={onChange}
-                    name="lastname"
-                />
-                <CInvalidFeedback invalid={getValidationResult(formik.touched.lastname && !!formik.errors.lastname)}>{formik.errors.lastname}</CInvalidFeedback>
             </CFormGroup>
 
             <CFormGroup className="mb-3">

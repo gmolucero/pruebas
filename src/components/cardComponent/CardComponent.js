@@ -9,6 +9,8 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
+import './styles.scss';
+
 const CardComponent = ({ title, btnText, text, iconName, iconClassName, btnOnClick, children }) => {
     return (
         <CRow className="justify-content-center">

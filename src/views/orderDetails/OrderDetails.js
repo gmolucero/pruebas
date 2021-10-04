@@ -47,6 +47,7 @@ const OrderDetails = props => {
                 ]
 
                 setData({
+                    ...result,
                     list: _list,
                     bank: result.bank,
                     listRight,

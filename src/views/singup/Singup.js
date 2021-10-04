@@ -56,7 +56,6 @@ const Singup = ({ history }) => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      lastname: '',
       rut: '',
       email: '',
       phone: '',
