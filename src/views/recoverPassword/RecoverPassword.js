@@ -33,7 +33,7 @@ const RecoverPassword = ({ history }) => {
 
   const menu = [
     {
-      name: 'Registros',
+      name: 'Registro',
       target: 'registro'
     }
   ]

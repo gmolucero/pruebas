@@ -46,9 +46,10 @@ const StepTwo = ({ next, prev }) => {
 
             if (data.result.independent_income && data.result.dependent_income) setType('ambos')
             else if (!data.result.independent_income && data.result.dependent_income) setType('dependiente')
-            else if (data.result.independent_income && !data.result.dependent_income) setType('independiente')
-
-            setState(data.result)
+            else if (data.result.independent_income && !data.result.dependent_income) setType('independiente')           
+            if(data.result.dependent_income && data.result.independent_income){
+                setState(data.result)
+            }            
             setType(data.result.activity_type);
             setLoading(false)
         } catch (error) {

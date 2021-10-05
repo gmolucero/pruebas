@@ -15,3 +15,8 @@ export const useStepper = () => {
     const { state: { step }, dispatch } = React.useContext(context)
     return [step, (_value) => dispatch({ type: 'SET_STEPPER', value: _value })]
 }
+
+export const useStepData = () => {
+    const { state: { stepData }, dispatch } = React.useContext(context)
+    return [stepData, (_value) => dispatch({ type: 'SET_STEPPER_DATA', value: _value })]
+}

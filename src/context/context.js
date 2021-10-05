@@ -9,5 +9,6 @@ export const initialState = {
         delay: 3000,
     },
     step: 1,
-    loading: false
+    loading: false,
+    stepData:'',
 };
