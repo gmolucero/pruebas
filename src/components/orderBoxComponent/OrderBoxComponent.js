@@ -25,8 +25,8 @@ const OrderBoxComponent = ({
                 <div className="d-block px-4 mb-5">
                     <img src={bank.img} alt="" className="d-block mb-4 w-100" />
                 </div>
-                <h2 className="bold text-primary">$ {enhanced_quota_value}</h2>
-                <p>valor cuota</p>
+                <h2 className="bold text-primary-light">$ {enhanced_quota_value}</h2>
+                <p class="sub-title">Valor cuota</p>
 
                 {
                     client_accepts === 1 && <>

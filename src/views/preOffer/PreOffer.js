@@ -33,8 +33,8 @@ const PreOffer = () => {
     }, [])
 
     return (
-        <CContainer className="pt-5">
-            <h1 className="text-primary mb-4">Pre-ofertas</h1>
+        <CContainer className="pt-5" id="pre-offer">
+            <h1 className="text-primary-light mb-4">Pre-ofertas</h1>
             {
                 loading ? <Spinner /> :
                     <CRow>

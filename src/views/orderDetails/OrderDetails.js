@@ -65,20 +65,20 @@ const OrderDetails = props => {
     }, [])
 
     return (
-        <CContainer className="pt-5">
+        <CContainer className="pt-5" id="order-details">
 
             {
                 data.loading ? <Spinner /> :
                     <CRow className="justify-content-center">
-                        <CCol xs={12} md={10}><h1 className="text-primary mb-3">Pre-oferta {data.bank.name && data.bank.name.toLowerCase()}</h1></CCol>
+                        <CCol xs={12} md={10}><h1 className="text-primary-light mb-3">Pre-oferta {data.bank.name && data.bank.name.toLowerCase()}</h1></CCol>
                         <CCol md={10}>
                             <CRow>
                                 <CCol md={6}>
                                     <CCard>
                                         <CCardBody className="py-4">
-                                            <div className="text-center" style={{ height: '110px' }}>
-                                                <h2 className="text-primary bold">Créditos de consumo</h2>
-                                                <p className="text-primary">Información solicitada</p>
+                                            <div className="text-center mb-3  mt-4" style={{ height: '110px' }}>
+                                                <h2 className="text-primary-light bold">CRÉDITOS DE CONSUMO</h2>
+                                                <p className="text-primary-light sub-title">Información solicitada</p>
                                             </div>
 
                                             <CListGroup flush className="mb-5">
@@ -99,8 +99,8 @@ const OrderDetails = props => {
                                 <CCol md={6}>
                                     <CCard>
                                         <CCardBody className="py-4">
-                                            <div className="text-center px-5" style={{ height: '110px' }}>
-                                                <img className="w-100" src={data.bank.img} alt={data.bank.name} />
+                                            <div className="text-center px-5 mb-3 mt-4" style={{ height: '110px' }}>
+                                                <img className="w-100 h-100" src={data.bank.img} alt={data.bank.name} />
                                             </div>
 
                                             <CRow className="justify-content-center">
@@ -132,7 +132,7 @@ const OrderDetails = props => {
                                             {
                                                 data.client_accepts === 1 &&
                                                 <div className="d-block text-center mt-4">
-                                                    <a href={`tel:${data.executive.phone}`} className="text-secondary justify-content-center d-flex align-items-center" style={{ fontSize: '18px' }}>
+                                                    <a href={`tel:${data.executive.phone}`} className="text-secondary justify-content-center d-flex align-items-center bold" style={{ fontSize: '18px' }}>
                                                         <CIcon name="cil-phone" className="mr-1" /> Contactar ejecutivo(a)
                                                     </a>
                                                 </div>
