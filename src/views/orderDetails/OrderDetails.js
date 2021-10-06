@@ -131,9 +131,9 @@ const OrderDetails = props => {
                 });   
                 setData({...data, loading:false});              
             } else {
-                setModalConfig({
-                    title:'Tu preoferta fue rechazada con éxito',
+                setModalConfig({                    
                     show: true, ...SUCCESS_MESSAGE,
+                    title:'Tu preoferta fue rechazada con éxito',
                     text: res.data.message,
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
                 })
@@ -208,7 +208,7 @@ const OrderDetails = props => {
                                                 </CCol>
                                             </CRow>
                                             {
-                                                data.client_accepts !== 1 &&
+                                                data.client_accepts === 0 &&
                                                 <CRow>
                                                     <CCol md={6}>
                                                         <CButton className="w-100 mb-3 mb-md-0" size="lg" color="secondary" onClick={handleRejectOffer} variant="outline" >Rechazar</CButton>

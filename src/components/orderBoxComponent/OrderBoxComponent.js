@@ -46,7 +46,7 @@ const OrderBoxComponent = ({
 
                 <div className="d-flex flex-column">
                     {
-                        client_accepts !== 1 && <CButton color="secondary" className="mb-3 bold" size="lg" onClick={()=>handleAcceptOffer(id)}>Aceptar</CButton>
+                        client_accepts === 0 && <CButton color="secondary" className="mb-3 bold" size="lg" onClick={()=>handleAcceptOffer(id)}>Aceptar</CButton>
                     }
                     <CButton to={`/detalle/${id}`} color="secondary" variant="outline" className="bold" size="lg">Ver detalles</CButton>
                 </div>
