@@ -187,10 +187,11 @@ const OrderDetails = props => {
                                 <CCol md={6}>
                                     <CCard>
                                         <CCardBody className="py-4">
-                                            <div className="text-center px-5 mb-3 mt-4" style={{ height: '110px' }}>
-                                                <img className="w-100 h-100" src={data.bank.img} alt={data.bank.name} />
+                                            
+                                            <div className="text-center mb-3 mt-4" >
+                                                <img style={{maxHeight:'42px', maxWidth:'190px'}}  src={data.bank.img} alt={data.bank.name} />
                                             </div>
-
+                                            
                                             <CRow className="justify-content-center">
                                                 <CCol md={10}>
                                                     <CListGroup flush className="mb-4">
