@@ -11,11 +11,14 @@ import {
     CListGroup,
     CListGroupItem,
     CButton,
+    CModal,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
-import { getOfferDetails } from 'services/offers';
+import CardComponent from 'components/cardComponent/CardComponent';
+import { getOfferDetails, acceptPreOffer, rejectPreOffer } from 'services/offers';
 import Spinner from 'app/common/Spinner';
+import { formatClp } from 'utils';
+
 
 const OrderDetails = props => {
     const { offer_id } = useParams();
@@ -24,7 +27,31 @@ const OrderDetails = props => {
         list: [],
         listRight: [],
         bank: {}
-    })
+    });
+    
+    const [modalConfig, setModalConfig] = React.useState({
+        show: false,
+        ...ERROR_MESSAGE
+    });
+
+    const SUCCESS_MESSAGE = {
+        title: "¡Tu preoferta fue aceptada con éxito!",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+        btnText: "Cerrar",
+        iconName: "cil-check-circle",
+        iconClassName: "text-success",
+        btnOnClick: () => null,
+    }
+    
+    const ERROR_MESSAGE = {
+        title: "",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+        btnText: "Cerrar",
+        iconName: "cil-warning",
+        iconClassName: "text-danger",
+        btnOnClick: () => null,
+    }
+
 
     const handleGetInit = async () => {
         try {
@@ -32,16 +59,16 @@ const OrderDetails = props => {
 
             if (status < 400) {
                 const _list = [
-                    { name: "Monto solicitado", value: `$${result.requested_amount}` },
+                    { name: "Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
                     { name: "N° de cuotas", value: result.quotas_offered },
                     { name: "Fecha pago", value: result.pay_day.replace(/-/ig, '/') },
                     { name: "Fecha solicitud", value: result.application_date.replace(/-/ig, '/') }
                 ]
 
                 const listRight = [
-                    { name: "Valor cuota", value: `$${result.enhanced_quota_value}` },
-                    { name: "Tasa de interés", value: `${result.interest}%` },
-                    { name: "Costo total", value: result.requested_amount },
+                    { name: "Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
+                    { name: "Tasa de interés", value: `${result.interest ? result.interest + '%'  : "-"}` },
+                    { name: "Costo total", value: formatClp(result.requested_amount) },
                     { name: "Periodo de gracia", value: `${result.grace_period || 0} meses` },
                     { name: "Plazo total", value: `${result.total_term || 0} meses` }
                 ]
@@ -58,6 +85,67 @@ const OrderDetails = props => {
         } catch (error) {
             console.log('error', error);
         }
+    }
+
+    const handleAcceptOffer = async () => {
+        try {       
+            setData({...data, loading:true});     
+            const res = await acceptPreOffer(offer_id);
+                        
+            if (res.status >= 400) {                
+                setModalConfig({
+                    show: true, ...ERROR_MESSAGE,
+                    title:'Ops',
+                    text: 'Ocurrió un error al aceptar la pre-oferta',
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                });   
+                setData({...data, loading:false});              
+            } else {
+                setModalConfig({
+                    show: true, ...SUCCESS_MESSAGE,
+                    text: res.data.message,
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                })
+                handleGetInit();
+                
+            }
+             
+
+        } catch (error) {
+         
+            console.log('error', error);
+        }
+    }
+
+    const handleRejectOffer = async () => {
+        try {       
+            setData({...data, loading:true});     
+            const res = await rejectPreOffer(offer_id);
+                        
+            if (res.status >= 400) {                
+                setModalConfig({
+                    show: true, ...ERROR_MESSAGE,
+                    title:'Ops',
+                    text: 'Ocurrió un error al rechazar la pre-oferta',
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                });   
+                setData({...data, loading:false});              
+            } else {
+                setModalConfig({
+                    title:'Tu preoferta fue rechazada con éxito',
+                    show: true, ...SUCCESS_MESSAGE,
+                    text: res.data.message,
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                })
+                handleGetInit();
+                
+            }
+             
+
+        } catch (error) {
+         
+            console.log('error', error);
+        }     
     }
 
     React.useEffect(() => {
@@ -119,15 +207,18 @@ const OrderDetails = props => {
                                                     </CListGroup>
                                                 </CCol>
                                             </CRow>
-
-                                            <CRow>
-                                                <CCol md={6}>
-                                                    <CButton className="w-100 mb-3 mb-md-0" size="lg" color="secondary" variant="outline" >Rechazar</CButton>
-                                                </CCol>
-                                                <CCol md={6}>
-                                                    <CButton className="w-100" size="lg" color="secondary">Aceptar</CButton>
-                                                </CCol>
-                                            </CRow>
+                                            {
+                                                data.client_accepts !== 1 &&
+                                                <CRow>
+                                                    <CCol md={6}>
+                                                        <CButton className="w-100 mb-3 mb-md-0" size="lg" color="secondary" onClick={handleRejectOffer} variant="outline" >Rechazar</CButton>
+                                                    </CCol>
+                                                    <CCol md={6}>
+                                                        <CButton className="w-100" size="lg" color="secondary" onClick={handleAcceptOffer}>Aceptar</CButton>
+                                                    </CCol>
+                                                </CRow>
+                                            }
+                                         
 
                                             {
                                                 data.client_accepts === 1 &&
@@ -144,6 +235,15 @@ const OrderDetails = props => {
                         </CCol>
                     </CRow>
             }
+            
+            <CModal
+                size="lg"
+                show={modalConfig.show}
+                onClose={() => setModalConfig((_p) => ({ ..._p, show: false }))}
+                className="modal-custom"
+            >
+                <CardComponent {...modalConfig} />
+            </CModal>
         </CContainer>
     )
 }

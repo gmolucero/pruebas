@@ -7,6 +7,7 @@ import {
     CCardBody
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { formatClp } from 'utils';
 
 
 const OrderBoxComponent = ({
@@ -17,15 +18,18 @@ const OrderBoxComponent = ({
     interest,
     quotas_offered,
     executive,
-    client_accepts
+    client_accepts,
+    handleAcceptOffer
 }) => {
+
+    
     return (
         <CCard>
             <CCardBody className="text-center p-3 p-md-4">
                 <div className="d-block px-4 mb-5">
                     <img src={bank.img} alt="" className="d-block mb-4 w-100" />
                 </div>
-                <h2 className="bold text-primary-light">$ {enhanced_quota_value}</h2>
+                <h2 className="bold text-primary-light">$ {formatClp(enhanced_quota_value)}</h2>
                 <p class="sub-title">Valor cuota</p>
 
                 {
@@ -36,13 +40,13 @@ const OrderBoxComponent = ({
                     </>
                 }
 
-                <p className="mb-2">Monto solicitado: {requested_amount}</p>
+                <p className="mb-2">Monto solicitado: {formatClp(requested_amount)}</p>
                 <p className="mb-2">Tasa de interés: {interest} %</p>
                 <p className="mb-4">N° de cuotas: {quotas_offered}</p>
 
                 <div className="d-flex flex-column">
                     {
-                        client_accepts === 0 && <CButton color="secondary" className="mb-3 bold" size="lg">Aceptar</CButton>
+                        client_accepts !== 1 && <CButton color="secondary" className="mb-3 bold" size="lg" onClick={()=>handleAcceptOffer(id)}>Aceptar</CButton>
                     }
                     <CButton to={`/detalle/${id}`} color="secondary" variant="outline" className="bold" size="lg">Ver detalles</CButton>
                 </div>

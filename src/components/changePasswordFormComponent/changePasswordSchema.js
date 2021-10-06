@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export const changePasswordSchema = () => {
     return Yup.object().shape({
-        username: Yup.string()
+        email: Yup.string()
             .email('Email inválido')
             .max(100, 'El texto no debe superar los 50 carácteres')
             .required("La dirección de correo es requerida"),

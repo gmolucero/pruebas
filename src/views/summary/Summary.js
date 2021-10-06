@@ -16,12 +16,13 @@ import CIcon from "@coreui/icons-react";
 import StatusBadgeComponent from 'components/statusBadgeComponent/StatusBadgeComponent'
 import Pagination from 'components/paginationComponent/PaginationComponent'
 import Spinner from 'app/common/Spinner';
+import { formatClp } from 'utils';
 
 const fields = [
     { key: 'inicio_credito', label: "Fecha" },
     { key: 'type', label: "Tipo de crédito" },
     { key: 'principal', label: "Monto" },
-    { key: 'estatus', label: "Estado" },
+    // { key: 'estatus', label: "Estado" },
     { key: 'offers', label: "" },
 ]
 
@@ -47,6 +48,7 @@ const Summary = props => {
 
     // const handlePagination = (page) => { console.log('pagina', page); }
 
+
     return (
         <CContainer className="pt-5">
             <CRow>
@@ -64,10 +66,20 @@ const Summary = props => {
                                 fields={fields}
                                 sorter
                                 scopedSlots={{
+                                    'inicio_credito':
+                                    (item) => (<td> {item.inicio_credito ? item.inicio_credito :"-"} </td>),
                                     'principal':
-                                        (item) => (<td className="bold"> ${item.principal} </td>),
-                                    'estatus':
-                                        (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
+                                        (item) => (<td className="bold"> ${formatClp(item.principal)} </td>),
+                                    'type':
+                                    () => {
+                                        return (
+                                            <td>
+                                                Crédito de consumo
+                                            </td>
+                                        )
+                                    },
+                                    // 'estatus':
+                                    //     (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':
                                         (item) => (<td> {
                                             item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver ofertas</a>

@@ -16,7 +16,7 @@ import CIcon from "@coreui/icons-react";
 import { useNotification } from "context/hooks";
 
 import { validate, handlerInputChangeCreator, getValidationResult } from 'utils';
-import { resetPassword } from "../../services/login";
+import { forgotPassword } from "../../services/login";
 
 import PublicLayout from 'containers/ThePublicLayout.js';
 
@@ -41,7 +41,7 @@ const RecoverPassword = ({ history }) => {
   const onSubmit = async (user) => {
     try {
       setVisible(false);
-      const res = await resetPassword(user)
+      const res = await forgotPassword(user)
       if (res.status !== 200) throw new Error("error ")
       setNotification({ open: true, type: 'info', message: 'Revise su correo electronico' });
       history.push('/');
@@ -54,10 +54,10 @@ const RecoverPassword = ({ history }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: ''
+      email: ''
     },
     validate: validate(() => Yup.object().shape({
-      username: Yup.string()
+      email: Yup.string()
         .email('Email inválido')
         .max(100, 'El texto no debe superar los 50 carácteres')
         .required("La dirección de correo es requerida"),
@@ -66,7 +66,7 @@ const RecoverPassword = ({ history }) => {
   });
 
   const handleTextChange = handlerInputChangeCreator(formik)
-
+  
   return (
 
     <PublicLayout menu={menu} >
@@ -99,12 +99,12 @@ const RecoverPassword = ({ history }) => {
                           type="email"
                           placeholder="Correo electronico"
                           autoComplete="email"
-                          value={formik.values.username}
-                          invalid={formik.touched.username && !!formik.errors.username}
+                          value={formik.values.email}
+                          invalid={formik.touched.email && !!formik.errors.email}
                           onChange={handleTextChange}
-                          name="username"
+                          name="email"
                         />
-                        <CInvalidFeedback invalid={getValidationResult(formik.touched.username && !!formik.errors.username)}>{formik.errors.username}</CInvalidFeedback>
+                        <CInvalidFeedback invalid={getValidationResult(formik.touched.email && !!formik.errors.email)}>{formik.errors.email}</CInvalidFeedback>
                       </CFormGroup>
 
                       <CButton type="submit" className="btn-login d-inline px-4" >

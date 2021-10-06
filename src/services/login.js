@@ -21,7 +21,15 @@ export const resetPassword = async function (user) {
   return request({
     method: "POST",
     data: user,
-    url: `/resetPasword`,
+    url: `/reset-password`,
+  });
+};
+
+export const forgotPassword = async function (user) {
+  return request({
+    method: "POST",
+    data: user,
+    url: `/forgot-password`,
   });
 };
 
