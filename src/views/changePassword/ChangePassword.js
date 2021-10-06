@@ -7,7 +7,7 @@ import {
   CSpinner
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useNotification } from 'context/hooks';
 
 import { validate, handlerInputChangeCreator } from 'utils';
@@ -18,6 +18,7 @@ import ChangePasswordFormComponent from 'components/changePasswordFormComponent/
 
 import ImgFondo from "../../assets/img/bg-1.png";
 
+
 import { resetPassword } from 'services/login';
 
 var styles = {
@@ -26,7 +27,10 @@ var styles = {
 };
 
 const ChangePassword = (props) => {
-  const { tokenId } = useParams();
+  // const { tokenId } = useParams();
+  const search = useLocation().search;
+  const token = new URLSearchParams(search).get('token');
+
   const [visible, setVisible] = useState(true);
   const [, setNotification] = useNotification();
   const menu = [
@@ -52,7 +56,7 @@ const ChangePassword = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      token: tokenId,
+      token: token,
       email: '',
       password: '',
       password_confirmation: '',

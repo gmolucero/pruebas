@@ -13,8 +13,8 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import StatusBadgeComponent from 'components/statusBadgeComponent/StatusBadgeComponent'
-import Pagination from 'components/paginationComponent/PaginationComponent'
+// import StatusBadgeComponent from 'components/statusBadgeComponent/StatusBadgeComponent'
+// import Pagination from 'components/paginationComponent/PaginationComponent'
 import Spinner from 'app/common/Spinner';
 import { formatClp } from 'utils';
 
@@ -64,6 +64,7 @@ const Summary = props => {
                             loading ? <Spinner /> : <CDataTable
                                 items={list}
                                 fields={fields}
+                                pagination={{align:'end', dots:false, doubleArrows:false}}
                                 sorter
                                 scopedSlots={{
                                     'inicio_credito':

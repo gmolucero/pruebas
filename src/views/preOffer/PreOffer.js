@@ -17,11 +17,6 @@ const PreOffer = () => {
     const { offer_id } = useParams();
     const [offers, setOffers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);    
-    const [modalConfig, setModalConfig] = React.useState({
-        show: false,
-        ...ERROR_MESSAGE
-    })
-
     const SUCCESS_MESSAGE = {
         title: "¡Tu preoferta fue aceptada con éxito!",
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -39,6 +34,11 @@ const PreOffer = () => {
         iconClassName: "text-danger",
         btnOnClick: () => null,
     }
+
+    const [modalConfig, setModalConfig] = React.useState({
+        show: false,
+        ...ERROR_MESSAGE
+    })
 
     const handleInit = async () => {
         try {

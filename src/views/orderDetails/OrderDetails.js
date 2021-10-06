@@ -29,11 +29,6 @@ const OrderDetails = props => {
         bank: {}
     });
     
-    const [modalConfig, setModalConfig] = React.useState({
-        show: false,
-        ...ERROR_MESSAGE
-    });
-
     const SUCCESS_MESSAGE = {
         title: "¡Tu preoferta fue aceptada con éxito!",
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -51,6 +46,11 @@ const OrderDetails = props => {
         iconClassName: "text-danger",
         btnOnClick: () => null,
     }
+
+    const [modalConfig, setModalConfig] = React.useState({
+        show: false,
+        ...ERROR_MESSAGE
+    });
 
 
     const handleGetInit = async () => {
