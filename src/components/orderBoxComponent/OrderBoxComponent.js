@@ -26,8 +26,8 @@ const OrderBoxComponent = ({
     return (
         <CCard>
             <CCardBody className="text-center p-3 p-md-4">
-                <div className="d-block px-4 mb-5">
-                    <img src={bank.img} alt="" className="d-block mb-4 w-100" />
+                <div className="mx-auto d-block px-4 mb-5 mt-3">
+                    <img src={bank.img} alt="img" style={{maxHeight:'42px', maxWidth:'190px'}}  />
                 </div>
                 <h2 className="bold text-primary-light">$ {formatClp(enhanced_quota_value)}</h2>
                 <p class="sub-title">Valor cuota</p>
