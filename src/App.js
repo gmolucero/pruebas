@@ -46,7 +46,7 @@ export default function App() {
             <Route exact path="/login" name="Login Page" component={Login} />
             <Route exact path="/registro" name="Signup Page" component={Singup} />
             <Route exact path="/recuperar" name="Recover password Page" component={RecoverPassword} />
-            <Route exact path="/actualizar" name="Recover password Page" component={ChangePassword} />
+            <Route exact path="/reset-password" name="Recover password Page" component={ChangePassword} />
             <ProtectedRoute
               path="/"
               name="Home"
