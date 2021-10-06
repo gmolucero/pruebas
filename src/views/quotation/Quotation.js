@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -11,11 +11,11 @@ import StepTwo from 'views/stepTwo/StepTwo';
 import StepThree from 'views/stepThree/StepThree';
 
 import TheQuotationLayout from 'containers/TheQuotationLayout';
-import { useStepper } from 'context/hooks';
+import { useStepper, useStepData } from 'context/hooks';
 
 const Quotation = (props) => {
     const [step, setStep] = useStepper(1);
-
+    const [stepKeepData, setStepKeepData] = useStepData(5);
     const stepsContent = [
         {
             title: "¡Necesitamos más datos para que las instituciones financieras puedan hacer sus pre-ofertas!",
@@ -40,7 +40,7 @@ const Quotation = (props) => {
         <TheQuotationLayout {...stepsContent[step - 1]} >
             {step === 1 && <StepOne next={() => setStep(2)} />}
             {step === 2 && <StepTwo next={() => setStep(3)} prev={stepsContent[step - 1].backFun} />}
-            {step === 3 && <StepThree history={props.history} prev={stepsContent[step - 1].backFun} />}
+            {step === 3 && <StepThree history={props.history} prev={stepsContent[step - 1].backFun} setStepKeepData={setStepKeepData} stepKeepData={stepKeepData}/>}
         </TheQuotationLayout>
     )
 }

@@ -35,7 +35,7 @@ const ERROR_MESSAGE = {
     btnOnClick: () => null,
 }
 
-const StepThree = ({ prev, history }) => {
+const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
     const [modalConfig, setModalConfig] = React.useState({
         show: false,
         ...ERROR_MESSAGE
@@ -44,7 +44,7 @@ const StepThree = ({ prev, history }) => {
     const onSubmit = async (data) => {
         try {
             const response = await createSolicitude(data);
-            if (response.status >= 400) {
+            if (response.status >= 400) {                
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,
@@ -63,24 +63,29 @@ const StepThree = ({ prev, history }) => {
     }
 
     const formik = useFormik({
-        initialValues: {
+        initialValues: stepKeepData ? stepKeepData :{
             reason: "",
             requested_amount: "",
             number_quotas: "",
-            credit_start: "30"
+            credit_start: ""
         },
         validate: validate(schema),
         onSubmit: onSubmit,
     });
 
-    const handleTextChange = handlerInputChangeCreator(formik)
+    const handleTextChange = handlerInputChangeCreator(formik);
+
+    const prevStape = () =>{
+        prev();
+        setStepKeepData(formik.values);
+    }
 
     return (
         <CRow className="justify-content-center">
             <CCol md={8} lg={6}>
                 <StepThreeFormComponent
                     formik={formik}
-                    prev={prev}
+                    prev={prevStape}
                     onChange={handleTextChange} />
             </CCol>
 

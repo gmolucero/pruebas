@@ -8,6 +8,8 @@ export function reducer(state, action) {
             return { ...state, loading: action.value };
         case 'SET_STEPPER':
             return { ...state, step: action.value };
+        case 'SET_STEPPER_DATA':
+            return { ...state, stepData: action.value };
         default:
             throw new Error();
     }

@@ -54,6 +54,13 @@ export const deleteRentAttachedFile = async function (file_id) {
     });
 };
 
+export const getRentAttachedFile = async function (file_id) {
+    return request({
+        method: "GET",
+        url: `/rent/file/${file_id}`,
+    });
+};
+
 export const getSolicitudes = async function () {
     return request({
         method: "GET",

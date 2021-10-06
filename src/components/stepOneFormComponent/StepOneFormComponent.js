@@ -24,6 +24,7 @@ const StepOneFormComponent = ({ formik, onChange }) => {
 
     const [region, setRegion] = React.useState([]);
     const [communes, setCommunes] = React.useState([]);
+    const [loadingCommunes, setLoadingCommunes] = React.useState(false);
     const [education, setEducation] = React.useState([]);
     const [profession, setProfession] = React.useState([]);
     const [isMounted, setIsMounted] = React.useState(false);
@@ -55,12 +56,14 @@ const StepOneFormComponent = ({ formik, onChange }) => {
     }
 
     const handleGetCommuneById = async (region_id) => {
+        setLoadingCommunes((prevState) => !prevState); 
         const resp = await getComuneById(region_id);
         try {
             setCommunes(resp.data.result)
         } catch (error) {
             console.log('ERROR: ', error);
         }
+        setLoadingCommunes((prevState) => !prevState); 
     }
 
     React.useEffect(() => {
@@ -111,7 +114,7 @@ const StepOneFormComponent = ({ formik, onChange }) => {
 
             <CFormGroup className="mb-3 text-left">
                 {
-                    communes.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="commune" value={formik.values.commune}>
+                    loadingCommunes ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="commune" value={formik.values.commune}>
                         <option disabled value="">Seleccione Comuna...</option>
                         {
                             communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))

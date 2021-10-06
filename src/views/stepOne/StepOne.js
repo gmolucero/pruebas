@@ -56,7 +56,7 @@ const StepOne = ({ next }) => {
     }
 
     const handleUpdate = async (data) => {
-        try {
+        try {           
             await updateCustomer(data);
         } catch (error) {
             console.error('[handleUpdate]', error);

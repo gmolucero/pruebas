@@ -36,3 +36,8 @@ export const isEmpty = (obj) => {
 
 // CREATORS
 export const handlerInputChangeCreator = (formik) => ({ target }) => formik.setValues({ ...formik.values, ...getInputValue(target) });
+
+export const formatClp = (value) => {  
+    let format = value.toString().split(".");  
+    return parseInt(format[0]).toLocaleString("es-CL");
+}

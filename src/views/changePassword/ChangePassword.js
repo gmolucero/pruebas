@@ -7,7 +7,7 @@ import {
   CSpinner
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
+import { useLocation } from "react-router-dom";
 import { useNotification } from 'context/hooks';
 
 import { validate, handlerInputChangeCreator } from 'utils';
@@ -18,7 +18,8 @@ import ChangePasswordFormComponent from 'components/changePasswordFormComponent/
 
 import ImgFondo from "../../assets/img/bg-1.png";
 
-import { changePassword } from 'services/login';
+
+import { resetPassword } from 'services/login';
 
 var styles = {
   backgroundImage: `url(${ImgFondo})`,
@@ -26,11 +27,15 @@ var styles = {
 };
 
 const ChangePassword = (props) => {
+  // const { tokenId } = useParams();
+  const search = useLocation().search;
+  const token = new URLSearchParams(search).get('token');
+
   const [visible, setVisible] = useState(true);
   const [, setNotification] = useNotification();
   const menu = [
     {
-      name: 'Registros',
+      name: 'Registro',
       target: 'registro'
     }
   ]
@@ -38,17 +43,21 @@ const ChangePassword = (props) => {
   const onSubmit = async (user) => {
     try {
       setVisible(false);
-      const res = await changePassword(user);
+      const res = await resetPassword(user);
+      if (res.status !== 200) throw new Error("error ")
       setNotification({ type: 'info', message: 'Contraseña acutalizada' })
       props.history.push("/")
-    } catch (error) {
+    } catch (error) {      
+      setNotification({ open: true, type: 'warning', message: 'Datos de usuario inválidos' });
+      setVisible(true);
       console.error('[onSubmit Error:]', error);
     }
   };
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      token: token,
+      email: '',
       password: '',
       password_confirmation: '',
     },
@@ -57,7 +66,7 @@ const ChangePassword = (props) => {
   });
 
   const handleTextChange = handlerInputChangeCreator(formik)
-
+  console.log(formik.values,"formik")
   return (
     <PublicLayout menu={menu} >
       <div

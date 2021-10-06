@@ -29,7 +29,7 @@ const Login = (props) => {
   const [, setNotification] = useNotification()
   const menu = [
     {
-      name: 'Registros',
+      name: 'Registro',
       target: 'registro'
     }
   ]
