@@ -32,7 +32,9 @@ const TheHeader = (props) => {
       </CHeaderNav>
 
       <CHeaderNav className="px-sm-3">
-        <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
+        <Link to="/cotizacion">
+          <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
+        </Link>
         <Link to="/" onClick={logout}>
           <CIcon name="cil-account-logout" className="text-white" />
         </Link>
