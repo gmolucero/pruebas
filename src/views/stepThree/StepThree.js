@@ -12,6 +12,7 @@ import { stepThreechema as schema } from 'components/stepThreeFormComponent/step
 import StepThreeFormComponent from 'components/stepThreeFormComponent/StepThreeFormComponent'
 
 import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
+import Spinner from 'app/common/Spinner'
 
 import { createSolicitude } from 'services/quotation';
 
@@ -41,8 +42,11 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
         ...ERROR_MESSAGE
     })
 
-    const onSubmit = async (data) => {
+    const [loading, setLoading] = React.useState(false);
+
+    const onSubmit = async (data) => {        
         try {
+            setLoading(true);
             const response = await createSolicitude(data);
             if (response.status >= 400) {                
                 setModalConfig({
@@ -50,6 +54,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                     text: response.data.message,
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
                 })
+                setLoading(false);
             } else {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
@@ -81,25 +86,27 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
     }
 
     return (
-        <CRow className="justify-content-center">
-            <CCol md={8} lg={6}>
-                <StepThreeFormComponent
-                    formik={formik}
-                    prev={prevStape}
-                    onChange={handleTextChange} />
-            </CCol>
+        <>
+            {loading ? <Spinner/> : (
+                <CRow className="justify-content-center">
+                    <CCol md={8} lg={6}>
+                        <StepThreeFormComponent
+                            formik={formik}
+                            prev={prevStape}
+                            onChange={handleTextChange} />
+                    </CCol>
 
-            <CModal
-                size="lg"
-                show={modalConfig.show}
-                onClose={() => null}
-                className="modal-custom"
-            >
-                <CardComponent {...modalConfig} />
-            </CModal>
-
-
-        </CRow>
+                    <CModal
+                        size="lg"
+                        show={modalConfig.show}
+                        onClose={() => null}
+                        className="modal-custom"
+                    >
+                        <CardComponent {...modalConfig} />
+                    </CModal>
+                </CRow>
+            )}
+        </>
     )
 }
 
