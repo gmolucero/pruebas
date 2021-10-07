@@ -15,7 +15,7 @@ import { useStepper, useStepData } from 'context/hooks';
 
 const Quotation = (props) => {
     const [step, setStep] = useStepper(1);
-    const [stepKeepData, setStepKeepData] = useStepData(5);
+    const [stepKeepData, setStepKeepData] = useStepData('');
     const stepsContent = [
         {
             title: "¡Necesitamos más datos para que las instituciones financieras puedan hacer sus pre-ofertas!",
