@@ -22,6 +22,7 @@ const fields = [
     { key: 'inicio_credito', label: "Fecha" },
     { key: 'type', label: "Tipo de crédito" },
     { key: 'principal', label: "Monto" },
+    { key: 'motivo', label: "Motivo" },
     // { key: 'estatus', label: "Estado" },
     { key: 'offers', label: "" },
 ]
@@ -29,14 +30,14 @@ const fields = [
 
 const Summary = props => {
 
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(true);
     const [list, setList] = React.useState([]);
 
     const handleInit = async () => {
         try {
             const response = await getSolicitudes();
-            setList(response.data.result)
-            setLoading(false)
+            setList(response.data.result);
+            setLoading(false);
         } catch (error) {
             console.error("Summary error: ", error);
         }
@@ -68,17 +69,13 @@ const Summary = props => {
                                 sorter
                                 scopedSlots={{
                                     'inicio_credito':
-                                    (item) => (<td> {item.inicio_credito ? item.inicio_credito :"-"} </td>),
+                                        (item) => (<td> {item.inicio_credito ? item.inicio_credito :"-"} </td>),
                                     'principal':
                                         (item) => (<td className="bold"> ${formatClp(item.principal)} </td>),
                                     'type':
-                                    () => {
-                                        return (
-                                            <td>
-                                                Crédito de consumo
-                                            </td>
-                                        )
-                                    },
+                                        (item) => (<td>{item.tipo.nombre}</td>),
+                                    'motivo':
+                                        (item) => (<td>{item.motivo.nombre}</td>),
                                     // 'estatus':
                                     //     (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':

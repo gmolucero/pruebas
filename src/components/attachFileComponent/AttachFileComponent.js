@@ -4,13 +4,15 @@ import {
     CLink,
     CRow,
     CCol,
+    CModal,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
 import { useLoading } from 'context/hooks';
-
-import { deleteRent, deleteRentAttachedFile, createRentFile } from 'services/quotation';
+import CardComponent from 'components/cardComponent/CardComponent';
+import { deleteRent, deleteRentAttachedFile, createRentFile, getRentAttachedFile } from 'services/quotation';
 import Modal from 'components/modalComponent/ModalComponent';
+import fileDownload from "js-file-download";
 import Spinner from 'app/common/Spinner';
 
 import moment from 'moment';
@@ -36,6 +38,21 @@ const AttachFileComponent = ({ income, onDone }) => {
         name: ''
     });
 
+    const ERROR_MESSAGE = {
+        title: "",
+        text: "",
+        btnText: "Cerrar",
+        iconName: "cil-warning",
+        iconClassName: "text-danger",
+        btnOnClick: () => null,
+    }
+
+    const [modalConfig, setModalConfig] = React.useState({
+        show: false,
+        ...ERROR_MESSAGE
+    })
+
+
     const handleDeleteAttach = async (fileId) => {
         try {
             setLoading(true)
@@ -45,6 +62,28 @@ const AttachFileComponent = ({ income, onDone }) => {
         } catch (error) {
             console.log('Error: ', error);
         }
+    }
+
+    const handleDownloadAttach = async (file) => {
+        try {
+            setLoading(true)            
+            let extension = file.original_name.split('.').pop();            
+            const response = await getRentAttachedFile(file.id);
+            if (response.status === 200){
+                fileDownload(response.data, file.comment +"."+ extension);
+                
+            }else{
+                setModalConfig({
+                    show: true, ...ERROR_MESSAGE,
+                    title:'Advertencia',
+                    text: response.data.message,
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                });   
+            }    
+        } catch (error) {
+            console.log('Error: ', error);
+        }
+        setLoading(false)
     }
 
     const handleDeleteRegister = async () => {
@@ -109,9 +148,9 @@ const AttachFileComponent = ({ income, onDone }) => {
                 {
                     income.files && income.files.map((_file) => (
                         <CCol key={_file.id} xs={12} className="justify-content-center justify-content-md-start d-inline-flex align-items-center">
-                            <CLink to="#" className="bold text-light d-inline-flex align-items-center">
+                            <CLink to="#" className="bold text-light d-inline-flex align-items-center" onClick={() => handleDownloadAttach(_file)}>
                                 <CIcon name="cil-file" className="mr-2" />
-                                {_file.original_name}
+                                {_file.comment}
                             </CLink>
                             <CIcon
                                 name="cil-x-circle"
@@ -125,6 +164,15 @@ const AttachFileComponent = ({ income, onDone }) => {
                     ))
                 }
             </CRow>
+
+            <CModal
+                size="lg"
+                show={modalConfig.show}
+                onClose={() => setModalConfig((_p) => ({ ..._p, show: false }))}
+                className="modal-custom"
+            >
+                <CardComponent {...modalConfig} />
+            </CModal>
 
             <Modal
                 show={attachFileModal.open}
