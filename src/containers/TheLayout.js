@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import {
   TheContent,
-  TheHeader
+  TheHeader,
+  TheAside,
 } from './index'
 
 const TheLayout = () => {
@@ -15,6 +16,7 @@ const TheLayout = () => {
 
   return (
     <div className={classes}>
+      <TheAside/>
       <div className="c-wrapper">
         <TheHeader />
         <div className="c-body">
