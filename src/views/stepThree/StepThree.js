@@ -62,6 +62,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                     btnOnClick: () => history.push('/resumen')
                 })
             }
+            setLoading(false);
         } catch (error) {
             console.log('onSubmit Error: ', error);
         }
@@ -87,25 +88,26 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
 
     return (
         <>
-            {loading ? <Spinner/> : (
-                <CRow className="justify-content-center">
+            
+            <CRow className="justify-content-center">
+                {loading ? <Spinner/> : (
                     <CCol md={8} lg={6}>
                         <StepThreeFormComponent
                             formik={formik}
                             prev={prevStape}
                             onChange={handleTextChange} />
                     </CCol>
-
-                    <CModal
-                        size="lg"
-                        show={modalConfig.show}
-                        onClose={() => null}
-                        className="modal-custom"
-                    >
-                        <CardComponent {...modalConfig} />
-                    </CModal>
-                </CRow>
-            )}
+                )}
+                <CModal
+                    size="lg"
+                    show={modalConfig.show}
+                    onClose={() => setModalConfig((_p) => ({ ..._p, show: false }))}
+                    className="modal-custom"
+                >
+                    <CardComponent {...modalConfig} />
+                </CModal>
+            </CRow>
+           
         </>
     )
 }

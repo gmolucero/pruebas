@@ -23,6 +23,21 @@ export default [
   // },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Cotiza tu crédito',
+    to: '/cotizacion',
+    className:'bg-secondary'
+    // icon: 'cil-account-logout',
+  
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Productos solicitados',
+    to: '/resumen',
+    // icon: 'cil-account-logout',
+   
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Cerrar sesión',
     to: '/',
     icon: 'cil-account-logout',

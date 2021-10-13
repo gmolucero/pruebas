@@ -5,16 +5,18 @@ import {
   CHeaderNav,
   CHeaderNavItem,
   CHeaderNavLink,
-  CButton
+  CButton,  
+  CToggler
 } from "@coreui/react";
-
+import { useSelector, useDispatch } from "react-redux";
 import logo from "../assets/img/logo_portal.png";
 import { Link } from "react-router-dom";
 import CIcon from "@coreui/icons-react";
 // routes config
 
 const TheHeader = (props) => {
-
+  const dispatch = useDispatch();
+  const asideShow = useSelector(state => state.asideShow)
   const logout = (props) => {
     localStorage.clear();
   };
@@ -30,15 +32,22 @@ const TheHeader = (props) => {
           <CHeaderNavLink to="/"></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
-
-      <CHeaderNav className="px-sm-3">
-        <Link to="/cotizacion">
+      <CHeaderNav className=" ml-auto px-sm-3  d-sm-down-none">
+        <CHeaderNavItem className="px-2">
+          <CHeaderNavLink to="/resumen">PRODUCTOS SOLICITADOS</CHeaderNavLink>
+        </CHeaderNavItem>
+        <Link to="/cotizacion" className="pl-2">
           <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
         </Link>
         <Link to="/" onClick={logout}>
           <CIcon name="cil-account-logout" className="text-white" />
         </Link>
       </CHeaderNav>
+      <CToggler
+        inHeader
+        className="ml-sm-3 d-md-none"
+        onClick={() => dispatch({type: 'set', asideShow: !asideShow})}
+      />
     </CHeader>
   );
 };

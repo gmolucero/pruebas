@@ -17,9 +17,10 @@ import CIcon from "@coreui/icons-react";
 // import Pagination from 'components/paginationComponent/PaginationComponent'
 import Spinner from 'app/common/Spinner';
 import { formatClp } from 'utils';
+import { useStepper,useStepData} from 'context/hooks';
 
 const fields = [
-    { key: 'inicio_credito', label: "Fecha" },
+    { key: 'fecha', label: "Fecha" },
     { key: 'type', label: "Tipo de crédito" },
     { key: 'principal', label: "Monto" },
     { key: 'motivo', label: "Motivo" },
@@ -29,9 +30,10 @@ const fields = [
 
 
 const Summary = props => {
-
+    const [step, setStepper] = useStepper();
     const [loading, setLoading] = React.useState(true);
     const [list, setList] = React.useState([]);
+    const [stepKeepData, setStepKeepData] = useStepData('');
 
     const handleInit = async () => {
         try {
@@ -45,6 +47,11 @@ const Summary = props => {
 
     React.useEffect(() => {
         handleInit();
+    }, [])
+
+    React.useEffect(() => {       
+        if (step !== 1) setStepper(1)
+        if (stepKeepData) setStepKeepData('')
     }, [])
 
     // const handlePagination = (page) => { console.log('pagina', page); }
@@ -68,14 +75,14 @@ const Summary = props => {
                                 pagination={{align:'end', dots:false, doubleArrows:false}}
                                 sorter
                                 scopedSlots={{
-                                    'inicio_credito':
-                                        (item) => (<td> {item.inicio_credito ? item.inicio_credito :"-"} </td>),
+                                    'fecha':
+                                        (item) => (<td> {item.fecha ? item.fecha :"-"} </td>),
                                     'principal':
                                         (item) => (<td className="bold"> ${formatClp(item.principal)} </td>),
                                     'type':
                                         (item) => (<td>{item.tipo.nombre}</td>),
                                     'motivo':
-                                        (item) => (<td>{item.motivo.nombre}</td>),
+                                        (item) => (<td>{item.motivo ? item.motivo.nombre : "-"}</td>),
                                     // 'estatus':
                                     //     (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':
