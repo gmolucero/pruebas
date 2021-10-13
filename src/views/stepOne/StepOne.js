@@ -89,7 +89,7 @@ const StepOne = ({ next }) => {
 
     React.useEffect(() => {
         clearTimeout(timer)
-        if (!isEmpty(formik.values)) {
+        if (formik.values.day && formik.values.month && formik.values.year && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
             setTimer(setTimeout(() => {
                 handleUpdate(formik.values)
             }, 500))

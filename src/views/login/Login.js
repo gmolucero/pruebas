@@ -49,7 +49,13 @@ const Login = (props) => {
       login(user).then(
         (response) => {
           if (response.status === 200) {
-            setUserLogged(user.email, response.data.result.access_token);
+            if(response.data.result.user.email_verified_at){
+              setUserLogged(user.email, response.data.result.access_token);
+            }else{
+              setNotification({ type: 'warning', message: 'Debe validar su email' })
+              setVisible(true);
+            }
+            
           } else {
             setNotification({ type: 'warning', message: response.data.message })
             setVisible(true);
