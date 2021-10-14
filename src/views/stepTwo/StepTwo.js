@@ -43,13 +43,10 @@ const StepTwo = ({ next, prev }) => {
     const handleInit = async () => {
         try {
             const { data } = await getRent();
-
             if (data.result.independent_income && data.result.dependent_income) setType('ambos')
             else if (!data.result.independent_income && data.result.dependent_income) setType('dependiente')
-            else if (data.result.independent_income && !data.result.dependent_income) setType('independiente')           
-            if(data.result.dependent_income && data.result.independent_income){
-                setState(data.result)
-            }            
+            else if (data.result.independent_income && !data.result.dependent_income) setType('independiente') 
+            setState(data.result)
             setType(data.result.activity_type);
             setLoading(false)
         } catch (error) {
@@ -77,7 +74,7 @@ const StepTwo = ({ next, prev }) => {
                 <p className="text-left"> Cuéntanos de tus ingresos líquidos en los últimos 3 meses </p>
                 {
                     type !== 'dependiente' && <>
-                        <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income.length >= 3} />
+                        <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income && states.independent_income.length >= 3} />
 
                         {
                             states.independent_income && states.independent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
@@ -89,7 +86,7 @@ const StepTwo = ({ next, prev }) => {
 
                 {
                     type !== 'independiente' && <>
-                        <QuotationForm label="Dependiente" type="dependent" onDone={handleInit} disabled={states.dependent_income.length >= 3} />
+                        <QuotationForm label="Dependiente" type="dependent" onDone={handleInit} disabled={states.dependent_income && states.dependent_income.length >= 3} />
 
                         {
                             states.dependent_income && states.dependent_income.map((el) => <AttachFileComponent key={el.id} income={el} onDone={handleInit} />)
