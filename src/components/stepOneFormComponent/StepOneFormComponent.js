@@ -20,7 +20,7 @@ import { getRegion, getComuneById } from 'services/location';
 import { getEducationOptions, getProfession } from 'services/lists';
 import Spinner from 'app/common/Spinner'
 
-const StepOneFormComponent = ({ formik, onChange }) => {
+const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
 
     const [region, setRegion] = React.useState([]);
     const [communes, setCommunes] = React.useState([]);
@@ -96,7 +96,9 @@ const StepOneFormComponent = ({ formik, onChange }) => {
                         (formik.touched.month && !!formik.errors.month) ||
                         (formik.touched.year && !!formik.errors.year)
                     )}>
-                    {[formik.errors.day, formik.errors.month, formik.errors.year].filter((el) => typeof el !== 'undefined').join(', ')}</CInvalidFeedback>
+                    {[formik.errors.day, formik.errors.month, formik.errors.year].filter((el) => typeof el !== 'undefined').join(', ')}</CInvalidFeedback
+                >
+                {errorAge ? <p style={{color: '#e55353'}}>Fecha inválida</p> : ''} 
 
             </CFormGroup>
 

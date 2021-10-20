@@ -1,7 +1,7 @@
 
 
 import React from "react";
-import { formatRut } from '@fdograph/rut-utilities';
+// import { formatRut, RutFormat } from '@fdograph/rut-utilities';
 import PropTypes from 'prop-types';
 import {
     CButton,
@@ -13,8 +13,7 @@ import {
 
 import { getValidationResult } from 'utils';
 
-const SignupFormComponent = ({ formik, onChange }) => {
-
+const SignupFormComponent = ({ formik, onChange, changeRut }) => {   
     return (
         <CForm className="my-5" onSubmit={formik.handleSubmit}>
             <CFormGroup className="mb-3">
@@ -33,9 +32,11 @@ const SignupFormComponent = ({ formik, onChange }) => {
                 <CInput
                     type="text"
                     placeholder="Rut"
-                    value={formatRut(formik.values.rut.replace('-', ''))}
-                    invalid={formik.touched.rut && !!formik.errors.rut}
+                    value={formik.values.rut}
+                    //value={formatRut(formik.values.rut.replace('-', ''))}
                     onChange={onChange}
+                    invalid={formik.touched.rut && !!formik.errors.rut}
+                    onBlur={changeRut}
                     name="rut"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.rut && !!formik.errors.rut)}>{formik.errors.rut}</CInvalidFeedback>
