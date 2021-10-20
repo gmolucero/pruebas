@@ -20,6 +20,7 @@ import Spinner from 'app/common/Spinner';
 const StepOne = ({ next }) => {
     let [timer, setTimer] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
+    const [errorAge, setErrorAge] = React.useState(false);
     const ERROR_MESSAGE = {
         title: "",
         text: "",
@@ -28,7 +29,7 @@ const StepOne = ({ next }) => {
         iconClassName: "text-danger",
         btnOnClick: () => null,
     }
-
+    
     const [modalConfig, setModalConfig] = React.useState({
         show: false,
         ...ERROR_MESSAGE
@@ -89,11 +90,21 @@ const StepOne = ({ next }) => {
 
     React.useEffect(() => {
         clearTimeout(timer)
-        if (formik.values.day && formik.values.month && formik.values.year && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
-            setTimer(setTimeout(() => {
-                handleUpdate(formik.values)
-            }, 500))
+        if(formik.values.day && formik.values.month && formik.values.year){
+            let valAge = getAge(formik.values.year+'/'+formik.values.month+'/'+formik.values.day)
+            if(valAge){
+                setErrorAge(false);
+                if (formik.values.day && formik.values.month && formik.values.year && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
+                    setTimer(setTimeout(() => {
+                        handleUpdate(formik.values)
+                    }, 500))
+                } 
+            }else{
+                setErrorAge(true)
+            }
+           
         }
+      
     }, [formik.values])
 
 
@@ -101,10 +112,26 @@ const StepOne = ({ next }) => {
         handleInit();
     }, [])
 
+    function getAge(dateString) {        
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        if(age >= 18){
+           return true;
+        }else{
+            return false;
+        }
+        // return age;
+    }
+
     return (
         <CRow className="justify-content-center">
             <CCol md={8} lg={6}>
-                {loading ? <Spinner /> : <StepOneFormComponent formik={formik} onChange={handleTextChange} />}
+                {loading ? <Spinner /> : <StepOneFormComponent formik={formik} onChange={handleTextChange} errorAge={errorAge} />}
             </CCol>
             <CModal
                 size="lg"

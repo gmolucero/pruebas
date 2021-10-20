@@ -19,6 +19,7 @@ import SignupFormComponent from 'components/signupFormComponent/SignupFormCompon
 import { useNotification } from 'context/hooks';
 
 import ImgFondo from "../../assets/img/bg-1.png";
+import { formatRut, RutFormat } from '@fdograph/rut-utilities';
 
 var styles = {
   backgroundImage: `url(${ImgFondo})`,
@@ -41,11 +42,11 @@ const Singup = ({ history }) => {
       setVisible(false);
       const { status, data } = await register(user);
       if (status > 400) {
-        setNotification({ type: 'warning', message: data.message })
+        setNotification({ type: 'warning', message: data.message, delay: 8000 })
         setVisible(true)
       }
       else {
-        setNotification({ type: 'success', message: 'Usuario creado correctamente' })
+        setNotification({ type: 'success', message: 'Usuario creado correctamente. Se ha enviado un correo electrónico de validación para continuar con el proceso', delay: 8000 })
         history.push("/")
       }
     } catch (error) {
@@ -69,6 +70,12 @@ const Singup = ({ history }) => {
 
   const handleTextChange = handlerInputChangeCreator(formik)
 
+  const changeRut = (e) =>{
+   const {value} = e.target; 
+   let format = (formatRut(value, RutFormat.DOTS_DASH));   
+   formik.setValues({...formik.values,rut:format})
+  }
+  
   return (
 
     <PublicLayout menu={menu} >
@@ -93,7 +100,7 @@ const Singup = ({ history }) => {
             <CCol md="6">
               <CRow className="justify-content-center align-items-center h-100">
                 <CCol md={8}>
-                  {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} /> : <div className="text-center"><CSpinner color="light" /></div>}
+                  {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} /> : <div className="text-center"><CSpinner color="light" /></div>}
                 </CCol>
               </CRow>
             </CCol>

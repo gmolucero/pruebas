@@ -52,12 +52,12 @@ const Login = (props) => {
             if(response.data.result.user.email_verified_at){
               setUserLogged(user.email, response.data.result.access_token);
             }else{
-              setNotification({ type: 'warning', message: 'Debe validar su email' })
+              setNotification({ type: 'warning', message: 'Debes verificar, para esto ingresa a tu correo y activa tu cuenta desde el correo de verificación que te enviamos al momento de crear tu cuenta', delay: 8000 })
               setVisible(true);
             }
             
           } else {
-            setNotification({ type: 'warning', message: response.data.message })
+            setNotification({ type: 'warning', message: "Esta credencial no se encuentra en nuestros registros o su contraseña es incorrecta.", delay: 8000 })
             setVisible(true);
           }
         },
