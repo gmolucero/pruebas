@@ -98,7 +98,7 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
                     )}>
                     {[formik.errors.day, formik.errors.month, formik.errors.year].filter((el) => typeof el !== 'undefined').join(', ')}</CInvalidFeedback
                 >
-                {errorAge ? <p style={{color: '#e55353'}}>Fecha inválida</p> : ''} 
+                {errorAge ? <p style={{color: '#e55353'}}>Edad minima 18 años</p> : ''} 
 
             </CFormGroup>
 

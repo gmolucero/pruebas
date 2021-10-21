@@ -3,7 +3,7 @@ import { validateRut } from '@fdograph/rut-utilities';
 
 export const signupSchema = () => {
     return Yup.object().shape({
-        name: Yup.string().required("El nombre es requerido").min(3, "El nombre debe terner mínimo 3 caracteres"),
+        name: Yup.string().required("El nombre es requerido").min(3, "El nombre debe tener mínimo 3 caracteres").matches(/^[aA-zZ\s]+$/, "Nombre no válido "),
         rut: Yup.string()
             .test('rut', 'El rut es invalido', (val) => validateRut(val.replace('-', '')))
             .required("El rut es requerido"),

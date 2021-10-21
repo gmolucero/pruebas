@@ -10,6 +10,7 @@ import {
     CFormGroup,
     CRow,
     CCol,
+    CInvalidFeedback
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
@@ -85,11 +86,13 @@ const QuotationForm = ({ label, type, onDone, disabled }) => {
                             md={4}
                             sx={6}
                             disabled={disabled}
+                            invalid={formik.touched.total && !!formik.errors.total}
                             value={formik.values.total}
                             name="total"
                             placeholder="2.000.000"
                             onChange={handleChange}
                         />
+                        <CInvalidFeedback>{formik.errors.total}</CInvalidFeedback>
                     </CCol>
                     <CCol
                         xs={12}
