@@ -62,7 +62,8 @@ const OrderDetails = props => {
                     { name: "Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
                     { name: "N° de cuotas", value: result.quotas_offered },
                     { name: "Fecha pago", value: result.pay_day.replace(/-/ig, '/') },
-                    { name: "Fecha solicitud", value: result.application_date.replace(/-/ig, '/') }
+                    { name: "Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
+                    { name: "oferta válida hasta el", value: result.offer_expiration.replace(/-/ig, '/') }
                 ]
 
                 const listRight = [
@@ -164,7 +165,7 @@ const OrderDetails = props => {
                                 <CCol md={6}>
                                     <CCard>
                                         <CCardBody className="py-4">
-                                            <div className="text-center mb-3  mt-4" style={{ height: '110px' }}>
+                                            <div className="text-center mb-3  mt-4" style={{ height: '69px' }}>
                                                 <h2 className="text-primary-light bold">CRÉDITOS DE CONSUMO</h2>
                                                 <p className="text-primary-light sub-title">Información solicitada</p>
                                             </div>
