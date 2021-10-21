@@ -19,7 +19,8 @@ const OrderBoxComponent = ({
     quotas_offered,
     executive,
     client_accepts,
-    handleAcceptOffer
+    handleAcceptOffer,
+    offer_expiration
 }) => {
 
     
@@ -43,6 +44,7 @@ const OrderBoxComponent = ({
                 <p className="mb-2">Monto solicitado: {formatClp(requested_amount)}</p>
                 <p className="mb-2">Tasa de interés: {interest} %</p>
                 <p className="mb-4">N° de cuotas: {quotas_offered}</p>
+                <p className="mb-2">oferta válida hasta el: {offer_expiration}</p>
 
                 <div className="d-flex flex-column">
                     {
