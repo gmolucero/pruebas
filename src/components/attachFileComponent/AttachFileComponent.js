@@ -14,7 +14,7 @@ import { deleteRent, deleteRentAttachedFile, createRentFile, getRentAttachedFile
 import Modal from 'components/modalComponent/ModalComponent';
 import fileDownload from "js-file-download";
 import Spinner from 'app/common/Spinner';
-
+import { formatClp } from 'utils';
 import moment from 'moment';
 moment.locale('es', {
     months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
@@ -116,7 +116,7 @@ const AttachFileComponent = ({ income, onDone }) => {
         <>
             <hr />
             <CRow>
-                <CCol xs={10} md={6} className="align-items-center d-inline-flex bold">{formated}  ·  $ {income.income}</CCol>
+                <CCol xs={10} md={6} className="align-items-center d-inline-flex bold">{formated}  ·  $ {formatClp(income.income)}</CCol>
                 <CCol xs={2} className="text-right d-md-none">
                     <CIcon name="cil-x" className="pointer" onClick={() => setDeleteRowModal(true)} />
                 </CCol>
