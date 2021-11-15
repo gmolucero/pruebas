@@ -68,7 +68,7 @@ const PreOffer = () => {
             } else {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
-                    text: res.data.message,
+                    text: 'A partir de ahora puedes contactarte con la institución financiera',
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
                 })
                 handleInit();
