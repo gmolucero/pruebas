@@ -16,7 +16,7 @@ import { useStepper, useStepData } from 'context/hooks';
 const Quotation = (props) => {
     const [step, setStep] = useStepper(1);
     const [stepKeepData, setStepKeepData] = useStepData('');
-    const stepsContent = [
+    const [stepsContent, setStepsContent ]= useState([
         {
             title: "Hola!! Necesitamos algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!",
             // text: "Las insituciones financieras requieren de datos para generar pre-ofertas personalizadas para ti.",
@@ -35,12 +35,12 @@ const Quotation = (props) => {
             step: 3,
             backFun: () => setStep(2)
         }
-    ]
+    ])
 
     return (
         <TheQuotationLayout {...stepsContent[step - 1]} >
-            {step === 1 && <StepOne next={() => setStep(2)} />}
-            {step === 2 && <StepTwo next={() => setStep(3)} prev={stepsContent[step - 1].backFun} />}
+            {step === 1 && <StepOne next={() => setStep(2)} stepsContent={stepsContent} setStepsContent={setStepsContent}/>}
+            {step === 2 && <StepTwo next={() => setStep(3)} prev={stepsContent[step - 1].backFun} stepsContent={stepsContent} setStepsContent={setStepsContent}/>}
             {step === 3 && <StepThree history={props.history} prev={stepsContent[step - 1].backFun} setStepKeepData={setStepKeepData} stepKeepData={stepKeepData}/>}
         </TheQuotationLayout>
     )

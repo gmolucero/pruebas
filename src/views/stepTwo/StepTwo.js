@@ -16,7 +16,7 @@ import Spinner from 'app/common/Spinner';
 import { getRent } from 'services/quotation';
 import { updateCustomerType } from 'services/customer';
 
-const StepTwo = ({ next, prev }) => {
+const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
 
     const [type, setType] = React.useState('ambos');
     const [loading, setLoading] = React.useState(true);
@@ -47,7 +47,10 @@ const StepTwo = ({ next, prev }) => {
             else if (!data.result.independent_income && data.result.dependent_income) setType('dependiente')
             else if (data.result.independent_income && !data.result.dependent_income) setType('independiente') 
             setState(data.result)
-            setType(data.result.activity_type);
+            setType(data.result.activity_type);            
+            if(data.result.hasOffer){
+                setStepsContent([...stepsContent, stepsContent[1].title = 'Actualizar Datos financieros' ])
+            }  
             setLoading(false)
         } catch (error) {
             console.error('Error: ', error);

@@ -17,7 +17,7 @@ import { updateCustomer, getCustomer } from 'services/customer';
 
 import Spinner from 'app/common/Spinner';
 
-const StepOne = ({ next }) => {
+const StepOne = ({ next, stepsContent,setStepsContent }) => {
     let [timer, setTimer] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
     const [errorAge, setErrorAge] = React.useState(false);
@@ -49,8 +49,7 @@ const StepOne = ({ next }) => {
         validate: validate(schema),
         onSubmit: next,
     });
-
-
+    
     const handleInit = async () => {
         try {
             const { data } = await getCustomer();
@@ -63,7 +62,10 @@ const StepOne = ({ next }) => {
                 education_level: data.result.education_level || '',
                 occupation: data.result.occupation || '',
                 other_occupation: data.result.other_occupation || ''
-            })
+            });            
+            if(data.hasOffer){
+                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!' ])
+            }            
             setLoading(false)
         } catch (error) {
             console.log('ERROR: ', error);
