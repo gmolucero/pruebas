@@ -47,6 +47,16 @@ const OrderDetails = props => {
         btnOnClick: () => null,
     }
 
+    const CONFIRM_MESSAGE = {
+        title: "Rechazar Pre oferta",
+        text: "¿Está seguro de rechazar la pre oferta?",
+        btnText: "Cerrar",
+        iconName: "cil-warning",
+        iconClassName: "text-waring",
+        btnTextRight:'Confirmar',
+        btnOnClick: () => null,
+    }
+
     const [modalConfig, setModalConfig] = React.useState({
         show: false,
         ...ERROR_MESSAGE
@@ -115,7 +125,7 @@ const OrderDetails = props => {
             } else {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
-                    text: res.data.message,
+                    text: 'A partir de ahora puedes contactarte con la institución financiera',
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
                 })
                 handleGetInit();
@@ -130,6 +140,7 @@ const OrderDetails = props => {
     }
 
     const handleRejectOffer = async () => {
+        setModalConfig((_p) => ({ ..._p, show: false }))
         try {       
             setData({...data, loading:true});     
             const res = await rejectPreOffer(offer_id);
@@ -160,7 +171,14 @@ const OrderDetails = props => {
         }     
     }
 
-    console.log(data,"data")
+    const handlePreRejectOffer = async () => {
+        setModalConfig({                    
+            show: true, ...CONFIRM_MESSAGE,     
+            btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
+            btnRightOnClick : () => handleRejectOffer()
+        })    
+    }
+   
     React.useEffect(() => {
         handleGetInit();
     }, [])
@@ -250,7 +268,7 @@ const OrderDetails = props => {
                                                 data.client_accepts === 0 &&
                                                 <CRow>
                                                     <CCol md={6}>
-                                                        <CButton className="w-100 mb-3 mb-md-0" size="lg" color="secondary" onClick={handleRejectOffer} variant="outline" >Rechazar</CButton>
+                                                        <CButton className="w-100 mb-3 mb-md-0" size="lg" color="secondary" onClick={handlePreRejectOffer} variant="outline" >Rechazar</CButton>
                                                     </CCol>
                                                     <CCol md={6}>
                                                         <CButton className="w-100" size="lg" color="secondary" onClick={handleAcceptOffer}>Aceptar</CButton>

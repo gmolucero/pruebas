@@ -11,7 +11,7 @@ import CIcon from "@coreui/icons-react";
 
 import './styles.scss';
 
-const CardComponent = ({ title, btnText, text, iconName, iconClassName, btnOnClick, children }) => {
+const CardComponent = ({ title, btnText, text, iconName, iconClassName, btnOnClick, children, btnRightOnClick, btnTextRight }) => {
     return (
         <CRow className="justify-content-center">
             <CCol md={12}>
@@ -21,7 +21,8 @@ const CardComponent = ({ title, btnText, text, iconName, iconClassName, btnOnCli
                         <h1 className="text-primary">{title}</h1>
                         <p className="px-4 f-24 mb-4">{text}</p>
                         {children}
-                        <CButton size="lg" onClick={btnOnClick} className="btn-secondary px-4">{btnText}</CButton>
+                        <CButton size="lg" onClick={btnOnClick} className=" px-4" color="secondary" variant={btnRightOnClick ? "outline": ""} >{btnText}</CButton>
+                        {btnRightOnClick ? <CButton size="lg" onClick={btnRightOnClick} className="btn-secondary px-4 ml-3">{btnTextRight}</CButton> : ''} 
                     </CCardBody>
                 </CCard>
             </CCol>
