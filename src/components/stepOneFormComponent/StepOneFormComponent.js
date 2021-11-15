@@ -87,7 +87,7 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
 
             <CFormGroup className="mb-3 text-left">
                 <label>¿cuándo naciste?</label>
-                <DateComponent day={formik.values.day} month={formik.values.month} year={formik.values.year} onChange={onChange} />
+                <DateComponent day={Number(formik.values.day)} month={formik.values.month} year={formik.values.year} onChange={onChange} />
 
                 <CInvalidFeedback
                     className="d-block"

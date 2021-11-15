@@ -6,7 +6,7 @@ const PreOffer = React.lazy(() => import("./views/preOffer/PreOffer"));
 const OrderDetails = React.lazy(() => import("./views/orderDetails/OrderDetails"));
 const Summary = React.lazy(() => import("./views/summary/Summary"));
 const Quotation = React.lazy(() => import("./views/quotation/Quotation"));
-
+const EditSingUp = React.lazy(() => import("./views/singup/EditSingUp"));
 
 const CardComponent = React.lazy(() => import("./components/cardComponent/CardComponent"));
 // INICIO SECCION DE EJEMPLOS
@@ -22,6 +22,7 @@ const routes = [
   { path: "/detalle/:offer_id", name: "Orders", component: OrderDetails },
   { path: "/oferta/:offer_id", name: "Orders", component: PreOffer },
   { path: "/cotizacion", name: "Quotation", component: Quotation },
+  { path: "/actualizar-datos", name: "EditSingUp", component: EditSingUp },
   // INICIO SECCION DE EJEMPLOS
   // { path: "/ejemplos/nuevo", name: "NewExample", component: NewExample },
   // { path: "/ejemplos/nuevoSinFormik", name: "NewExampleSinFormik", component: NewExampleSinFormik }

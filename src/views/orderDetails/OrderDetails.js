@@ -74,11 +74,19 @@ const OrderDetails = props => {
                     { name: "Plazo total", value: `${result.total_term || 0} meses` }
                 ]
 
+                const executiveListRight = [
+                    { name: "Nombre", value: result.executive.name},
+                    { name: "Correo", value: result.executive.email},
+                    { name: "Teléfono", value: result.executive.phone},
+                    
+                ]
+
                 setData({
                     ...result,
                     list: _list,
                     bank: result.bank,
                     listRight,
+                    executiveListRight,
                     loading: false
                 });
             }
@@ -195,9 +203,27 @@ const OrderDetails = props => {
                                             
                                             <CRow className="justify-content-center">
                                                 <CCol md={10}>
+                                                <div className="text-center" >                                                
+                                                    <p className="text-primary-light sub-title">Pre oferta</p>
+                                                </div>
                                                     <CListGroup flush className="mb-4">
                                                         {
                                                             data.listRight.map((el) => (
+                                                                <CListGroupItem key={el.name.replace(' ', '')}>
+                                                                    <CRow>
+                                                                        <CCol md={7}>{el.name}</CCol>
+                                                                        <CCol md={5} className="bold">{el.value}</CCol>
+                                                                    </CRow>
+                                                                </CListGroupItem>
+                                                            ))
+                                                        }
+                                                    </CListGroup>
+                                                    <div className="text-center" >                                                
+                                                        <p className="text-primary-light sub-title">Ejecutivo</p>
+                                                    </div>
+                                                    <CListGroup flush className="mb-4">
+                                                        {
+                                                            data.executiveListRight.map((el) => (
                                                                 <CListGroupItem key={el.name.replace(' ', '')}>
                                                                     <CRow>
                                                                         <CCol md={7}>{el.name}</CCol>
