@@ -37,6 +37,18 @@ export default [
    
   },
   {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Usuario',
+    // icon: 'cil-address-book',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Actualizar datos',
+        to: '/actualizar-datos',
+      }
+    ]
+  },
+  {
     _tag: 'CSidebarNavItem',
     name: 'Cerrar sesión',
     to: '/',

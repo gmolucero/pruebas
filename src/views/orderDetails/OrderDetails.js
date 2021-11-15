@@ -73,13 +73,16 @@ const OrderDetails = props => {
                     { name: "Periodo de gracia", value: `${result.grace_period || 0} meses` },
                     { name: "Plazo total", value: `${result.total_term || 0} meses` }
                 ]
+                let executiveListRight =[];
 
-                const executiveListRight = [
-                    { name: "Nombre", value: result.executive.name},
-                    { name: "Correo", value: result.executive.email},
-                    { name: "Teléfono", value: result.executive.phone},
-                    
-                ]
+                if(result.executive){
+                    executiveListRight = [
+                        { name: "Nombre", value: result.executive.name},
+                        { name: "Correo", value: result.executive.email},
+                        { name: "Teléfono", value: result.executive.phone},
+                        
+                    ]
+                }
 
                 setData({
                     ...result,
@@ -157,6 +160,7 @@ const OrderDetails = props => {
         }     
     }
 
+    console.log(data,"data")
     React.useEffect(() => {
         handleGetInit();
     }, [])
@@ -218,21 +222,28 @@ const OrderDetails = props => {
                                                             ))
                                                         }
                                                     </CListGroup>
-                                                    <div className="text-center" >                                                
-                                                        <p className="text-primary-light sub-title">Ejecutivo</p>
-                                                    </div>
-                                                    <CListGroup flush className="mb-4">
-                                                        {
-                                                            data.executiveListRight.map((el) => (
-                                                                <CListGroupItem key={el.name.replace(' ', '')}>
-                                                                    <CRow>
-                                                                        <CCol md={7}>{el.name}</CCol>
-                                                                        <CCol md={5} className="bold">{el.value}</CCol>
-                                                                    </CRow>
-                                                                </CListGroupItem>
-                                                            ))
-                                                        }
-                                                    </CListGroup>
+                                                    {
+                                                        data.executiveListRight.length > 1 ? (
+                                                            <>
+                                                                <div className="text-center" >                                                
+                                                                    <p className="text-primary-light sub-title">Ejecutivo</p>
+                                                                </div>
+                                                                <CListGroup flush className="mb-4">
+                                                                    {
+                                                                        data.executiveListRight.map((el) => (
+                                                                            <CListGroupItem key={el.name.replace(' ', '')}>
+                                                                                <CRow>
+                                                                                    <CCol md={7}>{el.name}</CCol>
+                                                                                    <CCol md={5} className="bold">{el.value}</CCol>
+                                                                                </CRow>
+                                                                            </CListGroupItem>
+                                                                        ))
+                                                                    }
+                                                                </CListGroup>
+                                                            </>
+                                                        ) :''
+                                                    }
+                                                
                                                 </CCol>
                                             </CRow>
                                             {

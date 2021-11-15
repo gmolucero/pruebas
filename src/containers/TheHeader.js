@@ -6,7 +6,11 @@ import {
   CHeaderNavItem,
   CHeaderNavLink,
   CButton,  
-  CToggler
+  CToggler,
+  CNavbarNav,
+  CDropdown,
+  CDropdownMenu,
+  CDropdownToggle
 } from "@coreui/react";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../assets/img/logo_portal.png";
@@ -32,10 +36,21 @@ const TheHeader = (props) => {
           <CHeaderNavLink to="/"></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
-      <CHeaderNav className=" ml-auto px-sm-3  d-sm-down-none">
+      <CHeaderNav className=" ml-auto px-sm-3  d-sm-down-none">  
         <CHeaderNavItem className="px-2">
           <CHeaderNavLink to="/resumen">PRODUCTOS SOLICITADOS</CHeaderNavLink>
         </CHeaderNavItem>
+        <CDropdown inNav>
+          <CDropdownToggle className="text-white">USUARIO</CDropdownToggle>
+          <CDropdownMenu>                                   
+            <Link to="/actualizar-datos" className="btn-logout dropdown-item">
+              Cambiar datos
+            </Link>                              
+            {/* <Link to="/login" onClick={logout} className="btn-logout dropdown-item">
+              Cerrar sesión
+            </Link>                                */}
+          </CDropdownMenu>
+        </CDropdown>
         <Link to="/cotizacion" className="pl-2">
           <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
         </Link>
@@ -43,6 +58,7 @@ const TheHeader = (props) => {
           <CIcon name="cil-account-logout" className="text-white" />
         </Link>
       </CHeaderNav>
+
       <CToggler
         inHeader
         className="ml-sm-3 d-md-none"
