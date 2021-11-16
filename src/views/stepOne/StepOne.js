@@ -63,7 +63,7 @@ const StepOne = ({ next, stepsContent, setStepsContent }) => {
                 occupation: data.result.occupation || '',
                 other_occupation: data.result.other_occupation || ''
             });
-            if (data.has_debt) {
+            if (data.result.has_debt) {
                 setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!'])
             }
             setLoading(false)
