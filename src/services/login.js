@@ -41,6 +41,14 @@ export const register = async function (user) {
   });
 };
 
+export const editRegister = async function (user) {
+  return request({
+    method: "PATCH",
+    data: user,
+    url: `/user`,
+  });
+};
+
 export default {
   login,
 };
