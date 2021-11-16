@@ -8,7 +8,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import { register } from 'services/login';
+import { editRegister } from 'services/login';
 
 import { validate, handlerInputChangeCreator } from 'utils';
 import { EditsignupSchema as schema } from 'components/signupFormComponent/signupSchema';
@@ -36,7 +36,7 @@ const EditSingUp = ({ history }) => {
   const onSubmit = async (user) => {
     try {
       setVisible(false);
-      const { status, data } = await register(user);      
+      const { status, data } = await editRegister(user);      
       if (status > 400) {
         let keys= Object.keys(data.errors);                
         let err = data.errors;
