@@ -17,7 +17,7 @@ import { updateCustomer, getCustomer } from 'services/customer';
 
 import Spinner from 'app/common/Spinner';
 
-const StepOne = ({ next, stepsContent,setStepsContent }) => {
+const StepOne = ({ next, stepsContent, setStepsContent }) => {
     let [timer, setTimer] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
     const [errorAge, setErrorAge] = React.useState(false);
@@ -29,7 +29,7 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
         iconClassName: "text-danger",
         btnOnClick: () => null,
     }
-    
+
     const [modalConfig, setModalConfig] = React.useState({
         show: false,
         ...ERROR_MESSAGE
@@ -49,7 +49,7 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
         validate: validate(schema),
         onSubmit: next,
     });
-    
+
     const handleInit = async () => {
         try {
             const { data } = await getCustomer();
@@ -62,10 +62,10 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
                 education_level: data.result.education_level || '',
                 occupation: data.result.occupation || '',
                 other_occupation: data.result.other_occupation || ''
-            });            
-            if(data.hasOffer){
-                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!' ])
-            }            
+            });
+            if (data.has_debt) {
+                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!'])
+            }
             setLoading(false)
         } catch (error) {
             console.log('ERROR: ', error);
@@ -73,15 +73,15 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
     }
 
     const handleUpdate = async (data) => {
-        try {           
+        try {
             const res = await updateCustomer(data);
-            if (res.status >= 400) { 
+            if (res.status >= 400) {
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
-                    title:'Advertencia',
+                    title: 'Advertencia',
                     text: 'Ocurrió un error',
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
-                });   
+                });
             }
         } catch (error) {
             console.error('[handleUpdate]', error);
@@ -92,21 +92,21 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
 
     React.useEffect(() => {
         clearTimeout(timer)
-        if(formik.values.day && formik.values.month && formik.values.year){
-            let valAge = getAge(formik.values.year+'/'+formik.values.month+'/'+formik.values.day)
-            if(valAge){
+        if (formik.values.day && formik.values.month && formik.values.year) {
+            let valAge = getAge(formik.values.year + '/' + formik.values.month + '/' + formik.values.day)
+            if (valAge) {
                 setErrorAge(false);
                 if (formik.values.day && formik.values.month && formik.values.year && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
                     setTimer(setTimeout(() => {
                         handleUpdate(formik.values)
                     }, 500))
-                } 
-            }else{
+                }
+            } else {
                 setErrorAge(true)
             }
-           
+
         }
-      
+
     }, [formik.values])
 
 
@@ -114,7 +114,7 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
         handleInit();
     }, [])
 
-    function getAge(dateString) {        
+    function getAge(dateString) {
         var today = new Date();
         var birthDate = new Date(dateString);
         var age = today.getFullYear() - birthDate.getFullYear();
@@ -122,9 +122,9 @@ const StepOne = ({ next, stepsContent,setStepsContent }) => {
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        if(age >= 18){
-           return true;
-        }else{
+        if (age >= 18) {
+            return true;
+        } else {
             return false;
         }
         // return age;
