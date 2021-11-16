@@ -48,7 +48,7 @@ const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
             else if (data.result.independent_income && !data.result.dependent_income) setType('independiente') 
             setState(data.result)
             setType(data.result.activity_type);            
-            if(data.result.has_debt){
+            if(data.result.hasDebt){
                 setStepsContent([...stepsContent, stepsContent[1].title = 'Actualizar Datos financieros' ])
             }  
             setLoading(false)
