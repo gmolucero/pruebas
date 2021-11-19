@@ -8,7 +8,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import { editRegister } from 'services/login';
+import { editRegister, getUser } from 'services/login';
 
 import { validate, handlerInputChangeCreator } from 'utils';
 import { EditsignupSchema as schema } from 'components/signupFormComponent/signupSchema';
@@ -27,41 +27,40 @@ var styles = {
 };
 
 const EditSingUp = ({ history }) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [, setNotification] = useNotification();
-  // const [err, setErrors] = useState([]);
-  // const [keys, setKeys] = useState([]);
-
 
   const onSubmit = async (user) => {
     try {
+      debugger;
       setVisible(false);
-      const { status, data } = await editRegister(user);      
+      const { status, data } = await editRegister(user);
       if (status > 400) {
-        let keys= Object.keys(data.errors);                
+        let keys = Object.keys(data.errors);
         let err = data.errors;
-           
-        setNotification({ type: 'warning', message: (
-          <ul> 
-            {keys.map((key) => (
-              err[key].map((item,index) => {
-                return <li key={index} className="mb-2">{item}</li>
-              })  
-            
-            ))}  
-          </ul>
-        ), delay: 8000 })
+
+        setNotification({
+          type: 'warning', message: (
+            <ul>
+              {keys.map((key) => (
+                err[key].map((item, index) => {
+                  return <li key={index} className="mb-2">{item}</li>
+                })
+
+              ))}
+            </ul>
+          ), delay: 8000
+        })
         setVisible(true)
       }
       else {
-        setNotification({ type: 'success', message: 'Usuario editado correctamente.', delay: 8000 })
-        history.push("/")
+        setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 })
+        history.push("/");
       }
     } catch (error) {
       console.error('[onSubmit Error] form', error);
     }
   };
-
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -76,46 +75,62 @@ const EditSingUp = ({ history }) => {
     onSubmit: onSubmit,
   });
 
+  const handleInit = async () => {
+    try {
+      const { data } = await getUser();
+
+      formik.setValues({
+        name: data.result.name || '',
+        rut: data.result.rut || '',
+        email: data.result.email || '',
+        phone: data.result.phone || '',
+        password: '',
+        password_confirmation: ''
+      });
+      setVisible(true);
+    } catch (error) {
+      console.log('ERROR: ', error);
+    }
+  }
+
   const handleTextChange = handlerInputChangeCreator(formik)
 
-  const changeRut = (e) =>{
-   const {value} = e.target; 
-   let format = (formatRut(value, RutFormat.DOTS_DASH));   
-   formik.setValues({...formik.values,rut:format})
+  const changeRut = (e) => {
+    const { value } = e.target;
+    let format = (formatRut(value, RutFormat.DOTS_DASH));
+    formik.setValues({ ...formik.values, rut: format })
   }
-  
+
+
+  React.useEffect(() => {
+    handleInit();
+  }, [])
+
   return (
 
-    
+
     <div
-    className="c-app c-default-layout flex-row bg-public"
+      className="c-app c-default-layout flex-row bg-public"
     >
-        <CContainer fluid={true}>
-            <CRow className="justify-content-center h-100">
-            <CCol md="6" style={styles} className="align-items-center bg-gradient-blue">
-                <div className="d-flex h-100 justify-content-center align-items-center text-center flex-column text-white p-relative">
-                <h1 className="bold f-48 mt-5 mt-md-0">Actualizar Datos</h1>
-                <p className="mb-5 h3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas fugit cupiditate ut mollitia itaque, accusamus beatae qui eaque corporis excepturi. </p>
+      <CContainer fluid={true}>
+        <CRow className="justify-content-center h-100">
+          <CCol md="6" style={styles} className="align-items-center bg-gradient-blue">
+            <div className="d-flex h-100 justify-content-center align-items-center text-center flex-column text-white p-relative">
+              <h1 className="bold f-48 mt-5 mt-md-0">Actualiza tus datos</h1>
+            </div>
+          </CCol>
 
-                {/* <ul className="login-list p-0">
-                    <li><CIcon name="cil-clock" /> Ahorra tiempo y solicita tu crédito.</li>
-                    <li><CIcon name="cil-find-in-page" /> Te llegarán pre-ofertas personalizadas.</li>
-                    <li><CIcon name="cil-chat-bubble" /> Negocia la pre-oferta de tu crédito.</li>
-                </ul> */}
-                </div>
-            </CCol>
-
-            <CCol md="6">
-                <CRow className="justify-content-center align-items-center h-100">
-                <CCol md={8}>
-                    {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} edit={true} /> : <div className="text-center"><CSpinner color="light" /></div>}
-                </CCol>
-                </CRow>
-            </CCol>
+          <CCol md="6">
+            <CRow className="justify-content-center align-items-center h-100">
+              <CCol md={8}>
+                {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} edit={true} /> : <div className="text-center"><CSpinner color="light" /></div>}
+              </CCol>
             </CRow>
-        </CContainer>
+          </CCol>
+        </CRow>
+      </CContainer>
     </div>
-  
+
 
 
   );

@@ -41,7 +41,7 @@ export const EditsignupSchema = () => {
             .max(10, 'El número debe contener al 10 dígitos como máximo')
             .required("El teléfono es requerido"),
         password: Yup.string()
-            .min(8, "La contraseña debe terner mínimo 8 caracteres"),            
+            .matches(/^(|.{8,})$/, "La contraseña debe terner mínimo 8 caracteres"),
         password_confirmation: Yup.string()
             .oneOf([Yup.ref("password"), null], "La contraseña no coinciden"),
         // term: Yup.boolean().oneOf([true], 'Debe aceptar los terminos y condiciones'),

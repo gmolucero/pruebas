@@ -49,6 +49,13 @@ export const editRegister = async function (user) {
   });
 };
 
+export const getUser = async function () {
+  return request({
+    method: "GET",
+    url: `/user`,
+  });
+};
+
 export default {
   login,
 };
