@@ -38,13 +38,13 @@ const TheHeader = (props) => {
       </CHeaderNav>
       <CHeaderNav className=" ml-auto px-sm-3  d-sm-down-none">  
         <CHeaderNavItem className="px-2">
-          <CHeaderNavLink to="/resumen">PRODUCTOS SOLICITADOS</CHeaderNavLink>
+          <CHeaderNavLink to="/resumen">Productos Solicitados</CHeaderNavLink>
         </CHeaderNavItem>
         <CDropdown inNav>
-          <CDropdownToggle className="text-white">USUARIO</CDropdownToggle>
+          <CDropdownToggle className="text-white">Usuario</CDropdownToggle>
           <CDropdownMenu>                                   
             <Link to="/actualizar-datos" className="btn-logout dropdown-item">
-              Cambiar datos
+              Actualizar datos
             </Link>                              
             {/* <Link to="/login" onClick={logout} className="btn-logout dropdown-item">
               Cerrar sesión

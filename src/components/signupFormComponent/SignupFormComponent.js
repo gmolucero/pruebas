@@ -1,7 +1,6 @@
 
 
 import React from "react";
-// import { formatRut, RutFormat } from '@fdograph/rut-utilities';
 import PropTypes from 'prop-types';
 import {
     CButton,
@@ -23,6 +22,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     value={formik.values.name}
                     invalid={formik.touched.name && !!formik.errors.name}
                     onChange={onChange}
+                    autoComplete="off"
                     name="name"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.name && !!formik.errors.name)}>{formik.errors.name}</CInvalidFeedback>
@@ -37,6 +37,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     onChange={onChange}
                     invalid={formik.touched.rut && !!formik.errors.rut}
                     onBlur={changeRut}
+                    autoComplete="off"
                     name="rut"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.rut && !!formik.errors.rut)}>{formik.errors.rut}</CInvalidFeedback>
@@ -49,6 +50,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     value={formik.values.email}
                     invalid={formik.touched.email && !!formik.errors.email}
                     onChange={onChange}
+                    autoComplete="off"
                     name="email"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.email && !!formik.errors.email)}>{formik.errors.email}</CInvalidFeedback>
@@ -60,6 +62,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     value={formik.values.phone}
                     invalid={formik.touched.phone && !!formik.errors.phone}
                     onChange={onChange}
+                    autoComplete="off"
                     name="phone"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.phone && !!formik.errors.phone)}>{formik.errors.phone}</CInvalidFeedback>
@@ -68,10 +71,11 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             <CFormGroup className="mb-3">
                 <CInput
                     type="password"
-                    placeholder="contraseña"
+                    placeholder="Contraseña"
                     onChange={onChange}
                     value={formik.values.password}
                     invalid={formik.touched.password && !!formik.errors.password}
+                    autoComplete="off"
                     name="password"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.password && !!formik.errors.password)}>{formik.errors.password}</CInvalidFeedback>
@@ -80,10 +84,11 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             <CFormGroup className="mb-3">
                 <CInput
                     type="password"
-                    placeholder="confirme contraseña"
+                    placeholder="Confirme contraseña"
                     onChange={onChange}
                     value={formik.values.password_confirmation}
                     invalid={formik.touched.password_confirmation && !!formik.errors.password_confirmation}
+                    autoComplete="off"
                     name="password_confirmation"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.password_confirmation && !!formik.errors.password_confirmation)}>{formik.errors.password_confirmation}</CInvalidFeedback>
@@ -98,7 +103,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
           
 
             <CButton type="submit" className="btn-login d-inline px-4" >
-               {edit ? 'Editar' : 'Comenzar'} 
+               {edit ? 'Actualizar' : 'Comenzar'} 
             </CButton>
 
         </CForm>

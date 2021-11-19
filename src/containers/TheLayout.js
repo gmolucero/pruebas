@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
+import NotificationComponent from 'components/notificationComponent/NotificationComponent';
 import {
   TheContent,
   TheHeader,
@@ -16,6 +17,7 @@ const TheLayout = () => {
 
   return (
     <div className={classes}>
+      <NotificationComponent />
       <TheAside/>
       <div className="c-wrapper">
         <TheHeader />
