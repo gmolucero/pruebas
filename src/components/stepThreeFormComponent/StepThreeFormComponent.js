@@ -17,7 +17,7 @@ import { getValidationResult } from 'utils';
 import { getCreditReason } from 'services/lists';
 import Spinner from 'app/common/Spinner';
 
-const StepThreeFormComponent = ({ formik, onChange, prev }) => {
+const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount }) => {
     const [reason, setReason] = React.useState([]);
 
     const handleGetter = async () => {
@@ -56,7 +56,8 @@ const StepThreeFormComponent = ({ formik, onChange, prev }) => {
                     value={formik.values.requested_amount}
                     placeholder="Monto solicitado"
                     invalid={formik.touched.requested_amount && !!formik.errors.requested_amount}
-                    onChange={onChange}
+                    //onChange={onChange}
+                    onChange={changeAmount}
                     name="requested_amount"
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.requested_amount && !!formik.errors.requested_amount)}>{formik.errors.requested_amount}</CInvalidFeedback>
