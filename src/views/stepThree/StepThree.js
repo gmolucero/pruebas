@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from "formik";
 
+
 import {
     CCol,
     CRow,
@@ -44,10 +45,12 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
 
     const [loading, setLoading] = React.useState(false);
 
-    const onSubmit = async (data) => {        
+    const onSubmit = async (data) => {
         try {
-            setLoading(true);
-            const response = await createSolicitude(data);
+            setLoading(true);                        
+            let clearAmount = data.requested_amount.replace(/\./g, '')
+            let tempData = {...data, requested_amount: clearAmount}  
+            const response = await createSolicitude(tempData);
             if (response.status >= 400) {                
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
@@ -86,6 +89,15 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
         setStepKeepData(formik.values);
     }
 
+    const changeAmount = (e) => {
+        const { value } = e.target;
+        let clearValue = value.replace(/\./g, '')
+        let clearAmount = clearValue.replace(/[^0-9 ]/g, '')
+        let format = new Intl.NumberFormat("es-CL").format(clearAmount);  
+        formik.setValues({ ...formik.values, requested_amount: format })
+    }
+    
+
     return (
         <>
             
@@ -95,7 +107,9 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                         <StepThreeFormComponent
                             formik={formik}
                             prev={prevStape}
+                            changeAmount={changeAmount}
                             onChange={handleTextChange} />
+                            
                     </CCol>
                 )}
                 <CModal
