@@ -42,7 +42,9 @@ const Singup = ({ history }) => {
   const onSubmit = async (user) => {
     try {
       setVisible(false);
-      const { status, data } = await register(user);      
+      let tempPhone = "+569"+user.phone
+      let tempUser = {...user, phone: tempPhone}
+      const { status, data } = await register(tempUser);      
       if (status > 400) {
         let keys= Object.keys(data.errors);                
         let err = data.errors;
