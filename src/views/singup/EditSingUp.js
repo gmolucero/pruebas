@@ -31,10 +31,11 @@ const EditSingUp = ({ history }) => {
   const [, setNotification] = useNotification();
 
   const onSubmit = async (user) => {
-    try {
-      debugger;
+    try {      
       setVisible(false);
-      const { status, data } = await editRegister(user);
+      let tempPhone = "+569"+user.phone
+      let tempUser = {...user, phone: tempPhone}
+      const { status, data } = await editRegister(tempUser);
       if (status > 400) {
         let keys = Object.keys(data.errors);
         let err = data.errors;
@@ -77,13 +78,12 @@ const EditSingUp = ({ history }) => {
 
   const handleInit = async () => {
     try {
-      const { data } = await getUser();
-
+      const { data } = await getUser();      
       formik.setValues({
         name: data.result.name || '',
         rut: data.result.rut || '',
         email: data.result.email || '',
-        phone: data.result.phone || '',
+        phone: data.result.phone.split('+569').pop() || '',
         password: '',
         password_confirmation: ''
       });

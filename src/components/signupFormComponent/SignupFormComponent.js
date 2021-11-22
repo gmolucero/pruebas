@@ -7,7 +7,10 @@ import {
     CForm,
     CInput,
     CInvalidFeedback,
-    CFormGroup
+    CFormGroup,
+    CInputGroupPrepend,
+    CInputGroupText,
+    CInputGroup
 } from "@coreui/react";
 
 import { getValidationResult } from 'utils';
@@ -57,15 +60,23 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
-                <CInput
-                    placeholder="N° teléfono celular"
-                    value={formik.values.phone}
-                    invalid={formik.touched.phone && !!formik.errors.phone}
-                    onChange={onChange}
-                    autoComplete="off"
-                    name="phone"
-                />
-                <CInvalidFeedback invalid={getValidationResult(formik.touched.phone && !!formik.errors.phone)}>{formik.errors.phone}</CInvalidFeedback>
+                <CInputGroup>
+                    <CInputGroupPrepend>
+                        <CInputGroupText>
+                            +569
+                        </CInputGroupText>
+                    </CInputGroupPrepend>
+                    <CInput
+                        placeholder="N° teléfono celular"
+                        value={formik.values.phone}
+                        invalid={formik.touched.phone && !!formik.errors.phone}
+                        onChange={onChange}
+                        autoComplete="off"
+                        name="phone"
+                    />
+                    <CInvalidFeedback invalid={getValidationResult(formik.touched.phone && !!formik.errors.phone)}>{formik.errors.phone}</CInvalidFeedback>
+                </CInputGroup>
+                
             </CFormGroup>
 
             <CFormGroup className="mb-3">
