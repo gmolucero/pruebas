@@ -90,9 +90,8 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
     }
 
     const changeAmount = (e) => {
-        const { value } = e.target;
-        let clearValue = value.replace(/\./g, '')
-        let clearAmount = clearValue.replace(/[^0-9 ]/g, '')
+        const { value } = e.target;        
+        let clearAmount = value.replace(/[^0-9 ]/g, '')
         let format = new Intl.NumberFormat("es-CL").format(clearAmount);  
         formik.setValues({ ...formik.values, requested_amount: format })
     }
