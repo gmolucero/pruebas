@@ -49,8 +49,10 @@ const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
             setState(data.result)
             setType(data.result.activity_type);            
             if(data.result.hasDebt){
-                setStepsContent([...stepsContent, stepsContent[1].title = 'Actualizar Datos financieros' ])
-            }  
+                setStepsContent([...stepsContent, stepsContent[1].title = 'Actualizar Datos financieros', stepsContent[1].text = "Cuéntanos un poco de tus ingresos, de está forma obtendrás Pre-ofertas pensadas en ti."  ])
+            }  else{
+                setStepsContent([...stepsContent, stepsContent[1].title = 'Datos financieros', stepsContent[1].text = "Cuéntanos un poco de tus ingresos, de está forma obtendrás Pre-ofertas pensadas en ti."  ])
+            }
             setLoading(false)
         } catch (error) {
             console.error('Error: ', error);
