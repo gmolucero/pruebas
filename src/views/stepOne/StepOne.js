@@ -66,7 +66,9 @@ const StepOne = ({ next, stepsContent, setStepsContent }) => {
                 other_occupation: data.result.other_occupation || ''
             });
             if (data.result.has_debt) {
-                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!'])
+                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos actualizar algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!', stepsContent[0].text = "Sólo Son 3 pasos!" ])
+            }else{
+                setStepsContent([...stepsContent, stepsContent[0].title = 'Hola!! Necesitamos algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!', stepsContent[0].text = "Sólo Son 3 pasos!" ])
             }
             setLoading(false)
         } catch (error) {

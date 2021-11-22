@@ -18,14 +18,14 @@ const Quotation = (props) => {
     const [stepKeepData, setStepKeepData] = useStepData('');
     const [stepsContent, setStepsContent ]= useState([
         {
-            title: "Hola!! Necesitamos algunos datos para que las Instituciones Financieras puedan realizar una Pre-Oferta a tu medida!!",
+            title: "",
             // text: "Las insituciones financieras requieren de datos para generar pre-ofertas personalizadas para ti.",
-            text:"Sólo Son 3 pasos!",
+            text:"",
             step: 1
         },
         {
-            title: "Datos financieros",
-            text: "Cuéntanos un poco de tus ingresos, de está forma obtendrás Pre-ofertas pensadas en ti.",
+            title: "",
+            text: "",
             step: 2,
             backFun: () => setStep(1),
         },
