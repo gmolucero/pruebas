@@ -13,8 +13,8 @@ export const signupSchema = () => {
             .required("La dirección de correo es requerida"),
         phone: Yup.string()
             .test('phone', 'Número invalido', (val) => !isNaN(val))
-            .min(8, 'El número debe contener al 8 dígitos como mínimo')
-            .max(10, 'El número debe contener al 10 dígitos como máximo')
+            .min(8, 'El número debe contener 8 dígitos como mínimo')
+            .max(8, 'El número debe contener 8 dígitos como máximo')
             .required("El teléfono es requerido"),
         password: Yup.string()
             .min(8, "La contraseña debe terner mínimo 8 caracteres")
@@ -37,8 +37,8 @@ export const EditsignupSchema = () => {
             .required("La dirección de correo es requerida"),
         phone: Yup.string()
             .test('phone', 'Número invalido', (val) => !isNaN(val))
-            .min(8, 'El número debe contener al 8 dígitos como mínimo')
-            .max(10, 'El número debe contener al 10 dígitos como máximo')
+            .min(8, 'El número debe contener 8 dígitos como mínimo')
+            .max(8, 'El número debe contener 8 dígitos como máximo')
             .required("El teléfono es requerido"),
         password: Yup.string()
             .matches(/^(|.{8,})$/, "La contraseña debe terner mínimo 8 caracteres"),
