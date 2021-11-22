@@ -1,6 +1,6 @@
 import request from "./index";
 
-export const getRegion = function (user) {
+export const getRegion = function () {
     return request({
         method: "GET",
         url: `/region`,

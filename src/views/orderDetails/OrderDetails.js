@@ -79,6 +79,7 @@ const OrderDetails = props => {
                 const listRight = [
                     { name: "Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
                     { name: "Tasa de interés", value: `${result.interest ? result.interest + '%'  : "-"}` },
+                    { name: "CAE", value: `${result.cae ? result.cae + '%'  : "-"}` },
                     { name: "Costo total", value: formatClp(result.requested_amount) },
                     { name: "Periodo de gracia", value: `${result.grace_period || 0} meses` },
                     { name: "Plazo total", value: `${result.total_term || 0} meses` }

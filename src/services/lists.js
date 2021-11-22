@@ -20,3 +20,10 @@ export const getProfession = function (id) {
         url: `/list/profession`,
     });
 };
+
+export const getCountries = function () {
+    return request({
+        method: "GET",
+        url: `/list/countries`,
+    });
+};
