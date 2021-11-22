@@ -107,7 +107,7 @@ const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
                     </CCol>
                     <CCol xs="12" sm="6" xl="5" className="pt-3">
                         <CButton onClick={next} color="secondary" size="lg" className="btn-login px-4 w-100" >
-                            continuar
+                            Continuar
                         </CButton>
                     </CCol>
                 </CRow>

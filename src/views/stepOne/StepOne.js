@@ -40,6 +40,7 @@ const StepOne = ({ next, stepsContent, setStepsContent }) => {
             day: '',
             month: '',
             year: '',
+            country: '',
             region: '',
             commune: '',
             education_level: '',
@@ -57,6 +58,7 @@ const StepOne = ({ next, stepsContent, setStepsContent }) => {
                 day: data.result.day || '',
                 month: data.result.month || '',
                 year: data.result.year || '',
+                country: data.result.country || '',
                 region: data.result.region || '',
                 commune: data.result.commune || '',
                 education_level: data.result.education_level || '',
@@ -96,7 +98,7 @@ const StepOne = ({ next, stepsContent, setStepsContent }) => {
             let valAge = getAge(formik.values.year + '/' + formik.values.month + '/' + formik.values.day)
             if (valAge) {
                 setErrorAge(false);
-                if (formik.values.day && formik.values.month && formik.values.year && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
+                if (formik.values.day && formik.values.month && formik.values.year && formik.values.country && formik.values.region && formik.values.commune && formik.values.education_level && formik.values.occupation) {
                     setTimer(setTimeout(() => {
                         handleUpdate(formik.values)
                     }, 500))

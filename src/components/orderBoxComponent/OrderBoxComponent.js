@@ -16,6 +16,7 @@ const OrderBoxComponent = ({
     bank,
     requested_amount,
     interest,
+    cae,
     quotas_offered,
     executive,
     client_accepts,
@@ -43,6 +44,7 @@ const OrderBoxComponent = ({
 
                 <p className="mb-2">Monto solicitado: {formatClp(requested_amount)}</p>
                 <p className="mb-2">Tasa de interés: {interest} %</p>
+                <p className="mb-2">CAE: {cae} %</p>
                 <p className="mb-4">N° de cuotas: {quotas_offered}</p>
                 <p className="mb-2">oferta válida hasta el: {offer_expiration}</p>
 
