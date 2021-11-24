@@ -24,10 +24,17 @@ export const createRent = async function (rent) {
     });
 };
 
-export const deleteRent = async function (income_id) {
+export const deleteDependentRent = async function (income_id) {
     return request({
         method: "DELETE",
-        url: `/rent/${income_id}`,
+        url: `/rent/dependent/${income_id}`,
+    });
+};
+
+export const deleteIndependentRent = async function (income_id) {
+    return request({
+        method: "DELETE",
+        url: `/rent/independent/${income_id}`,
     });
 };
 
