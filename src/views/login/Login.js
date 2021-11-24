@@ -15,7 +15,7 @@ import PublicLayout from 'containers/ThePublicLayout.js';
 import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent';
 
 import ImgFondo from "../../assets/img/bg-1.png";
-import { login } from "../../services/login";
+import { login,reSendEmail } from "../../services/login";
 import { useNotification } from "context/hooks";
 
 
@@ -51,9 +51,22 @@ const Login = (props) => {
           if (response.status === 200) {
             if(response.data.result.user.email_verified_at){
               setUserLogged(user.email, response.data.result.access_token);
-            }else{
+            }else{              
               setNotification({ type: 'warning', message: 'Debes verificar, para esto ingresa a tu correo y activa tu cuenta desde el correo de verificación que te enviamos al momento de crear tu cuenta', delay: 8000 })
               setVisible(true);
+              localStorage.setItem("token", response.data.result.access_token);
+              reSendEmail().then(
+                (res) => {
+                  sessionStorage.clear();                  
+                  if (res.status !== 200){
+                    setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 3000 })
+                  }                  
+                },
+                (error) => {
+                  console.error('Resend email: ', error);
+                }
+              );
+              localStorage.clear();
             }
             
           } else {

@@ -56,6 +56,13 @@ export const getUser = async function () {
   });
 };
 
+export const reSendEmail = async function () {
+  return request({
+    method: "POST",    
+    url: `/email/verification-notification`, 
+  });
+};
+
 export default {
   login,
 };
