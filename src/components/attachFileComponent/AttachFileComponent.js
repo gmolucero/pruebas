@@ -10,7 +10,7 @@ import CIcon from "@coreui/icons-react";
 
 import { useLoading } from 'context/hooks';
 import CardComponent from 'components/cardComponent/CardComponent';
-import { deleteRent, deleteRentAttachedFile, createRentFile, getRentAttachedFile } from 'services/quotation';
+import { deleteDependentRent, deleteIndependentRent, deleteRentAttachedFile, createRentFile, getRentAttachedFile } from 'services/quotation';
 import Modal from 'components/modalComponent/ModalComponent';
 import fileDownload from "js-file-download";
 import Spinner from 'app/common/Spinner';
@@ -25,7 +25,7 @@ moment.locale('es', {
 }
 );
 
-const AttachFileComponent = ({ income, onDone }) => {
+const AttachFileComponent = ({ income, onDone, type }) => {
     const formated = moment(income.period).locale('es').format('MMMM YYYY');
     const [, setLoading] = useLoading();
     const [loadingBtn, setLoadingBtn] = React.useState(false);
@@ -66,20 +66,20 @@ const AttachFileComponent = ({ income, onDone }) => {
 
     const handleDownloadAttach = async (file) => {
         try {
-            setLoading(true)            
-            let extension = file.original_name.split('.').pop();            
+            setLoading(true)
+            let extension = file.original_name.split('.').pop();
             const response = await getRentAttachedFile(file.id);
-            if (response.status === 200){
-                fileDownload(response.data, file.comment +"."+ extension);
-                
-            }else{
+            if (response.status === 200) {
+                fileDownload(response.data, file.comment + "." + extension);
+
+            } else {
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
-                    title:'Advertencia',
+                    title: 'Advertencia',
                     text: response.data.message,
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
-                });   
-            }    
+                });
+            }
         } catch (error) {
             console.log('Error: ', error);
         }
@@ -89,7 +89,12 @@ const AttachFileComponent = ({ income, onDone }) => {
     const handleDeleteRegister = async () => {
         try {
             setLoading(true)
-            const response = await deleteRent(income.id)
+            if (type === 'dependiente') {
+                const response = await deleteDependentRent(income.id);
+            } else {
+                const response = await deleteIndependentRent(income.id);
+            }
+
             setLoading(false)
         } catch (error) {
             console.error('Error: ', error);
