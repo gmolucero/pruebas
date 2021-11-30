@@ -189,7 +189,7 @@ const AttachFileComponent = ({ income, onDone, type }) => {
                     open: false
                 })}>
                 <h3>Eliminar Archivo</h3>
-                <p>¿Desea elimiar el archivos {attachFileModal.name}?</p>
+                <p>¿Desea eliminar el archivo {attachFileModal.name}?</p>
             </Modal>
 
             <Modal
@@ -198,7 +198,7 @@ const AttachFileComponent = ({ income, onDone, type }) => {
                 rigthButtonText="Eliminar"
                 toggle={setDeleteRowModal}>
                 <h3>Eliminar Periodo</h3>
-                <p>¿Desea elimiar el registro {formated}?</p>
+                <p>¿Desea eliminar el registro {formated}?</p>
             </Modal>
         </>
     )
