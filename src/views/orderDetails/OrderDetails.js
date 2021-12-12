@@ -25,6 +25,7 @@ const OrderDetails = props => {
     const [data, setData] = React.useState({
         loading: true,
         list: [],
+        listLeft: [],
         listRight: [],
         bank: {}
     });
@@ -68,21 +69,29 @@ const OrderDetails = props => {
             const { data: { result }, status } = await getOfferDetails(offer_id)
 
             if (status < 400) {
+
                 const _list = [
-                    { name: "Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
-                    { name: "N° de cuotas", value: result.quotas_offered },
-                    { name: "Fecha pago", value: result.pay_day.replace(/-/ig, '/') },
-                    { name: "Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
-                    { name: "oferta válida hasta el", value: result.offer_expiration.replace(/-/ig, '/') }
+                    { name: "A. Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
+                    { name: "B. N° de cuotas", value: result.quotas_offered },
+                    { name: "C. Pago primera cuota", value: result.pay_day.replace(/-/ig, '/') },
+                    { name: "D. Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
+                ]
+
+                const listLeft = [
+                    { name: "E. Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
+                    { name: "F. Tasa de interés mensual", value: `${result.interest ? result.interest + '%'  : "-"}` },
+                    { name: "G. Tasa de interés anual", value: `${result.annual_rate ? result.annual_rate + '%'  : "-"}` },
+                    { name: "H. Costo anual equivalente (CAE)", value: `${result.cae ? result.cae + '%'  : "-"}` },
+                    { name: "I. Costo total", value: formatClp(result.requested_amount) },
+                    { name: "J. Periodo de gracia", value: `${result.grace_period || 0}  ${ result.grace_period !== 1 ? 'meses' : 'mes' }` },
+                    { name: "K. Plazo total", value: `${result.total_term || 0} ${ result.total_term !== 1 ? 'meses' : 'mes' }` }
                 ]
 
                 const listRight = [
-                    { name: "Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
-                    { name: "Tasa de interés", value: `${result.interest ? result.interest + '%'  : "-"}` },
-                    { name: "CAE", value: `${result.cae ? result.cae + '%'  : "-"}` },
-                    { name: "Costo total", value: formatClp(result.requested_amount) },
-                    { name: "Periodo de gracia", value: `${result.grace_period || 0} meses` },
-                    { name: "Plazo total", value: `${result.total_term || 0} meses` }
+                    { name: "L. Seguro mensual", value: `$${formatClp(result.insurance)}` },
+                    { name: "M. Impuesto a timbres y estampillas", value: `$${formatClp(result.tax)}` },
+                    { name: "N. Gastos", value: `$${formatClp(result.notarial_spending)}` },
+                    { name: "O. Monto Bruto", value: `$${formatClp(result.gross_amount)}`, info: `(L)+(M)+(N)+(A)`},
                 ]
                 let executiveListRight =[];
 
@@ -99,6 +108,7 @@ const OrderDetails = props => {
                     ...result,
                     list: _list,
                     bank: result.bank,
+                    listLeft,
                     listRight,
                     executiveListRight,
                     loading: false
@@ -191,12 +201,12 @@ const OrderDetails = props => {
                 data.loading ? <Spinner /> :
                     <CRow className="justify-content-center">
                         <CCol xs={12} md={10}><h1 className="text-primary-light mb-3">Pre-oferta {data.bank.name && data.bank.name.toLowerCase()}</h1></CCol>
-                        <CCol md={10}>
+                        <CCol md={12}>
                             <CRow>
-                                <CCol md={6}>
+                                <CCol md={4}>
                                     <CCard>
                                         <CCardBody className="py-4">
-                                            <div className="text-center mb-3  mt-4" style={{ height: '69px' }}>
+                                            <div className="text-center mb-3  mt-4" >
                                                 <h2 className="text-primary-light bold">CRÉDITOS DE CONSUMO</h2>
                                                 <p className="text-primary-light sub-title">Información solicitada</p>
                                             </div>
@@ -206,8 +216,8 @@ const OrderDetails = props => {
                                                     data.list.map((el) => (
                                                         <CListGroupItem className="px-0 px-md-3" key={el.name.replace(' ', '')}>
                                                             <CRow className="px-0">
-                                                                <CCol xs={7} md={7}>{el.name}</CCol>
-                                                                <CCol xs={5} md={5} className="bold">{el.value}</CCol>
+                                                                <CCol md={12}>{el.name}</CCol>
+                                                                <CCol md={12} className="bold">{el.value}</CCol>
                                                             </CRow>
                                                         </CListGroupItem>
                                                     ))
@@ -216,7 +226,7 @@ const OrderDetails = props => {
                                         </CCardBody>
                                     </CCard>
                                 </CCol>
-                                <CCol md={6}>
+                                <CCol md={8}>
                                     <CCard>
                                         <CCardBody className="py-4">
                                             
@@ -225,44 +235,65 @@ const OrderDetails = props => {
                                             </div>
                                             
                                             <CRow className="justify-content-center">
-                                                <CCol md={10}>
+                                                <CCol md={12} lg={8}>
                                                 <div className="text-center" >                                                
                                                     <p className="text-primary-light sub-title">Pre oferta</p>
                                                 </div>
-                                                    <CListGroup flush className="mb-4">
-                                                        {
-                                                            data.listRight.map((el) => (
-                                                                <CListGroupItem key={el.name.replace(' ', '')}>
-                                                                    <CRow>
-                                                                        <CCol md={7}>{el.name}</CCol>
-                                                                        <CCol md={5} className="bold">{el.value}</CCol>
-                                                                    </CRow>
-                                                                </CListGroupItem>
-                                                            ))
+                                                    <CRow className="justify-content-center">
+                                                        <CCol md={6}>
+                                                        <CListGroup flush className="mb-4">
+                                                            {
+                                                                data.listLeft.map((el) => (
+                                                                    <CListGroupItem key={el.name.replace(' ', '')}>
+                                                                        <CRow>
+                                                                            <CCol md={12} style={{ fontSize:12 }}>{el.name}</CCol>
+                                                                            <CCol md={12} className="bold">{el.value}</CCol>
+                                                                        </CRow>
+                                                                    </CListGroupItem>
+                                                                ))
+                                                            }
+                                                        </CListGroup>
+                                                        </CCol>
+                                                        <CCol md={6}>
+                                                            <CListGroup flush className="mb-4">
+                                                                {
+                                                                    data.listRight.map((el) => (
+                                                                        <CListGroupItem key={el.name.replace(' ', '')}>
+                                                                            <CRow>
+                                                                                <CCol md={12} style={{ fontSize:12 }}>{el.name}</CCol>
+                                                                                <CCol md={12} className="bold">{el.value}</CCol>
+                                                                                <CCol md={12} style={{ fontSize:12, color: 'grey' }}>{el.info ?? ''}</CCol>
+                                                                            </CRow>
+                                                                        </CListGroupItem>
+                                                                    ))
+                                                                }
+                                                            </CListGroup>
+                                                        </CCol>
+                                                    </CRow>
+                                                </CCol>
+                                                <CCol md={12} lg={4}>
+                                                <div className="text-center" >                                                
+                                                    <p className="text-primary-light sub-title">Ejecutivo</p>
+                                                </div>
+                                                {
+                                                            data.executiveListRight.length > 1 ? (
+                                                                <>
+
+                                                                    <CListGroup flush className="mb-4">
+                                                                        {
+                                                                            data.executiveListRight.map((el) => (
+                                                                                <CListGroupItem key={el.name.replace(' ', '')}>
+                                                                                    <CRow>
+                                                                                        <CCol md={12} style={{ fontSize:12 }}>{el.name}</CCol>
+                                                                                        <CCol md={12} className="bold">{el.value}</CCol>
+                                                                                    </CRow>
+                                                                                </CListGroupItem>
+                                                                            ))
+                                                                        }
+                                                                    </CListGroup>
+                                                                </>
+                                                            ) :''
                                                         }
-                                                    </CListGroup>
-                                                    {
-                                                        data.executiveListRight.length > 1 ? (
-                                                            <>
-                                                                <div className="text-center" >                                                
-                                                                    <p className="text-primary-light sub-title">Ejecutivo</p>
-                                                                </div>
-                                                                <CListGroup flush className="mb-4">
-                                                                    {
-                                                                        data.executiveListRight.map((el) => (
-                                                                            <CListGroupItem key={el.name.replace(' ', '')}>
-                                                                                <CRow>
-                                                                                    <CCol md={7}>{el.name}</CCol>
-                                                                                    <CCol md={5} className="bold">{el.value}</CCol>
-                                                                                </CRow>
-                                                                            </CListGroupItem>
-                                                                        ))
-                                                                    }
-                                                                </CListGroup>
-                                                            </>
-                                                        ) :''
-                                                    }
-                                                
                                                 </CCol>
                                             </CRow>
                                             {
