@@ -71,27 +71,27 @@ const OrderDetails = props => {
             if (status < 400) {
 
                 const _list = [
-                    { name: "A. Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
-                    { name: "B. N° de cuotas", value: result.quotas_offered },
-                    { name: "C. Pago primera cuota", value: result.pay_day.replace(/-/ig, '/') },
-                    { name: "D. Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
+                    { name: "a) Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
+                    { name: "b) N° de cuotas", value: result.quotas_offered },
+                    { name: "c) Pago primera cuota", value: result.pay_day.replace(/-/ig, '/') },
+                    { name: "d) Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
                 ]
 
                 const listLeft = [
-                    { name: "E. Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
-                    { name: "F. Tasa de interés mensual", value: `${result.interest ? result.interest + '%'  : "-"}` },
-                    { name: "G. Tasa de interés anual", value: `${result.annual_rate ? result.annual_rate + '%'  : "-"}` },
-                    { name: "H. Costo anual equivalente (CAE)", value: `${result.cae ? result.cae + '%'  : "-"}` },
-                    { name: "I. Costo total", value: formatClp(result.requested_amount) },
-                    { name: "J. Periodo de gracia", value: `${result.grace_period || 0}  ${ result.grace_period !== 1 ? 'meses' : 'mes' }` },
-                    { name: "K. Plazo total", value: `${result.total_term || 0} ${ result.total_term !== 1 ? 'meses' : 'mes' }` }
+                    { name: "e) Valor cuota", value: `$${formatClp(result.enhanced_quota_value)}` },
+                    { name: "f) Tasa de interés mensual", value: `${result.interest ? result.interest + '%'  : "-"}` },
+                    { name: "g) Tasa de interés anual", value: `${result.annual_rate ? result.annual_rate + '%'  : "-"}` },
+                    { name: "h) Costo anual equivalente (CAE)", value: `${result.cae ? result.cae + '%'  : "-"}` },
+                    { name: "i) Costo total", value: formatClp(result.requested_amount) },
+                    { name: "j) Periodo de gracia", value: `${result.grace_period || 0}  ${ result.grace_period !== 1 ? 'meses' : 'mes' }` },
+                    { name: "k) Plazo total", value: `${result.total_term || 0} ${ result.total_term !== 1 ? 'meses' : 'mes' }` }
                 ]
 
                 const listRight = [
-                    { name: "L. Seguro mensual", value: `$${formatClp(result.insurance)}` },
-                    { name: "M. Impuesto a timbres y estampillas", value: `$${formatClp(result.tax)}` },
-                    { name: "N. Gastos", value: `$${formatClp(result.notarial_spending)}` },
-                    { name: "O. Monto Bruto", value: `$${formatClp(result.gross_amount)}`, info: `(L)+(M)+(N)+(A)`},
+                    { name: "l) Seguro mensual", value: `$${formatClp(result.insurance)}` },
+                    { name: "m) Impuesto a timbres y estampillas", value: `$${formatClp(result.tax)}` },
+                    { name: "n) Gastos notariales", value: `$${formatClp(result.notarial_spending)}` },
+                    { name: "o) Monto Bruto", value: `$${formatClp(result.gross_amount)}`, info: `(l)+(m)+(n)+(a)`},
                 ]
                 let executiveListRight =[];
 
@@ -204,7 +204,7 @@ const OrderDetails = props => {
                         <CCol md={12}>
                             <CRow>
                                 <CCol md={4}>
-                                    <CCard>
+                                    <CCard className='magic-box' >
                                         <CCardBody className="py-4">
                                             <div className="text-center mb-3  mt-4" >
                                                 <h2 className="text-primary-light bold">CRÉDITOS DE CONSUMO</h2>
@@ -216,7 +216,7 @@ const OrderDetails = props => {
                                                     data.list.map((el) => (
                                                         <CListGroupItem className="px-0 px-md-3" key={el.name.replace(' ', '')}>
                                                             <CRow className="px-0">
-                                                                <CCol md={12}>{el.name}</CCol>
+                                                                <CCol md={12} style={{ fontSize:12 }}>{el.name}</CCol>
                                                                 <CCol md={12} className="bold">{el.value}</CCol>
                                                             </CRow>
                                                         </CListGroupItem>
