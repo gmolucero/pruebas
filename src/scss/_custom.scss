@@ -269,3 +269,25 @@ h1{
     font-weight: bold;
   }
 }
+
+.magic-box {
+
+  @media (max-width: 575.98px) {
+    //height: 712px;
+  }
+  @media (min-width: 575.98px) {
+    height: 997px;
+  }
+
+  @media (min-width: 767.98px) {
+    height: 997px;
+  }
+
+  @media (min-width: 991.98px) {
+    height: 766px;
+  }
+
+  @media (min-width: 1199.98px) {
+    height: 712px;
+  }
+}

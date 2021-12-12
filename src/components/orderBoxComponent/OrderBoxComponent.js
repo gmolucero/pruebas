@@ -21,7 +21,8 @@ const OrderBoxComponent = ({
     executive,
     client_accepts,
     handleAcceptOffer,
-    offer_expiration
+    offer_expiration,
+    offer_created_at
 }) => {
 
     
@@ -31,22 +32,24 @@ const OrderBoxComponent = ({
                 <div className="mx-auto d-block px-4 mb-5 mt-3">
                     <img src={bank.img} alt="img" style={{maxHeight:'42px', maxWidth:'190px'}}  />
                 </div>
-                <h2 className="bold text-primary-light">$ {formatClp(enhanced_quota_value)}</h2>
-                <p class="sub-title">Valor cuota</p>
-
                 {
                     client_accepts === 1 && <>
-                        <p className="bold mb-1"><CIcon className="mr-1" name="cil-user" /> {executive.name}</p>
-                        <p className="bold mb-1"><CIcon className="mr-1" name="cil-envelope-closed" /> {executive.email}</p>
-                        <p className="bold mb-3"><CIcon className="mr-1" name="cil-phone" /> {executive.phone}</p>
+                        <p className="mb-1"><CIcon name="cil-check-circle" size="4xl"  className="c-d-dark-none m-1 text-success"  /></p>
                     </>
                 }
-
+                               {
+                    client_accepts === 2 && <>
+                        <p className="mb-1"><CIcon name="cil-x-circle" size="4xl"  className="c-d-dark-none m-1 text-danger"  /></p>
+                    </>
+                }
+                <p className="mb-2">Cuota: <span className="bold text-primary-light">$ {formatClp(enhanced_quota_value)}</span> </p>
                 <p className="mb-2">Monto solicitado: {formatClp(requested_amount)}</p>
                 <p className="mb-2">Tasa de interés: {interest} %</p>
                 <p className="mb-2">CAE: {cae} %</p>
-                <p className="mb-4">N° de cuotas: {quotas_offered}</p>
-                <p className="mb-2">oferta válida hasta el: {offer_expiration}</p>
+                <p className="mb-2">N° de cuotas: {quotas_offered}</p>
+                <p className="mb-4">Fecha creación preoferta: {offer_created_at}</p>
+                <p className="mb-2">Oferta válida hasta el: {offer_expiration}</p>
+                
 
                 <div className="d-flex flex-column">
                     {
