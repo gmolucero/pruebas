@@ -227,7 +227,7 @@ const OrderDetails = props => {
                                     </CCard>
                                 </CCol>
                                 <CCol md={8}>
-                                    <CCard>
+                                    <CCard className='magic-box'>
                                         <CCardBody className="py-4">
                                             
                                             <div className="text-center mb-3 mt-4" >
