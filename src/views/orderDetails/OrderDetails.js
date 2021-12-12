@@ -72,8 +72,8 @@ const OrderDetails = props => {
 
                 const _list = [
                     { name: "a) Monto solicitado", value: `$${formatClp(result.requested_amount)}` },
-                    { name: "b) N° de cuotas", value: result.quotas_offered },
-                    { name: "c) Pago primera cuota", value: result.pay_day.replace(/-/ig, '/') },
+                    { name: "b) N° de cuotas", value: result.application_quotas },
+                    { name: "c) Pago primera cuota", value: `${result.pay_day} dias`},
                     { name: "d) Fecha solicitud", value: result.application_date.replace(/-/ig, '/') },
                 ]
 
@@ -82,9 +82,9 @@ const OrderDetails = props => {
                     { name: "f) Tasa de interés mensual", value: `${result.interest ? result.interest + '%'  : "-"}` },
                     { name: "g) Tasa de interés anual", value: `${result.annual_rate ? result.annual_rate + '%'  : "-"}` },
                     { name: "h) Costo anual equivalente (CAE)", value: `${result.cae ? result.cae + '%'  : "-"}` },
-                    { name: "i) Costo total", value: formatClp(result.requested_amount) },
+                    { name: "i) Costo total", value: `$${formatClp(result.total)}` },
                     { name: "j) Periodo de gracia", value: `${result.grace_period || 0}  ${ result.grace_period !== 1 ? 'meses' : 'mes' }` },
-                    { name: "k) Plazo total", value: `${result.total_term || 0} ${ result.total_term !== 1 ? 'meses' : 'mes' }` }
+                    { name: "k) Plazo total", value: `${result.quotas_offered || 0} ${ result.quotas_offered !== 1 ? 'meses' : 'mes' }` }
                 ]
 
                 const listRight = [
