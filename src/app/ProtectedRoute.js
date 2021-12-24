@@ -10,6 +10,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
         window.localStorage.getItem('token') ? (
         <Component {...props} />
       ) : (
+        
         <Redirect
           to={{
             pathname: '/login',

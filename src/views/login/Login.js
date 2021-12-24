@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import {
   CCol,
@@ -15,7 +15,7 @@ import PublicLayout from 'containers/ThePublicLayout.js';
 import LoginFormComponent from 'components/loginFormComponent/LoginFormComponent';
 
 import ImgFondo from "../../assets/img/bg-1.png";
-import { login,reSendEmail } from "../../services/login";
+import { login, reSendEmail } from "../../services/login";
 import { useNotification } from "context/hooks";
 
 
@@ -34,10 +34,21 @@ const Login = (props) => {
     }
   ]
 
+  useEffect(() => {
+    if (window.localStorage.getItem('token')) {
+      props.history.push("/");
+    }
+  }, []);
+
   const setUserLogged = (email, token) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", email);
-    props.history.push("/");
+
+    if (typeof props.location.state !== 'undefined' && typeof props.location.state.from !== 'undefined' && props.location.state.from.pathname != '/' && props.location.state.from.pathname != 'login') {
+      props.history.push(props.location.state.from.pathname);
+    } else {
+      props.history.push("/");
+    }
   }
 
   const onSubmit = (user) => {
@@ -49,18 +60,18 @@ const Login = (props) => {
       login(user).then(
         (response) => {
           if (response.status === 200) {
-            if(response.data.result.user.email_verified_at){
+            if (response.data.result.user.email_verified_at) {
               setUserLogged(user.email, response.data.result.access_token);
-            }else{              
+            } else {
               setNotification({ type: 'warning', message: 'Debes verificar, para esto ingresa a tu correo y activa tu cuenta desde el correo de verificación que te enviamos al momento de crear tu cuenta', delay: 8000 })
               setVisible(true);
               localStorage.setItem("token", response.data.result.access_token);
               reSendEmail().then(
                 (res) => {
-                  sessionStorage.clear();                  
-                  if (res.status !== 200){
+                  sessionStorage.clear();
+                  if (res.status !== 200) {
                     setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 3000 })
-                  }                  
+                  }
                 },
                 (error) => {
                   console.error('Resend email: ', error);
@@ -68,7 +79,7 @@ const Login = (props) => {
               );
               localStorage.clear();
             }
-            
+
           } else {
             setNotification({ type: 'warning', message: "Esta credencial no se encuentra en nuestros registros o su contraseña es incorrecta.", delay: 8000 })
             setVisible(true);
