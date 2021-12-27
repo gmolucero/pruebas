@@ -7,26 +7,19 @@ const OrderDetails = React.lazy(() => import("./views/orderDetails/OrderDetails"
 const Summary = React.lazy(() => import("./views/summary/Summary"));
 const Quotation = React.lazy(() => import("./views/quotation/Quotation"));
 const EditSingUp = React.lazy(() => import("./views/singup/EditSingUp"));
-
-const CardComponent = React.lazy(() => import("./components/cardComponent/CardComponent"));
-// INICIO SECCION DE EJEMPLOS
-const NewExample = React.lazy(() => import("./views/example/New"));
-const NewExampleSinFormik = React.lazy(() => import("./views/example/NewSinFormik"));
-// FIN SECCION DE EJEMPLOS
+// const EditAddressProfession = React.lazy(() => import("./views/user/EditAddressProfession"));
+const EditRent = React.lazy(() => import("./views/user/EditRent"));
 
 const routes = [
   { path: "/", exact: true, name: "Home", component: Home },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
-  { path: "/card", name: "Dashboard", component: CardComponent },
   { path: "/resumen", name: "Summary", component: Summary },
   { path: "/detalle/:offer_id", name: "Orders", component: OrderDetails },
   { path: "/oferta/:offer_id", name: "Orders", component: PreOffer },
   { path: "/cotizacion", name: "Quotation", component: Quotation },
   { path: "/actualizar-datos", name: "EditSingUp", component: EditSingUp },
-  // INICIO SECCION DE EJEMPLOS
-  // { path: "/ejemplos/nuevo", name: "NewExample", component: NewExample },
-  // { path: "/ejemplos/nuevoSinFormik", name: "NewExampleSinFormik", component: NewExampleSinFormik }
-  // FIN SECCION DE EJEMPLOS
+  // { path: "/actualizar-profesion", name: "EditAddressProfession", component: EditAddressProfession },
+  // { path: "/actualizar-renta", name: "EditRent", component: EditRent }
 ];
 
 export default routes;
