@@ -6,18 +6,12 @@ import {
   CRow,
   CSpinner
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-
 import { editRegister, getUser } from 'services/login';
-
 import { validate, handlerInputChangeCreator } from 'utils';
 import { EditsignupSchema as schema } from 'components/signupFormComponent/signupSchema';
-
-import PublicLayout from 'containers/ThePublicLayout.js';
+import UserEditNavComponent from 'components/userComponent/UserEditNavComponent';
 import SignupFormComponent from 'components/signupFormComponent/SignupFormComponent';
-
 import { useNotification } from 'context/hooks';
-
 import ImgFondo from "../../assets/img/bg-1.png";
 import { formatRut, RutFormat } from '@fdograph/rut-utilities';
 
@@ -31,10 +25,10 @@ const EditSingUp = ({ history }) => {
   const [, setNotification] = useNotification();
 
   const onSubmit = async (user) => {
-    try {      
+    try {
       setVisible(false);
-      let tempPhone = "+569"+user.phone
-      let tempUser = {...user, phone: tempPhone}
+      let tempPhone = "+569" + user.phone
+      let tempUser = { ...user, phone: tempPhone }
       const { status, data } = await editRegister(tempUser);
       if (status > 400) {
         let keys = Object.keys(data.errors);
@@ -78,7 +72,7 @@ const EditSingUp = ({ history }) => {
 
   const handleInit = async () => {
     try {
-      const { data } = await getUser();      
+      const { data } = await getUser();
       formik.setValues({
         name: data.result.name || '',
         rut: data.result.rut || '',
@@ -107,10 +101,8 @@ const EditSingUp = ({ history }) => {
   }, [])
 
   return (
-
-
     <div
-      className="c-app c-default-layout flex-row bg-public"
+      className="c-app c-default-layout flex-row"
     >
       <CContainer fluid={true}>
         <CRow className="justify-content-center h-100">
@@ -120,19 +112,17 @@ const EditSingUp = ({ history }) => {
             </div>
           </CCol>
 
-          <CCol md="6">
-            <CRow className="justify-content-center align-items-center h-100">
+          <CCol className="p-5" md="6">
+            <CRow className="justify-content-center h-100">
               <CCol md={8}>
-                {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} edit={true} /> : <div className="text-center"><CSpinner color="light" /></div>}
+                <UserEditNavComponent></UserEditNavComponent>
+                {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} edit={true} /> : <div className="text-center mt-5"><CSpinner color="light" /></div>}
               </CCol>
             </CRow>
           </CCol>
         </CRow>
       </CContainer>
     </div>
-
-
-
   );
 };
 
