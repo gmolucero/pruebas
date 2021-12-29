@@ -61,7 +61,7 @@ const UserEditRentComponent = () => {
     }, [])
 
     return (
-        <CRow className="justify-content-center">
+        <CRow className="justify-content-center mb-5">
             {loading ? <Spinner /> : <CCol md={12} lg={8}>
 
                 <CFormGroup className="mb-3 text-left">
