@@ -49,8 +49,7 @@ const EditSingUp = ({ history }) => {
         setVisible(true)
       }
       else {
-        setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 })
-        history.push("/");
+        setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 });
       }
     } catch (error) {
       console.error('[onSubmit Error] form', error);
