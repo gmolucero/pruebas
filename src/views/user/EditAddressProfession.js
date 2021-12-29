@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import { updateCustomer, getCustomer } from 'services/customer';
 import { getRegion, getComuneById } from 'services/location';
 import { getEducationOptions, getProfession, getCountries } from 'services/lists';
+import { stepOnechema as schema } from 'components/stepOneFormComponent/stepOnechema'
+import { validate } from 'utils';
 
 var styles = {
     backgroundImage: `url(${ImgFondo})`,
@@ -27,6 +29,19 @@ const EditAddressProfession = () => {
     const [communes, setCommunes] = React.useState([]);
     const [educations, setEducations] = React.useState([]);
     const [, setNotification] = useNotification();
+
+    const onSubmit = async (user) => {
+        try {
+            const res = await updateCustomer(user);
+            if (res.status >= 400) {
+                setNotification({ type: 'error', message: 'Ha ocurrido un error, no fue posible actualizar los datos.', delay: 2000 });
+            }
+            setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 })
+        } catch (error) {
+          console.error('[onSubmit Error] form', error);
+        }
+      };
+      
     const formik = useFormik({
         initialValues: {
             day: '',
@@ -39,20 +54,9 @@ const EditAddressProfession = () => {
             occupation: '',
             other_occupation: ''
         },
-        onSubmit: handleUpdate
+        validate: validate(schema),
+        onSubmit: onSubmit
     });
-
-    const handleUpdate = async (data) => {
-        try {
-            const res = await updateCustomer(data);
-            if (res.status >= 400) {
-                setNotification({ type: 'error', message: 'Ha ocurrido un error, no fue posible actualizar los datos.', delay: 2000 });
-            }
-            setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 })
-        } catch (error) {
-            console.error('[handleUpdate]', error);
-        }
-    }
 
     const handleGetCountries = async () => {
         try {
