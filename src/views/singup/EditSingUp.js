@@ -4,14 +4,14 @@ import {
   CCol,
   CContainer,
   CRow,
-  CSpinner
+  CSpinner,
+  CAlert
 } from "@coreui/react";
 import { editRegister, getUser } from 'services/login';
 import { validate, handlerInputChangeCreator } from 'utils';
 import { EditsignupSchema as schema } from 'components/signupFormComponent/signupSchema';
 import UserEditNavComponent from 'components/userComponent/UserEditNavComponent';
 import SignupFormComponent from 'components/signupFormComponent/SignupFormComponent';
-import { useNotification } from 'context/hooks';
 import ImgFondo from "../../assets/img/bg-1.png";
 import { formatRut, RutFormat } from '@fdograph/rut-utilities';
 
@@ -22,39 +22,30 @@ var styles = {
 
 const EditSingUp = ({ history }) => {
   const [visible, setVisible] = useState(false);
-  const [, setNotification] = useNotification();
+  const [notification, setNotification] = React.useState({ visible: false, type: 'success', message: '' });
 
   const onSubmit = async (user) => {
     try {
-      setVisible(false);
+      setVisible((prevState) => !prevState);
       let tempPhone = "+569" + user.phone
       let tempUser = { ...user, phone: tempPhone }
       const { status, data } = await editRegister(tempUser);
-      if (status > 400) {
-        let keys = Object.keys(data.errors);
-        let err = data.errors;
-
-        setNotification({
-          type: 'warning', message: (
-            <ul>
-              {keys.map((key) => (
-                err[key].map((item, index) => {
-                  return <li key={index} className="mb-2">{item}</li>
-                })
-
-              ))}
-            </ul>
-          ), delay: 8000
-        })
-        setVisible(true)
-      }
-      else {
-        setNotification({ type: 'success', message: 'Datos actualizados correctamente.', delay: 8000 });
-      }
+      checkStatus(status);
+      setVisible((prevState) => !prevState);
     } catch (error) {
       console.error('[onSubmit Error] form', error);
     }
+
+    function checkStatus(res) {
+      if (res.status >= 400) {
+        setNotification((notification) => ({ ...notification, type: 'danger', visible: true, message: 'Ha ocurrido un error, no fue posible actualizar los datos.' }));
+      } else {
+        setNotification((notification) => ({ ...notification, type: 'success', visible: true, message: 'Datos actualizados correctamente.' }));
+      }
+      setTimeout(() => setNotification((notification) => ({ ...notification, visible: false, message: '' })), 2000);
+    }
   };
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -111,10 +102,14 @@ const EditSingUp = ({ history }) => {
             </div>
           </CCol>
 
-          <CCol className="p-5" md="6">
+          <CCol className="pt-5" md="6">
             <CRow className="justify-content-center h-100">
               <CCol md={8}>
                 <UserEditNavComponent></UserEditNavComponent>
+                {
+                  notification.visible &&
+                  <CAlert className="mt-1" color={notification.type} dismissible visible={notification.visible} onClose={() => setNotification((notification) => ({ ...notification, open: false }))}> {notification.message} </CAlert>
+                }
                 {visible ? <SignupFormComponent formik={formik} onChange={handleTextChange} changeRut={changeRut} edit={true} /> : <div className="text-center mt-5"><CSpinner color="light" /></div>}
               </CCol>
             </CRow>
