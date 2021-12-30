@@ -1,13 +1,5 @@
-import React, { Fragment } from "react";
-// import PropTypes from 'prop-types';
-// import { updateCustomer, getCustomer } from 'services/customer';
-// import { getRegion, getComuneById } from 'services/location';
-// import { getEducationOptions, getProfession, getCountries } from 'services/lists';
-// import { useFormik } from "formik";
-// import { validate, handlerInputChangeCreator, isEmpty, getValidationResult } from 'utils';
-// import { stepOnechema as schema } from 'components/stepOneFormComponent/stepOnechema'
+import React from "react";
 import DateComponent from 'components/dateComponent/DateComponent';
-import Spinner from 'app/common/Spinner';
 import { getValidationResult } from 'utils';
 
 import {
@@ -20,38 +12,10 @@ import {
     CSpinner
 } from "@coreui/react";
 
-const UserEditAddressProfessionComponent = ({ formik, countries, regions, communes, getCommunesByRegion, educations, professions }) => {
-    // let [timer, setTimer] = React.useState(null);
-    // const [countires, setCountries] = React.useState([]);
-    // const [region, setRegion] = React.useState([]);
-    // const [communes, setCommunes] = React.useState([]);
-    const [loadingCommunes, setLoadingCommunes] = React.useState(false);
-    // const [education, setEducation] = React.useState([]);
-    // const [profession, setProfession] = React.useState([]);
+const UserEditAddressProfessionComponent = ({ formik, countries, regions, communes, getCommunesByRegion, educations, professions, mounted }) => {
+    const [loadingCommunes, setLoadingCommunes] = React.useState(true);
     const [isMounted, setIsMounted] = React.useState(false);
-    // const [loading, setLoading] = React.useState(true);
     const [errorAge, setErrorAge] = React.useState(false);
-    // const ERROR_MESSAGE = {
-    //     title: "",
-    //     text: "",
-    //     btnText: "Cerrar",
-    //     iconName: "cil-warning",
-    //     iconClassName: "text-danger",
-    //     btnOnClick: () => null,
-    // }
-    // const [modalConfig, setModalConfig] = React.useState({
-    //     show: false,
-    //     ...ERROR_MESSAGE
-    // })
-
-
-
-    // const handleInit = async () => {
-    //     try {
-
-    //     } catch (error) {
-    //     }
-    // }
 
     function getAge(dateString) {
         var today = new Date();
@@ -66,8 +30,9 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
         } else {
             return false;
         }
-        // return age;
     }
+
+
 
     React.useEffect(() => {
         if (formik.values.day && formik.values.month && formik.values.year) {
@@ -82,30 +47,38 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
     }, [formik.values.day, formik.values.month, formik.values.year]);
 
     React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    React.useEffect(() => {
         if (formik.values.region !== '') {
-            setLoadingCommunes((prevState) => !prevState);
+            setLoadingCommunes(true);
             if (isMounted) {
                 formik.setFieldValue('commune', '');
             }
             getCommunesByRegion(Number(formik.values.region));
-            setLoadingCommunes((prevState) => !prevState);
         }
     }, [formik.values.region]);
 
     React.useEffect(() => {
-        setIsMounted(true);
-    }, [])
+        if (communes.length > 0 || formik.values.region == '') {
+            setLoadingCommunes(false);
+        }
+    }, [communes]);
+
+
 
     return (
-        <CForm className="my-5" onSubmit={formik.handleSubmit}>
+        <CForm className="mt-2" onSubmit={formik.handleSubmit}>
             <CFormGroup className="mb-3">
                 <label>¿Cuándo Naciste?</label>
-                <DateComponent custom size="small"
+                <DateComponent
                     day={Number(formik.values.day)}
                     month={formik.values.month}
                     year={formik.values.year}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur} />
+                    onBlur={formik.handleBlur}
+                    size="" />
 
                 <CInvalidFeedback
                     className="d-block"
@@ -148,17 +121,20 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
-                {(communes.length === 0 || loadingCommunes) ? <div className="text-center"><CSpinner color="light" /></div> :
-                    <CSelect custom name="commune"
-                        value={formik.values.commune}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}>
-                        <option disabled value="">Seleccione Comuna...</option>
-                        {
-                            communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))
-                        }
-                    </CSelect>}
-                <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.commune)}>{formik.errors.commune}</CInvalidFeedback>
+                {loadingCommunes ? <div className="text-center"><CSpinner color="light" /></div> :
+                    <>
+                        <CSelect custom name="commune"
+                            value={formik.values.commune}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}>
+                            <option disabled value="">Seleccione Comuna...</option>
+                            {
+                                communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))
+                            }
+                        </CSelect>
+                        <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.commune)}>{formik.errors.commune}</CInvalidFeedback>
+                    </>
+                }
 
             </CFormGroup>
 

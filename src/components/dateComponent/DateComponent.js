@@ -10,7 +10,7 @@ import {
     twentyEighth
 } from './dayValues';
 
-const DateComponent = ({ day, month, year, onChange }) => {
+const DateComponent = ({ day, month, year, onChange, size }) => {
 
     const current = moment();
     const defautlYears = [];
@@ -36,13 +36,13 @@ const DateComponent = ({ day, month, year, onChange }) => {
     return (
         <CRow>
             <CCol className="pr-1">
-                <CSelect custom value={day} onChange={onChange} name="day">
+                <CSelect custom size={size} value={day} onChange={onChange} name="day">
                     <option disabled value="">día</option>
                     {buildDayList()}
                 </CSelect>
             </CCol>
             <CCol className="px-2">
-                <CSelect custom value={month} onChange={onChange} name="month">
+                <CSelect custom size={size} value={month} onChange={onChange} name="month">
                     <option disabled value="">mes</option>
                     <option value="01">Enero</option>
                     <option value="02">Febrero</option>
@@ -55,11 +55,11 @@ const DateComponent = ({ day, month, year, onChange }) => {
                     <option value="09">Septiembre</option>
                     <option value="10">Octubre</option>
                     <option value="11">Noviembre</option>
-                    <option value="12">Diciempre</option>
+                    <option value="12">Diciembre</option>
                 </CSelect>
             </CCol>
             <CCol className="pl-1">
-                <CSelect custom value={year} onChange={onChange} name="year">
+                <CSelect custom size={size} value={year} onChange={onChange} name="year">
                     <option disabled value="">año</option>
                     {
                         defautlYears.map((year) => <option key={year} value={year}>{year}</option>)

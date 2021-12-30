@@ -15,9 +15,9 @@ import {
 
 import { getValidationResult } from 'utils';
 
-const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {   
+const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
     return (
-        <CForm className="my-5" onSubmit={formik.handleSubmit}>
+        <CForm className="mt-3" onSubmit={formik.handleSubmit}>
             <CFormGroup className="mb-3">
                 <CInput
                     type="text"
@@ -76,7 +76,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     />
                     <CInvalidFeedback invalid={getValidationResult(formik.touched.phone && !!formik.errors.phone)}>{formik.errors.phone}</CInvalidFeedback>
                 </CInputGroup>
-                
+
             </CFormGroup>
 
             <CFormGroup className="mb-3">
@@ -108,13 +108,13 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             <CInvalidFeedback className="d-inline" invalid={getValidationResult(formik.touched.term && !!formik.errors.term)}>{formik.errors.term}</CInvalidFeedback>
             {!edit ? (
                 <p className="mb-4 text-white d-block">
-                  <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href="/" className="text-white underline" >Términos y Condiciones de Privacidad</a>
+                    <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href="/" className="text-white underline" >Términos y Condiciones de Privacidad</a>
                 </p>
             ) : ""}
-          
+
 
             <CButton type="submit" className="btn-login d-inline px-4" >
-               {edit ? 'Actualizar' : 'Comenzar'} 
+                {edit ? 'Actualizar' : 'Comenzar'}
             </CButton>
 
         </CForm>
