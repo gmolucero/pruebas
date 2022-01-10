@@ -12,7 +12,7 @@ import {
     CInputGroupText,
     CInputGroup
 } from "@coreui/react";
-
+import logo from '../../assets/img/pdf.pdf'
 import { getValidationResult } from 'utils';
 
 const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
@@ -42,6 +42,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                     onBlur={changeRut}
                     autoComplete="off"
                     name="rut"
+                    disabled={edit ? true : false}
                 />
                 <CInvalidFeedback invalid={getValidationResult(formik.touched.rut && !!formik.errors.rut)}>{formik.errors.rut}</CInvalidFeedback>
             </CFormGroup>
@@ -108,7 +109,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             <CInvalidFeedback className="d-inline" invalid={getValidationResult(formik.touched.term && !!formik.errors.term)}>{formik.errors.term}</CInvalidFeedback>
             {!edit ? (
                 <p className="mb-4 text-white d-block">
-                    <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href="/" className="text-white underline" >Términos y Condiciones de Privacidad</a>
+                    <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href={logo} target="_blank" className="text-white underline" >Términos y Condiciones de Privacidad</a>
                 </p>
             ) : ""}
 

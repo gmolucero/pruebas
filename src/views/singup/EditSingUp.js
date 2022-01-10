@@ -30,16 +30,27 @@ const EditSingUp = ({ history }) => {
       let tempPhone = "+569" + user.phone
       let tempUser = { ...user, phone: tempPhone }
       const { status, data } = await editRegister(tempUser);
-      checkStatus(status);
+      checkStatus(status, data.errors);
       setVisible((prevState) => !prevState);
     } catch (error) {
       console.error('[onSubmit Error] form', error);
     }
 
-    function checkStatus(res) {
-      if (res.status >= 400) {
-        setNotification((notification) => ({ ...notification, type: 'danger', visible: true, message: 'Ha ocurrido un error, no fue posible actualizar los datos.' }));
-      } else {
+    function checkStatus(res, errors) {
+      if (res >= 400) {
+        let keys= Object.keys(errors);
+        setNotification((notification) => ({ ...notification, type: 'danger', visible: true, message: 
+          ( 
+            <ul> 
+              {keys.map((key) => (
+                errors[key].map((item,index) => {
+                  return <li key={index} className="mb-2">{item}</li>
+                })  
+              
+              ))}  
+            </ul>) })
+          );
+      } else {        
         setNotification((notification) => ({ ...notification, type: 'success', visible: true, message: 'Datos actualizados correctamente.' }));
       }
       setTimeout(() => setNotification((notification) => ({ ...notification, visible: false, message: '' })), 2000);

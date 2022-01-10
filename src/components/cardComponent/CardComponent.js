@@ -35,7 +35,7 @@ CardComponent.defaultProps = {
     // iconName: "cil-warning",
     iconClassName: "text-success",
     title: "¡Tu cotización de Crédito de Consumo fue enviada con éxito!",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+    text: "",
     btnText: "Ir a producto",
     btnOnClick: () => null
 }

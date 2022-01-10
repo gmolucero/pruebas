@@ -35,7 +35,7 @@ const Home = ({ history }) => {
                         <CRow className="justify-content-center align-items-center h-100 pt-5">
                             <CCol md={10} className="text-center">
                                 <h1 className="text-primary bold f-48">¡Cotiza tu producto!</h1>
-                                <p className="f-24 mb-5">Revisa los créditos solicitados en Portal Bancario</p>
+                                <p className="f-24 mb-5">Revisa los créditos solicitados en {process.env.REACT_APP_NAME}</p>
 
                                 <button onClick={() => history.push(`/cotizacion`)} className="card bg-secondary text-center p-4 d-inline-flex">
                                     <svg className="m-auto mb-4" width="105" height="102" viewBox="0 0 105 102" fill="none" xmlns="http://www.w3.org/2000/svg">
