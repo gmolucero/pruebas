@@ -28,7 +28,7 @@ const TheHeader = (props) => {
   return (
     <CHeader withSubheader className="px-sm-5 px-3 py-2 bg-primary">
       <CHeaderBrand className="" to="/">
-        <img src={logo} alt="Logo" style={{ height: "48px" }} />
+        <img src={logo} alt="Logo" style={{ width:"197px" }} />
       </CHeaderBrand>
 
       <CHeaderNav className="d-xs-down-none mr-auto">

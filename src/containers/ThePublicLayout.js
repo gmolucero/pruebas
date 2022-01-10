@@ -20,7 +20,7 @@ const PublicLayout = ({ children, menu }) => {
             <CContainer fluid className="bg-primary-dark" >
                 <CNavbar expand="md" colorscheme="light" >
 
-                    <CNavbarBrand href="#/"><img src={Logo} alt="Logo" /></CNavbarBrand>
+                    <CNavbarBrand href="#/"><img src={Logo} alt="Logo" style={{ width:"197px" }} /></CNavbarBrand>
                     <CNavbarNav className="flex-row">
                         {
                             menu && menu.map(element => (<CNavItem key={element.name}>

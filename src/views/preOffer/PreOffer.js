@@ -19,7 +19,7 @@ const PreOffer = () => {
     const [loading, setLoading] = React.useState(true);    
     const SUCCESS_MESSAGE = {
         title: "¡Tu preoferta fue aceptada con éxito!",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+        text: "",
         btnText: "Cerrar",
         iconName: "cil-check-circle",
         iconClassName: "text-success",
@@ -28,7 +28,7 @@ const PreOffer = () => {
     
     const ERROR_MESSAGE = {
         title: "Tu cotización no pudo ser enviada.",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+        text: "",
         btnText: "Cerrar",
         iconName: "cil-warning",
         iconClassName: "text-danger",

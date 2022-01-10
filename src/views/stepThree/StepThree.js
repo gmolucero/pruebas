@@ -21,7 +21,7 @@ import CardComponent from 'components/cardComponent/CardComponent';
 
 const SUCCESS_MESSAGE = {
     title: "¡Tu cotización de Crédito de Consumo fue enviada con éxito!",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+    text: "",
     btnText: "Ir a productos",
     iconName: "cil-check-circle",
     iconClassName: "text-success",
@@ -30,7 +30,7 @@ const SUCCESS_MESSAGE = {
 
 const ERROR_MESSAGE = {
     title: "Tu cotización no pudo ser enviada.",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+    text: "",
     btnText: "Editar cotización",
     iconName: "cil-warning",
     iconClassName: "text-danger",
