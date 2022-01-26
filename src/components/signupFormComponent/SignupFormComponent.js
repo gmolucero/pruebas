@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import PropTypes from 'prop-types';
 import {
@@ -12,7 +10,7 @@ import {
     CInputGroupText,
     CInputGroup
 } from "@coreui/react";
-import logo from '../../assets/img/pdf.pdf'
+import Pdf from '../../assets/tc/25012022-01.pdf';
 import { getValidationResult } from 'utils';
 
 const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
@@ -109,7 +107,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             <CInvalidFeedback className="d-inline" invalid={getValidationResult(formik.touched.term && !!formik.errors.term)}>{formik.errors.term}</CInvalidFeedback>
             {!edit ? (
                 <p className="mb-4 text-white d-block">
-                    <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href={logo} target="_blank" className="text-white underline" >Términos y Condiciones de Privacidad</a>
+                    <CInput id="terms" type="checkbox" name="term" checked={formik.values.term} className="w-auto d-inline h-auto" onChange={onChange} /> Al utilizar la plataforma aceptas nuestros <a href={Pdf} target="_blank" className="text-white underline" >Términos y Condiciones de Privacidad</a>
                 </p>
             ) : ""}
 
