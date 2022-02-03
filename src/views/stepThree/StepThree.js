@@ -44,6 +44,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
     })
 
     const [loading, setLoading] = React.useState(false);
+    const [termsChanged, setTermsChanged] = React.useState(0);
 
     const onSubmit = async (data) => {
         try {
@@ -51,7 +52,16 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             let clearAmount = data.requested_amount.replace(/\./g, '')
             let tempData = {...data, requested_amount: clearAmount}  
             const response = await createSolicitude(tempData);
-            if (response.status >= 400) {                
+            if (response.status == 409){
+                setModalConfig({
+                    show: true, ...ERROR_MESSAGE,
+                    text: response.data.message,
+                    // text: 'Debe volver a aceptar los términos y condiciones porque estos han cambiado',
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                });
+                setTermsChanged(termsChanged + 1);
+                formik.setFieldValue('acceptedTerms',false,false);
+            } else if (response.status >= 400) {                
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,
@@ -76,7 +86,9 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             reason: "",
             requested_amount: "",
             number_quotas: "",
-            credit_start: ""
+            credit_start: "",
+            acceptedTerms: false,
+            terms_id: 0
         },
         validate: validate(schema),
         onSubmit: onSubmit,
@@ -107,7 +119,8 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                             formik={formik}
                             prev={prevStape}
                             changeAmount={changeAmount}
-                            onChange={handleTextChange} />
+                            onChange={handleTextChange}
+                            termsChanged={termsChanged} />
                             
                     </CCol>
                 )}
