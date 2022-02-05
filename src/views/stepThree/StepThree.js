@@ -56,11 +56,10 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,
-                    // text: 'Debe volver a aceptar los términos y condiciones porque estos han cambiado',
                     btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
                 });
                 setTermsChanged(termsChanged + 1);
-                formik.setFieldValue('acceptedTerms',false,false);
+                formik.setFieldValue('terms',false,false);
             } else if (response.status >= 400) {                
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
@@ -87,7 +86,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             requested_amount: "",
             number_quotas: "",
             credit_start: "",
-            acceptedTerms: false,
+            terms: false,
             terms_id: 0
         },
         validate: validate(schema),

@@ -30,7 +30,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
             const response = await getCreditReason();
             setReason(response.data.result);
             const lastTerm = await getLastTerm();
-            setTerm(lastTerm.data.result?.content);
+            setTerm(lastTerm.data.result?.contenido);
             formik.setFieldValue('terms_id', lastTerm.data.result?.id || 0, false);
             const { scrollHeight, clientHeight } = listInnerRef.current;
             setTermDisabled(scrollHeight>clientHeight);
@@ -123,9 +123,9 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
                         </div>
                     </CFormGroup>
                     <CFormGroup className="mb-3 text-left">
-                        <CInput disabled={termDisabled} onChange={onChange} type="checkbox" className="w-auto d-inline h-auto" name="acceptedTerms" checked={formik.values.acceptedTerms}/> Al utilizar la plataforma aceptas nuestros Términos y Condiciones de Privacidad
+                        <CInput disabled={termDisabled} onChange={onChange} type="checkbox" className="w-auto d-inline h-auto" name="terms" checked={formik.values.terms}/> Al utilizar la plataforma aceptas nuestros Términos y Condiciones de Privacidad
                         <br/>
-                        <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.acceptedTerms)}>{formik.errors.acceptedTerms}</CInvalidFeedback>
+                        <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.terms)}>{formik.errors.terms}</CInvalidFeedback>
                     </CFormGroup>
                 </>
             }
