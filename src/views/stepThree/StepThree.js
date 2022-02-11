@@ -20,7 +20,7 @@ import { createSolicitude } from 'services/quotation';
 import CardComponent from 'components/cardComponent/CardComponent';
 
 const SUCCESS_MESSAGE = {
-    title: "¡Tu cotización de Crédito de Consumo fue enviada con éxito!",
+    title: "¡Tu solicitud de Crédito de Consumo fue enviada con éxito!",
     text: "",
     btnText: "Ir a productos",
     iconName: "cil-check-circle",
@@ -29,9 +29,9 @@ const SUCCESS_MESSAGE = {
 }
 
 const ERROR_MESSAGE = {
-    title: "Tu cotización no pudo ser enviada.",
+    title: "Tu solicitud no pudo ser enviada.",
     text: "",
-    btnText: "Editar cotización",
+    btnText: "Editar solicitud",
     iconName: "cil-warning",
     iconClassName: "text-danger",
     btnOnClick: () => null,

@@ -138,7 +138,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
                 </CCol>
                 <CCol xs="12" sm="6" xl="5" className="pt-3">
                     <CButton type="submit" color="secondary" size="lg" className="btn-login px-4 w-100" >
-                        Enviar cotizacion
+                        Enviar solicitud
                     </CButton>
                 </CCol>
             </CRow>

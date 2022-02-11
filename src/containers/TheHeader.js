@@ -52,7 +52,7 @@ const TheHeader = (props) => {
           </CDropdownMenu>
         </CDropdown>
         <Link to="/cotizacion" className="pl-2">
-          <CButton className="btn-secondary mr-2">Cotiza tu crédito</CButton>
+          <CButton className="btn-secondary mr-2">Solicita tu crédito</CButton>
         </Link>
         <Link to="/" onClick={logout}>
           <CIcon name="cil-account-logout" className="text-white" />

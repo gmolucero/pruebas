@@ -117,9 +117,9 @@ const Login = (props) => {
                 <p className="mb-5 h3 px-5">Rellena el formulario y comienza la experiencia con {process.env.REACT_APP_NAME}.</p>
 
                 <ul className="login-list p-0">
-                  <li><CIcon name="cil-clock" /> Ahorra tiempo y solicita tu crédito.</li>
-                  <li><CIcon name="cil-find-in-page" /> Te llegarán pre-ofertas personalizadas.</li>
-                  <li><CIcon name="cil-chat-bubble" /> Negocia la pre-oferta de tu crédito.</li>
+                  <li><CIcon name="cil-clock" /> Ahorra tiempo.</li>
+                  <li><CIcon name="cil-find-in-page" /> Pre-ofertas personalizadas.</li>
+                  <li><CIcon name="cil-chat-bubble" /> Negocia tu pre-oferta.</li>
                 </ul>
               </div>
             </CCol>
