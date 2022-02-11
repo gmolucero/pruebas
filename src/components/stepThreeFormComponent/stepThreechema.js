@@ -13,7 +13,7 @@ export const stepThreechema = () => {
     credit_start: Yup.string().required(
       "La fecha del primer pago es requerida"
     ),
-    acceptedTerms: Yup.boolean().oneOf(
+    terms: Yup.boolean().oneOf(
       [true],
       "Debe aceptar los términos y condiciones"
     ),
