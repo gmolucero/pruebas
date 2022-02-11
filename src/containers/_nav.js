@@ -23,7 +23,7 @@ export default [
   // },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Cotiza tu crédito',
+    name: 'Solicita tu crédito',
     to: '/cotizacion',
     className:'bg-secondary'
     // icon: 'cil-account-logout',
