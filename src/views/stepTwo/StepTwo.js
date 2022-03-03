@@ -77,7 +77,7 @@ const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
                     </CSelect>
                 </CFormGroup>
 
-                <p className="text-left"> Cuéntanos de tus ingresos líquidos en los últimos 3 meses </p>
+                {(states.independent_income.length >= 3) ?  <p className="text-left"><strong> Ya tienes 3 rentas, para poder agregar otra renta debes eliminar una </strong></p> :  <p className="text-left"><strong>Cuéntanos de tus ingresos líquidos en los últimos 3 meses </strong></p>}
                 {
                     type !== 'dependiente' && <>
                         <QuotationForm label="Independiente" type="independent" onDone={handleInit} disabled={states.independent_income && states.independent_income.length >= 3} />

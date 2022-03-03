@@ -70,7 +70,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             } else {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
-                    text: response.data.message,
+                    text: '',
                     btnOnClick: () => history.push('/resumen')
                 })
             }
