@@ -67,7 +67,7 @@ const AttachFileComponent = ({ income, onDone, type }) => {
           for (var [key_error, errors] of Object.entries(
             response.data.errors
           )) {
-            messageErrors = `${messageErrors} ${errors.join("\n")}`;
+            messageErrors = `${messageErrors} ${errors.join(" - ")}`;
           }
         }
 
@@ -75,6 +75,14 @@ const AttachFileComponent = ({ income, onDone, type }) => {
           show: true,
           ...ERROR_MESSAGE,
           text: messageErrors,
+          title: "¡Ha ocurrido un error!",
+          btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
+        });
+      } else {
+        setModalConfig({
+          show: true,
+          ...ERROR_MESSAGE,
+          text: "No fue posible eliminar el archivo",
           title: "¡Ha ocurrido un error!",
           btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
         });
@@ -137,7 +145,7 @@ const AttachFileComponent = ({ income, onDone, type }) => {
           for (var [key_error, errors] of Object.entries(
             response.data.errors
           )) {
-            messageErrors = `${messageErrors} ${errors.join("\n")}`;
+            messageErrors = `${messageErrors} ${errors.join(" - ")}`;
           }
         }
 
@@ -145,6 +153,14 @@ const AttachFileComponent = ({ income, onDone, type }) => {
           show: true,
           ...ERROR_MESSAGE,
           text: messageErrors,
+          title: "¡Ha ocurrido un error!",
+          btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
+        });
+      } else {
+        setModalConfig({
+          show: true,
+          ...ERROR_MESSAGE,
+          text: "No fue posible cargar el archivo",
           title: "¡Ha ocurrido un error!",
           btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
         });
