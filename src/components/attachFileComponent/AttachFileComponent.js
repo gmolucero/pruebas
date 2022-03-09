@@ -63,12 +63,11 @@ const AttachFileComponent = ({ income, onDone, type }) => {
         onDone();
       } else if (response.status === 422) {
         let messageErrors = "";
-        if (
-          typeof response.data.errors !== "undefined" &&
-          response.data.errors.length > 0
-        ) {
-          for (let error of response.data.errors) {
-            messageErrors = `${messageErrors} ${error.join("\n")}`;
+        if (typeof response.data.errors !== "undefined") {
+          for (var [key_error, errors] of Object.entries(
+            response.data.errors
+          )) {
+            messageErrors = `${messageErrors} ${errors.join("\n")}`;
           }
         }
 
@@ -134,12 +133,11 @@ const AttachFileComponent = ({ income, onDone, type }) => {
         onDone();
       } else if (response.status === 422) {
         let messageErrors = "";
-        if (
-          typeof response.data.errors !== "undefined" &&
-          response.data.errors.length > 0
-        ) {
-          for (let error of response.data.errors) {
-            messageErrors = `${messageErrors} ${error.join("\n")}`;
+        if (typeof response.data.errors !== "undefined") {
+          for (var [key_error, errors] of Object.entries(
+            response.data.errors
+          )) {
+            messageErrors = `${messageErrors} ${errors.join("\n")}`;
           }
         }
 
