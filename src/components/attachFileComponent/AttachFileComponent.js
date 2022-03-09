@@ -63,7 +63,10 @@ const AttachFileComponent = ({ income, onDone, type }) => {
         onDone();
       } else if (response.status === 422) {
         let messageErrors = "";
-        if (typeof response.data.errors !== "undefined" && response.data.errors.length > 0) {
+        if (
+          typeof response.data.errors !== "undefined" &&
+          response.data.errors.length > 0
+        ) {
           for (let error of response.data.errors) {
             messageErrors = `${messageErrors} ${error.join("\n")}`;
           }
@@ -127,7 +130,27 @@ const AttachFileComponent = ({ income, onDone, type }) => {
       _form.append("rent_id", income.id);
       _form.append("file", target.files[0]);
       const response = await createRentFile(_form);
-      if (response.status === 200) onDone();
+      if (response.status === 200) {
+        onDone();
+      } else if (response.status === 422) {
+        let messageErrors = "";
+        if (
+          typeof response.data.errors !== "undefined" &&
+          response.data.errors.length > 0
+        ) {
+          for (let error of response.data.errors) {
+            messageErrors = `${messageErrors} ${error.join("\n")}`;
+          }
+        }
+
+        setModalConfig({
+          show: true,
+          ...ERROR_MESSAGE,
+          text: messageErrors,
+          title: "¡Ha ocurrido un error!",
+          btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false })),
+        });
+      }
       setLoadingBtn(false);
     } catch (error) {
       console.error("Error: ", error);
