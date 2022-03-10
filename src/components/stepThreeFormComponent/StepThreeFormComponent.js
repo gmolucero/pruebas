@@ -1,6 +1,6 @@
 
 
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from 'prop-types';
 import {
     CButton,
@@ -10,29 +10,47 @@ import {
     CInvalidFeedback,
     CFormGroup,
     CCol,
-    CRow
+    CRow,
+    CLabel
 } from "@coreui/react";
 
 import { getValidationResult } from 'utils';
 import { getCreditReason } from 'services/lists';
+import { getLastTerm } from "services/terms-conditions";
 import Spinner from 'app/common/Spinner';
 
-const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount }) => {
+const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsChanged }) => {
     const [reason, setReason] = React.useState([]);
+    const [term, setTerm] = React.useState('');
+    const listInnerRef = useRef(null);
+    const [termDisabled, setTermDisabled] = React.useState(false);
 
     const handleGetter = async () => {
         try {
             const response = await getCreditReason();
-            setReason(response.data.result)
-            console.log(response);
+            setReason(response.data.result);
+            const lastTerm = await getLastTerm();
+            setTerm(lastTerm.data.result?.contenido);
+            formik.setFieldValue('terms_id', lastTerm.data.result?.id || 0, false);
+            const { scrollHeight, clientHeight } = listInnerRef.current;
+            setTermDisabled(scrollHeight>clientHeight);
         } catch (error) {
             console.error('handleGetter Error: ', error);
         }
     }
 
+    const onScroll = () => {
+        if (listInnerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+            if (scrollTop + clientHeight >= (scrollHeight-20)) {
+                setTermDisabled(false);
+            }
+        }
+    }
+
     React.useEffect(() => {
         handleGetter();
-    }, [])
+    }, [termsChanged])
 
     return (
         <CForm onSubmit={formik.handleSubmit}>
@@ -56,7 +74,6 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount }) => {
                     value={formik.values.requested_amount}
                     placeholder="Monto solicitado"
                     invalid={formik.touched.requested_amount && !!formik.errors.requested_amount}
-                    //onChange={onChange}
                     onChange={changeAmount}
                     name="requested_amount"
                 />
@@ -83,8 +100,35 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount }) => {
                     }
                 </CSelect>
                 <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.credit_start)}>{formik.errors.credit_start}</CInvalidFeedback>
-
             </CFormGroup>
+            
+            
+            {
+                term === '' ? <Spinner /> : 
+                <>
+                    <CLabel>Términos y Condiciones</CLabel>
+                    <CFormGroup className="mb-3 text-left">
+                        <div
+                        style={{
+                            border: '5px solid #eaeaea',
+                            padding: '5px',
+                            height: '200px',
+                            overflowY: 'auto',
+                            borderRadius: '5px',
+                          }}
+                        readOnly={true}
+                        onScroll={onScroll}
+                        ref={listInnerRef}>
+                            {term}
+                        </div>
+                    </CFormGroup>
+                    <CFormGroup className="mb-3 text-left">
+                        <CInput disabled={termDisabled} onChange={onChange} type="checkbox" className="w-auto d-inline h-auto" name="terms" checked={formik.values.terms}/> Al utilizar la plataforma aceptas nuestros Términos y Condiciones de Privacidad
+                        <br/>
+                        <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.terms)}>{formik.errors.terms}</CInvalidFeedback>
+                    </CFormGroup>
+                </>
+            }
 
             <CRow className="justify-content-center">
                 <CCol xs="12" sm="6" xl="5" className="pt-3">
@@ -94,7 +138,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount }) => {
                 </CCol>
                 <CCol xs="12" sm="6" xl="5" className="pt-3">
                     <CButton type="submit" color="secondary" size="lg" className="btn-login px-4 w-100" >
-                        Enviar cotizacion
+                        Enviar solicitud
                     </CButton>
                 </CCol>
             </CRow>

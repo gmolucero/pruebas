@@ -87,7 +87,7 @@ const Summary = props => {
                                     //     (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':
                                         (item) => (<td> {
-                                            item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver ofertas</a>
+                                            item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver pre-ofertas</a>
                                         }   </td>),
                                     'actions':
                                         (item, index) => {

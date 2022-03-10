@@ -20,7 +20,7 @@ import { createSolicitude } from 'services/quotation';
 import CardComponent from 'components/cardComponent/CardComponent';
 
 const SUCCESS_MESSAGE = {
-    title: "¡Tu cotización de Crédito de Consumo fue enviada con éxito!",
+    title: "¡Tu solicitud de Crédito de Consumo fue enviada con éxito!",
     text: "",
     btnText: "Ir a productos",
     iconName: "cil-check-circle",
@@ -29,9 +29,9 @@ const SUCCESS_MESSAGE = {
 }
 
 const ERROR_MESSAGE = {
-    title: "Tu cotización no pudo ser enviada.",
+    title: "Tu solicitud no pudo ser enviada.",
     text: "",
-    btnText: "Editar cotización",
+    btnText: "Editar solicitud",
     iconName: "cil-warning",
     iconClassName: "text-danger",
     btnOnClick: () => null,
@@ -44,6 +44,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
     })
 
     const [loading, setLoading] = React.useState(false);
+    const [termsChanged, setTermsChanged] = React.useState(0);
 
     const onSubmit = async (data) => {
         try {
@@ -51,7 +52,15 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             let clearAmount = data.requested_amount.replace(/\./g, '')
             let tempData = {...data, requested_amount: clearAmount}  
             const response = await createSolicitude(tempData);
-            if (response.status >= 400) {                
+            if (response.status == 409){
+                setModalConfig({
+                    show: true, ...ERROR_MESSAGE,
+                    text: response.data.message,
+                    btnOnClick: () => setModalConfig((_p) => ({ ..._p, show: false }))
+                });
+                setTermsChanged(termsChanged + 1);
+                formik.setFieldValue('terms',false,false);
+            } else if (response.status >= 400) {                
                 setModalConfig({
                     show: true, ...ERROR_MESSAGE,
                     text: response.data.message,
@@ -61,7 +70,7 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             } else {
                 setModalConfig({
                     show: true, ...SUCCESS_MESSAGE,
-                    text: response.data.message,
+                    text: '',
                     btnOnClick: () => history.push('/resumen')
                 })
             }
@@ -76,7 +85,9 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
             reason: "",
             requested_amount: "",
             number_quotas: "",
-            credit_start: ""
+            credit_start: "",
+            terms: false,
+            terms_id: 0
         },
         validate: validate(schema),
         onSubmit: onSubmit,
@@ -107,7 +118,8 @@ const StepThree = ({ prev, history, setStepKeepData, stepKeepData }) => {
                             formik={formik}
                             prev={prevStape}
                             changeAmount={changeAmount}
-                            onChange={handleTextChange} />
+                            onChange={handleTextChange}
+                            termsChanged={termsChanged} />
                             
                     </CCol>
                 )}
