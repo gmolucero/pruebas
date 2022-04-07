@@ -70,6 +70,9 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
 
     return (
         <CForm className="mt-2" onSubmit={formik.handleSubmit}>
+            <CFormGroup className="d-block d-sm-none">
+                <h3 className="mb-4">Dirección y Estudios</h3>
+            </CFormGroup>
             <CFormGroup className="mb-3">
                 <label>¿Cuándo Naciste?</label>
                 <DateComponent

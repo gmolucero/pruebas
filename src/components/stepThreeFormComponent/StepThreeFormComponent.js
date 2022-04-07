@@ -27,6 +27,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
 
     const handleGetter = async () => {
         try {
+            window.scrollTo(0, 0);
             const response = await getCreditReason();
             setReason(response.data.result);
             const lastTerm = await getLastTerm();

@@ -41,11 +41,8 @@ const StepTwo = ({ next, prev, stepsContent,setStepsContent }) => {
     }
 
     const handleInit = async () => {
-        console.log("hola");
         try {
             const { data } = await getRent();
-            console.log("hola");
-            console.log(data);
             if (data.result.independent_income && data.result.dependent_income) setType('ambos')
             else if (!data.result.independent_income && data.result.dependent_income) setType('dependiente')
             else if (data.result.independent_income && !data.result.dependent_income) setType('independiente') 

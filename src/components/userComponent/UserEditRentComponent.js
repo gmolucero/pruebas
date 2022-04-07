@@ -63,7 +63,9 @@ const UserEditRentComponent = () => {
     return (
         <CRow className="justify-content-center mb-5">
             {loading ? <Spinner /> : <CCol md={12}>
-
+                <CFormGroup className="d-block d-sm-none">
+                    <h3 className="mb-4">Rentas</h3>
+                </CFormGroup>
                 <CFormGroup className="mb-3 text-left">
                     <label>¿Eres dependiente o independiente?</label>
                     <CSelect size="lg" value={type} onChange={({ target: { value } }) => handleUpdateType(value)}>

@@ -16,6 +16,10 @@ import { getValidationResult } from 'utils';
 const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
     return (
         <CForm className="mt-3" onSubmit={formik.handleSubmit}>
+
+            <CFormGroup className={edit ? "d-block d-sm-none" : "d-none"}>
+                <h3 className="mb-4">Identificación</h3>
+            </CFormGroup>
             <CFormGroup className="mb-3">
                 <CInput
                     type="text"
