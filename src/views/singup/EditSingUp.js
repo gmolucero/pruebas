@@ -115,7 +115,7 @@ const EditSingUp = ({ history }) => {
 
           <CCol className="pt-5" md="6">
             <CRow className="justify-content-center h-100">
-              <CCol md={8}>
+              <CCol xl={8}>
                 <UserEditNavComponent></UserEditNavComponent>
                 {
                   notification.visible &&

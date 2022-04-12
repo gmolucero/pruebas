@@ -21,6 +21,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
                 <h3 className="mb-4">Identificación</h3>
             </CFormGroup>
             <CFormGroup className="mb-3">
+                <label>Nombre Completo</label>
                 <CInput
                     type="text"
                     placeholder="Nombre completo"
@@ -34,6 +35,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Rut</label>
                 <CInput
                     type="text"
                     placeholder="Rut"
@@ -50,6 +52,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Correo electrónico</label>
                 <CInput
                     type="email"
                     placeholder="Correo electronico"
@@ -63,6 +66,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>N° teléfono celular</label>
                 <CInputGroup>
                     <CInputGroupPrepend>
                         <CInputGroupText>
@@ -83,6 +87,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Contraseña</label>
                 <CInput
                     type="password"
                     placeholder="Contraseña"
@@ -96,6 +101,7 @@ const SignupFormComponent = ({ formik, onChange, changeRut, edit }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Confirme contraseña</label>
                 <CInput
                     type="password"
                     placeholder="Confirme contraseña"

@@ -98,6 +98,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Nacionalidad</label>
                 <CSelect custom name="country"
                     value={formik.values.country}
                     onChange={formik.handleChange}
@@ -111,6 +112,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Región</label>
                 <CSelect custom name="region"
                     value={formik.values.region}
                     onChange={formik.handleChange}
@@ -124,6 +126,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Comuna</label>
                 {loadingCommunes ? <div className="text-center"><CSpinner color="light" /></div> :
                     <>
                         <CSelect custom name="commune"
@@ -142,6 +145,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Nivel de Estudios</label>
                 <CSelect custom name="education_level"
                     value={formik.values.education_level}
                     onChange={formik.handleChange}
@@ -156,6 +160,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>¿A qué te dedicas?</label>
                 <CSelect custom name="occupation"
                     value={formik.values.occupation}
                     onChange={formik.handleChange}
