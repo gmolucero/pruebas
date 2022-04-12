@@ -70,7 +70,7 @@ const Login = (props) => {
                 (res) => {
                   sessionStorage.clear();
                   if (res.status !== 200) {
-                    setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 3000 })
+                    setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 5000 })
                   }
                 },
                 (error) => {
