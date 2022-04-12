@@ -45,6 +45,12 @@ const QuotationForm = ({ label, type, onDone, disabled }) => {
         onSubmit: onSubmit,
     });
 
+    const handleTotalChange = ({ target: { name, value } }) => {  
+        let clearAmount = value.replace(/[^0-9 ]/g, '')
+        let format = new Intl.NumberFormat("es-CL").format(clearAmount); 
+        formik.setFieldValue(name, format);
+    }
+    
     const handleChange = ({ target: { name, value } }) => formik.setFieldValue(name, value);
 
     const handleCreateMonth = () => {
@@ -74,7 +80,7 @@ const QuotationForm = ({ label, type, onDone, disabled }) => {
                             value={formik.values.date}
                             name="date"
                             className="px-1">
-                            <option disabled value="">Periodo</option>
+                            <option disabled hidden value="">Periodo</option>
                             {
                                 handleCreateMonth()
                             }
@@ -90,7 +96,7 @@ const QuotationForm = ({ label, type, onDone, disabled }) => {
                             value={formik.values.total}
                             name="total"
                             placeholder="2.000.000"
-                            onChange={handleChange}
+                            onChange={handleTotalChange}
                         />
                         <CInvalidFeedback>{formik.errors.total}</CInvalidFeedback>
                     </CCol>

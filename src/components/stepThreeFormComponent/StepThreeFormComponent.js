@@ -56,10 +56,11 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
     return (
         <CForm onSubmit={formik.handleSubmit}>
             <CFormGroup className="mb-3 text-left">
+                <label>Motivo del crédito</label>
                 {
 
                     reason.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="reason" value={formik.values.reason}>
-                        <option disabled value="">Motivo del crédito</option>
+                        <option disabled hidden value="">Motivo del crédito</option>
                         {
                             reason.map((_reason) => (<option key={_reason.id} value={_reason.id}>{_reason.nombre}</option>))
                         }
@@ -70,6 +71,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Monto solicitado</label>
                 <CInput
                     size="lg"
                     value={formik.values.requested_amount}
@@ -82,6 +84,7 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Número de cuotas</label>
                 <CInput
                     size="lg"
                     value={formik.values.number_quotas}
@@ -94,8 +97,9 @@ const StepThreeFormComponent = ({ formik, onChange, prev, changeAmount, termsCha
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Fecha pago primero cuota</label>
                 <CSelect size="lg" onChange={onChange} name="credit_start" value={formik.values.credit_start}>
-                    <option disabled value="">Fecha pago primero cuota</option>
+                    <option disabled hidden value="">Fecha pago primero cuota</option>
                     {
                         [30, 60, 90, 120].map((_credit_start) => (<option key={_credit_start} value={_credit_start}>{_credit_start}</option>))
                     }

@@ -102,7 +102,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
                     value={formik.values.country}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Seleccione Nacionalidad ...</option>
+                    <option disabled hidden value="">Seleccione Nacionalidad ...</option>
                     {
                         countries.map((_country) => (<option key={_country.id} value={parseInt(_country.id)}>{_country.name}</option>))
                     }
@@ -115,7 +115,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
                     value={formik.values.region}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Seleccione Region...</option>
+                    <option disabled hidden value="">Seleccione Region...</option>
                     {
                         regions.map((_region) => (<option key={_region.id} value={_region.id}>{_region.name}</option>))
                     }
@@ -130,7 +130,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
                             value={formik.values.commune}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}>
-                            <option disabled value="">Seleccione Comuna...</option>
+                            <option disabled hidden value="">Seleccione Comuna...</option>
                             {
                                 communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))
                             }
@@ -146,7 +146,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
                     value={formik.values.education_level}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Nivel de Estudios...</option>
+                    <option disabled hidden value="">Nivel de Estudios...</option>
                     {
                         educations.map((_education_level) => (<option key={_education_level.id} value={_education_level.nombre}>{_education_level.nombre}</option>))
                     }
@@ -160,7 +160,7 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
                     value={formik.values.occupation}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">¿A qué te dedicas?</option>
+                    <option disabled hidden value="">¿A qué te dedicas?</option>
                     {
                         professions.map((_occupation) => (<option key={_occupation.id} value={_occupation.name}>{_occupation.name}</option>))
                     }

@@ -37,13 +37,13 @@ const DateComponent = ({ day, month, year, onChange, size }) => {
         <CRow>
             <CCol className="pr-1">
                 <CSelect custom size={size} value={day} onChange={onChange} name="day">
-                    <option disabled value="">día</option>
+                    <option disabled hidden value="">día</option>
                     {buildDayList()}
                 </CSelect>
             </CCol>
             <CCol className="px-2">
                 <CSelect custom size={size} value={month} onChange={onChange} name="month">
-                    <option disabled value="">mes</option>
+                    <option disabled hidden value="">mes</option>
                     <option value="01">Enero</option>
                     <option value="02">Febrero</option>
                     <option value="03">Marzo</option>
@@ -60,7 +60,7 @@ const DateComponent = ({ day, month, year, onChange, size }) => {
             </CCol>
             <CCol className="pl-1">
                 <CSelect custom size={size} value={year} onChange={onChange} name="year">
-                    <option disabled value="">año</option>
+                    <option disabled hidden value="">año</option>
                     {
                         defautlYears.map((year) => <option key={year} value={year}>{year}</option>)
                     }
