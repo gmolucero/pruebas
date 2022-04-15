@@ -33,3 +33,24 @@ pipelines:
                 ZIP_FILE: "app.tar.gz"
                 WAIT: "true"
                 DEBUG: "true"
+    main:
+      - step:
+          name: Install
+          caches:
+            - node
+          script:
+            - unset CI
+            - npm install
+            - npm run build
+          artifacts:
+            - build/**
+      - step:
+          name: Deploy to prod
+          deployment: Production
+          script:
+            - pipe: microsoft/azure-static-web-apps-deploy:main
+              variables:
+                APP_LOCATION: "$BITBUCKET_CLONE_DIR/build"
+                API_LOCATION: "$BITBUCKET_CLONE_DIR/api"
+                OUTPUT_LOCATION: "$BITBUCKET_CLONE_DIR"
+                API_TOKEN: $deployment_token
