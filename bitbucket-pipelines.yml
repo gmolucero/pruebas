@@ -48,9 +48,9 @@ pipelines:
           name: Deploy to prod
           deployment: Production
           script:
-            - pipe: microsoft/azure-static-web-apps-deploy:main
-              variables:
-                APP_LOCATION: "$BITBUCKET_CLONE_DIR/build"
-                API_LOCATION: "$BITBUCKET_CLONE_DIR/api"
-                OUTPUT_LOCATION: "$BITBUCKET_CLONE_DIR"
-                API_TOKEN: $deployment_token
+            - pipe: microsoft/azure-storage-deploy:2.0.1
+                variables:
+                SOURCE: 'build/**'
+                DESTINATION: 'https://yqwebprod.blob.core.windows.net/%24web/'
+                DESTINATION_SAS_TOKEN: $SAS_TOKEN
+                EXTRA_ARGS: '--from-to localBlob --recursive'
