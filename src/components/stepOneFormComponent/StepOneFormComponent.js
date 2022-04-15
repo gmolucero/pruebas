@@ -113,9 +113,10 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Nacionalidad</label>
                 {
                     countires.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="country" value={formik.values.country}>
-                        <option disabled value="">Seleccione Nacionalidad ...</option>
+                        <option disabled hidden value="">Seleccione Nacionalidad ...</option>
                         {
                             countires.map((_country) => (<option key={_country.id} value={parseInt(_country.id)}>{_country.name}</option>))
                         }
@@ -125,9 +126,10 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Región</label>
                 {
                     region.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="region" value={formik.values.region}>
-                        <option disabled value="">Seleccione Region...</option>
+                        <option disabled hidden value="">Seleccione Region...</option>
                         {
                             region.map((_region) => (<option key={_region.id} value={_region.id}>{_region.name}</option>))
                         }
@@ -136,10 +138,11 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
                 <CInvalidFeedback className="d-inline" invalid={getValidationResult(!!formik.errors.region)}>{formik.errors.region}</CInvalidFeedback>
             </CFormGroup>
 
-            <CFormGroup className="mb-3 text-left">
+            <CFormGroup className="mb-3 text-left">    
+                <label>Comuna</label>
                 {
                     loadingCommunes ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="commune" value={formik.values.commune}>
-                        <option disabled value="">Seleccione Comuna...</option>
+                        <option disabled hidden value="">Seleccione Comuna...</option>
                         {
                             communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))
                         }
@@ -150,8 +153,9 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Nivel de Estudios</label>
                 {education.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="education_level" value={formik.values.education_level}>
-                    <option disabled value="">Nivel de Estudios...</option>
+                    <option disabled hidden value="">Nivel de Estudios...</option>
                     {
                         education.map((_education_level) => (<option key={_education_level.id} value={_education_level.nombre}>{_education_level.nombre}</option>))
                     }
@@ -161,8 +165,9 @@ const StepOneFormComponent = ({ formik, onChange, errorAge }) => {
             </CFormGroup>
 
             <CFormGroup className="mb-3 text-left">
+                <label>Profesión</label>
                 {profession.length === 0 ? <Spinner /> : <CSelect size="lg" onChange={onChange} name="occupation" value={formik.values.occupation}>
-                    <option disabled value="">¿A qué te dedicas?</option>
+                    <option disabled hidden value="">¿A qué te dedicas?</option>
                     {
                         profession.map((_occupation) => (<option key={_occupation.id} value={_occupation.name}>{_occupation.name}</option>))
                     }

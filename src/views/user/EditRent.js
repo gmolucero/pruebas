@@ -46,7 +46,7 @@ const EditRent = () => {
                                 <UserEditNavComponent></UserEditNavComponent>
                             </CCol>
                         </CRow>
-                        <CRow className="justify-content-center mt-5">
+                        <CRow className="justify-content-center mt-2">
                             <CCol md={8}>
                                 {visible ? <UserEditRentComponent /> : <div className="text-center mt-5"><CSpinner color="light" /></div>}
                             </CCol>

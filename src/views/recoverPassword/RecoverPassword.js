@@ -43,10 +43,10 @@ const RecoverPassword = ({ history }) => {
       setVisible(false);
       const res = await forgotPassword(user)
       if (res.status !== 200) throw new Error("error ")
-      setNotification({ open: true, type: 'info', message: 'Revise su correo electronico' });
+      setNotification({ open: true, type: 'info', message: 'Revise su correo electronico', delay: 6000, icon:true });
       history.push('/');
     } catch (error) {
-      setNotification({ open: true, type: 'warning', message: 'Datos de usuario inválidos' });
+      setNotification({ open: true, type: 'warning', message: 'Datos de usuario inválidos', delay: 6000, icon:true});
       setVisible(true);
       console.log('[onSubmit error]', error);
     }

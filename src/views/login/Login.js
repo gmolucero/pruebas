@@ -70,7 +70,7 @@ const Login = (props) => {
                 (res) => {
                   sessionStorage.clear();
                   if (res.status !== 200) {
-                    setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 3000 })
+                    setNotification({ type: 'warning', message: 'Ocurrió un error al reenviar mensaje de confirmación de correo electrónico', delay: 5000 })
                   }
                 },
                 (error) => {
@@ -113,8 +113,8 @@ const Login = (props) => {
           <CRow className="justify-content-center h-100">
             <CCol md="6" style={styles} className="align-items-center bg-gradient-blue">
               <div className="d-flex h-100 justify-content-center align-items-center text-center flex-column text-white p-relative">
-                <h1 className="bold f-48 mt-5 mt-md-0">Inicia sesión</h1>
-                <p className="mb-5 h3 px-5">Rellena el formulario y comienza la experiencia con {process.env.REACT_APP_NAME}.</p>
+                <h1 className="bold f-48 mt-4 mt-md-0 mt-sm-5">Inicia sesión</h1>
+                <p className="h3 mb-4 px-4 mb-sm-5 px-sm-5">Rellena el formulario y comienza la experiencia con {process.env.REACT_APP_NAME}.</p>
 
                 <ul className="login-list p-0">
                   <li><CIcon name="cil-clock" /> Ahorra tiempo</li>

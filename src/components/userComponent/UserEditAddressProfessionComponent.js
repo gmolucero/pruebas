@@ -70,6 +70,9 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
 
     return (
         <CForm className="mt-2" onSubmit={formik.handleSubmit}>
+            <CFormGroup className="d-block d-sm-none">
+                <h3 className="mb-4">Dirección y Estudios</h3>
+            </CFormGroup>
             <CFormGroup className="mb-3">
                 <label>¿Cuándo Naciste?</label>
                 <DateComponent
@@ -95,11 +98,12 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Nacionalidad</label>
                 <CSelect custom name="country"
                     value={formik.values.country}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Seleccione Nacionalidad ...</option>
+                    <option disabled hidden value="">Seleccione Nacionalidad ...</option>
                     {
                         countries.map((_country) => (<option key={_country.id} value={parseInt(_country.id)}>{_country.name}</option>))
                     }
@@ -108,11 +112,12 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Región</label>
                 <CSelect custom name="region"
                     value={formik.values.region}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Seleccione Region...</option>
+                    <option disabled hidden value="">Seleccione Region...</option>
                     {
                         regions.map((_region) => (<option key={_region.id} value={_region.id}>{_region.name}</option>))
                     }
@@ -121,13 +126,14 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Comuna</label>
                 {loadingCommunes ? <div className="text-center"><CSpinner color="light" /></div> :
                     <>
                         <CSelect custom name="commune"
                             value={formik.values.commune}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}>
-                            <option disabled value="">Seleccione Comuna...</option>
+                            <option disabled hidden value="">Seleccione Comuna...</option>
                             {
                                 communes.map((_commune) => (<option key={_commune.id} value={_commune.id}>{_commune.name}</option>))
                             }
@@ -139,11 +145,12 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>Nivel de Estudios</label>
                 <CSelect custom name="education_level"
                     value={formik.values.education_level}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">Nivel de Estudios...</option>
+                    <option disabled hidden value="">Nivel de Estudios...</option>
                     {
                         educations.map((_education_level) => (<option key={_education_level.id} value={_education_level.nombre}>{_education_level.nombre}</option>))
                     }
@@ -153,11 +160,12 @@ const UserEditAddressProfessionComponent = ({ formik, countries, regions, commun
             </CFormGroup>
 
             <CFormGroup className="mb-3">
+                <label>¿A qué te dedicas?</label>
                 <CSelect custom name="occupation"
                     value={formik.values.occupation}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}>
-                    <option disabled value="">¿A qué te dedicas?</option>
+                    <option disabled hidden value="">¿A qué te dedicas?</option>
                     {
                         professions.map((_occupation) => (<option key={_occupation.id} value={_occupation.name}>{_occupation.name}</option>))
                     }
