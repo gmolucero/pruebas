@@ -114,7 +114,7 @@ const Login = (props) => {
             <CCol md="6" style={styles} className="align-items-center bg-gradient-blue">
               <div className="d-flex h-100 justify-content-center align-items-center text-center flex-column text-white p-relative">
                 <h1 className="bold f-48 mt-5 mt-md-0">Inicia sesión</h1>
-                <p className="mb-5 h3 px-5">Rellena el formulario y comienza la experiencia con {process.env.REACT_APP_NAME}..</p>
+                <p className="mb-5 h3 px-5">Rellena el formulario y comienza la experiencia con {process.env.REACT_APP_NAME}...</p>
 
                 <ul className="login-list p-0">
                   <li><CIcon name="cil-clock" /> Ahorra tiempo</li>
