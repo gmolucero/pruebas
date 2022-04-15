@@ -49,7 +49,7 @@ pipelines:
           deployment: Production
           script:
             - pipe: microsoft/azure-storage-deploy:2.0.1
-                variables:
+              variables:
                 SOURCE: 'build/**'
                 DESTINATION: 'https://yqwebprod.blob.core.windows.net/%24web/'
                 DESTINATION_SAS_TOKEN: $SAS_TOKEN
