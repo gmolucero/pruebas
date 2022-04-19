@@ -32,6 +32,8 @@ import {
   cilXCircle,
   cilPaperclip,
   cilArrowCircleLeft,
+  cilHouse,
+  cilMoney
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -71,5 +73,7 @@ export const icons = Object.assign(
     cilXCircle,
     cilPaperclip,
     cilArrowCircleLeft,
+    cilHouse,
+    cilMoney
   }
 );

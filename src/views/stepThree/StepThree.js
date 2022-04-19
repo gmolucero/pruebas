@@ -12,7 +12,7 @@ import {
 import { stepThreechema as schema } from 'components/stepThreeFormComponent/stepThreechema'
 import StepThreeFormComponent from 'components/stepThreeFormComponent/StepThreeFormComponent'
 
-import { validate, handlerInputChangeCreator, isEmpty } from 'utils';
+import { validate, handlerInputChangeCreator, isEmpty, formatClp } from 'utils';
 import Spinner from 'app/common/Spinner'
 
 import { createSolicitude } from 'services/quotation';

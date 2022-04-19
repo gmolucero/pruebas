@@ -7,6 +7,7 @@ export const initialState = {
         type: 'success',
         message: 'hola mundo',
         delay: 3000,
+        icon: false
     },
     step: 1,
     loading: false,

@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  app:
+    container_name: yoquero-web.app
+    image: yoquero-web
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3000:3000
