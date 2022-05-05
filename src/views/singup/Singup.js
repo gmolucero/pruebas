@@ -106,7 +106,7 @@ const Singup = ({ history }) => {
                 {/* <p className="mb-5 h3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas fugit cupiditate ut mollitia itaque, accusamus beatae qui eaque corporis excepturi. </p> */}
 
                 <ul className="login-list p-0">
-                  <li><CIcon name="cil-clock" /> Ahorra tiempo y solicita tu crédito</li>
+                  <li><CIcon name="cil-clock" /> Ahorra tiempo y solicita tu crédito.</li>
                   <li><CIcon name="cil-find-in-page" /> Te llegarán pre-ofertas personalizadas.</li>
                   <li><CIcon name="cil-chat-bubble" /> Negocia la pre-oferta de tu crédito.</li>
                 </ul>

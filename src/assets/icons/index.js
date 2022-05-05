@@ -33,7 +33,9 @@ import {
   cilPaperclip,
   cilArrowCircleLeft,
   cilHouse,
-  cilMoney
+  cilMoney,
+  cilArrowLeft,
+  cilArrowRight,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -74,6 +76,8 @@ export const icons = Object.assign(
     cilPaperclip,
     cilArrowCircleLeft,
     cilHouse,
-    cilMoney
+    cilMoney,
+    cilArrowLeft,
+    cilArrowRight,
   }
 );

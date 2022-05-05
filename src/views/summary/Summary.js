@@ -20,13 +20,14 @@ import { formatClp } from 'utils';
 import { useStepper,useStepData} from 'context/hooks';
 
 const fields = [
-    { key: 'fecha', label: "Fecha" },
-    { key: 'type', label: "Tipo de crédito" },
-    { key: 'principal', label: "Monto" },
-    { key: 'motivo', label: "Motivo" },
+    { key: 'fecha', label: "Fecha", _classes: "sticky"},
+    { key: 'tipo_deuda_nombre', label: "Tipo de crédito", _classes: "" },
+    { key: 'monto', label: "Monto", _classes: "" },
+    { key: 'motivo_nombre', label: "Motivo", _classes: "" },
     // { key: 'estatus', label: "Estado" },
     { key: 'offers', label: "" },
 ]
+
 
 
 const Summary = props => {
@@ -34,22 +35,60 @@ const Summary = props => {
     const [loading, setLoading] = React.useState(true);
     const [list, setList] = React.useState([]);
     const [stepKeepData, setStepKeepData] = useStepData('');
+    const [onStart, setOnStart ] = React.useState(true);
+    const [onEnd, setOnEnd ] = React.useState(true);
+    const ref = React.createRef();
 
     const handleInit = async () => {
         try {
             const response = await getSolicitudes();
-            setList(response.data.result);
+            setList( response.data.result.map(item =>{
+              item['motivo_nombre'] = item.motivo.nombre;
+              item['tipo_deuda_nombre'] = item.tipo.nombre;
+              item['monto'] = '$'+formatClp(item.principal);
+              return item;
+            }) );
             setLoading(false);
+            setOnStart(false);
+            setOnEnd(false);
         } catch (error) {
             console.error("Summary error: ", error);
         }
+    }
+
+    const Buttons = () => {
+      return (<div className="d-block d-sm-none text-right my-2">
+      <CButton
+        className="mr-2"
+        shape="square"
+        disabled={onStart}
+        onClick={()=>scrollTableTo('left')}
+        >
+          <CIcon name="cil-arrow-left"/>
+      </CButton>
+      <CButton
+        shape="square"
+        disabled={onEnd}
+        onClick={()=>scrollTableTo('right')}
+      >
+          <CIcon name="cil-arrow-right"/>
+      </CButton>
+    </div>);
+    }
+
+    function scrollTableTo(direction, step = 100) {
+      const elem = document.getElementsByClassName('table-responsive')[0];
+      elem.scrollTo({
+        left: direction === 'left' ? (-1)*step : step,
+        behavior: 'smooth'
+      });
     }
 
     React.useEffect(() => {
         handleInit();
     }, [])
 
-    React.useEffect(() => {       
+    React.useEffect(() => {
         if (step !== 1) setStepper(1)
         if (stepKeepData) setStepKeepData('')
     }, [])
@@ -67,54 +106,25 @@ const Summary = props => {
             <CRow>
                 <CCol md={12}>
                     <CCard className="p-3 p-md-4">
-                        {
-
-                            loading ? <Spinner /> : <CDataTable
+                        <CDataTable
                                 items={list}
                                 fields={fields}
                                 pagination={{align:'end', dots:false, doubleArrows:false}}
+                                responsive
+                                loading={loading}
                                 sorter
+                                overTableSlot = {<Buttons/>}
+                                underTableSlot = {<Buttons/>}
                                 scopedSlots={{
-                                    'fecha':
-                                        (item) => (<td> {item.fecha ? item.fecha :"-"} </td>),
-                                    'principal':
-                                        (item) => (<td className="bold"> ${formatClp(item.principal)} </td>),
-                                    'type':
-                                        (item) => (<td>{item.tipo.nombre}</td>),
-                                    'motivo':
-                                        (item) => (<td>{item.motivo ? item.motivo.nombre : "-"}</td>),
-                                    // 'estatus':
-                                    //     (item) => (<td> <StatusBadgeComponent status={item.estatus === 0 ? 'info' : 'success'} text={item.estatus === 0 ? 'Creado' : 'Finalizado'} /> </td>),
                                     'offers':
                                         (item) => (<td> {
                                             item.preOffers && item.preOffers.length > 0 && <a href={`#/oferta/${item.id}`} className="link bold"> <CIcon name="cil-dollar" /> Ver pre-ofertas</a>
                                         }   </td>),
-                                    'actions':
-                                        (item, index) => {
-                                            return (
-                                                <td className="py-2">
-                                                    <CButton
-                                                        variant="outline"
-                                                        shape="square"
-                                                        size="sm"
-                                                    >
-                                                        <CIcon name="cil-pencil" className="text-primary" />
-                                                    </CButton>
-                                                    <CButton
-                                                        variant="outline"
-                                                        shape="square"
-                                                        size="sm"
-                                                        className="ml-1"
-                                                    >
-                                                        <CIcon name="cil-trash" className="text-primary" />
-                                                    </CButton>
-                                                </td>
-                                            )
-                                        },
-                                }}
-                            />}
-                    </CCard>
 
+                                }}
+                                innerRef={ref}
+                            />
+                    </CCard>
                     {
                         // paginationConfig && paginationConfig.pages > 1 && <Pagination {...paginationConfig} onActivePageChange={handlePagination} />
                     }
@@ -124,8 +134,5 @@ const Summary = props => {
     )
 }
 
-Summary.propTypes = {
-
-}
 
 export default Summary
